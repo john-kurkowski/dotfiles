@@ -1,0 +1,12 @@
+[user]
+	name = John Kurkowski
+	email = john.kurkowski@gmail.com
+[core]
+	excludesfile = ~/.gitignore
+[color]
+	ui = true
+[alias]
+  svnpush = !sh -c 'git stash && git svn dcommit && git stash pop'
+  svnpull = !sh -c 'git stash && git svn rebase && git stash pop'
+  stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
+

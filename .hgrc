@@ -1,0 +1,16 @@
+[ui]
+username = John Kurkowski <john.kurkowski@gmail.com>
+verbose = True
+ignore = ~/.hgignore
+merge = vim -d
+
+[pager]
+pager = LESS='FSRX' less
+
+[extensions]
+color =
+rebase =
+record =
+pager =
+collapse = ~/Documents/code/hg/hgcollapse/hgext/collapse.py
+histedit = ~/Documents/code/hg/histedit/hg_histedit.py

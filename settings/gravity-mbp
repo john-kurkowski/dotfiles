@@ -1,0 +1,9 @@
+export INSIGHTS_ENVIRONMENT=development
+export PYTHONPATH=$PYTHONPATH:/Users/John/Documents/code/gravity/platform/etl/insights_processing
+export INSIGHTS_PATH=/Users/John/Documents/code/gravity/platform/etl/insights_processing
+export INSIGHTS_WEB_PATH=/opt/local/apache2/htdocs/insights
+export GRAVITY_PATH=/Users/John/Documents/code/gravity/platform/web/gravity
+export INTEREST_SERVICE_PATH=/Users/John/Documents/code/gravity/platform/services/interests
+export BROWSER_APPS_PATH=/Users/John/Documents/code/gravity/platform/web/browserapps/
+alias zf=~/Downloads/ZendFramework-1.9.6/bin/zf.sh
+
