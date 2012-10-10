@@ -1,8 +1,9 @@
 [user]
 	name = John Kurkowski
-	email = john.kurkowski@gmail.com
+	email = jkurkowski@gravity.com
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/John/.gitignore
+	editor = mvim -f
 [color]
 	ui = true
 [alias]
@@ -10,3 +11,9 @@
   svnpull = !sh -c 'git stash && git svn rebase && git stash pop'
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

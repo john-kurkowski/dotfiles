@@ -1,7 +1,7 @@
 [ui]
-username = John Kurkowski <john.kurkowski@gmail.com>
+username=John Kurkowski <jkurkowski@gravity.com>
 verbose = True
-ignore = ~/.hgignore
+ignore=/Users/John/.hgignore_global
 merge = vim -d
 
 [pager]
@@ -14,3 +14,17 @@ record =
 pager =
 collapse = ~/Documents/code/hg/hgcollapse/hgext/collapse.py
 histedit = ~/Documents/code/hg/histedit/hg_histedit.py
+[merge-tools]
+sourcetreemerge.gui=False
+sourcetreebulkmerge.gui=False
+sourcetreemerge.binary=False
+sourcetreebulkmerge.executable=/Applications/SourceTree.app/Contents/Resources/hg-merge.sh
+sourcetreemerge.args=$local $other -ancestor $base -merge $output
+sourcetreemerge.checkconflicts=True
+sourcetreemerge.premerge=True
+sourcetreemerge.executable=/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh
+sourcetreebulkmerge.premerge=False
+sourcetreebulkmerge.binary=True
+[extdiff]
+cmd.sourcetreediff=opendiff
+opts.sourcetreediff=

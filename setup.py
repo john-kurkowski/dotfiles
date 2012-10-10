@@ -20,15 +20,17 @@ def call(cmd):
       raise subprocess.CalledProcessError(p.returncode, split_cmd)
     return stdout
 
+def dotfiles():
+    return call('git ls-files .*').splitlines()
+
 def install(args):
     if args.settings in ('gravity', 'gravity-mbp'):
       args.tabstop = 2
       args.email = 'jkurkowski@gravity.com'
 
-    dotfiles = [os.path.join(MOD_DIR, dotfile) for dotfile in call('hg -R %s stat --modified --added --clean --no-status --include=%s' % (MOD_DIR, os.path.join(MOD_DIR, ".*"))).splitlines()]
     dest = os.path.expanduser('~/')
-    for f in dotfiles:
-        shutil.copy2(f, dest)
+    for f in dotfiles():
+        shutil.copy2(os.path.join(MOD_DIR, f), dest)
 
     hostspecific = os.path.join(dest, '.hostspecific')
     if args.settings:
@@ -49,16 +51,26 @@ def install(args):
     email_cmd = """perl -pi -e 's/%s/%s/g' %s""" % (old_email, new_email, gitrc)
     call(email_cmd)
 
+def export(args):
+    """The inverse of install."""
+    src = os.path.expanduser('~/')
+    for f in dotfiles():
+        shutil.copy2(os.path.join(src, f), MOD_DIR)
+
 if __name__ == "__main__":
     settings_choices = [os.path.basename(f) for f in glob.glob(os.path.join(MOD_DIR, 'settings', '[A-Za-z]*'))]
 
     parser = argparse.ArgumentParser(description="Install dotfiles")
     subparsers = parser.add_subparsers(title='subcommands')
+
     install_cmd = subparsers.add_parser('install')
     install_cmd.set_defaults(func=install)
     install_cmd.add_argument('--tabstop', '-ts', type=int, default=4, help='Vim tabstop (default: 4)')
     install_cmd.add_argument('--email', '-e', default='john.kurkowski@gmail.com', help='Git author email address (default: personal)')
     install_cmd.add_argument('settings', choices=settings_choices, help='Install a predefined suite of settings.')
+
+    export_cmd = subparsers.add_parser('export')
+    export_cmd.set_defaults(func=export)
 
     args = parser.parse_args()
     args.func(args)

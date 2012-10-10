@@ -2,7 +2,7 @@
 *.class
 *.iml
 *.pyc
-*.swp
+*.sw[po]
 *.ipr
 *.iws
 *~
@@ -19,3 +19,4 @@ dist/
 target/
 project/boot/
 *.egg-info/
+atlassian-ide-plugin.xml
