@@ -46,17 +46,22 @@ export PATH=/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-
 export NODE_PATH=/usr/local/lib/node_modules
 export EDITOR=vim
 export SVN_EDITOR=vim
+export LESS=-FRXi
 export WORKON_HOME=~/Documents/python-environments/
 export PYTHONSTARTUP=~/.pystartup
 export MAVEN_COLOR=true
 
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 export SCALA_HOME=/usr/share/java
-#export SBT_OPTS='-noverify -javaagent:/opt/jrebel/jrebel.jar -Xms512M -Xmx2536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=512M -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'
-export SBT_OPTS='-Xms512M -Xmx2536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=512M'
+#export SBT_OPTS='-noverify -javaagent:/opt/jrebel/jrebel.jar -Xms512M -Xmx2536M -Xss2M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=512M -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'
+export SBT_OPTS='-Xms512M -Xmx2536M -Xss2M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1024M -XX:ReservedCodeCacheSize=1024M'
 
 alias sbtd='SBT_OPTS="$SBT_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005" sbt'
+alias sbtj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS" sbt'
 alias sbtdj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005" sbt'
+
+alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
 VENVWRAPPER=/usr/local/Cellar/python/2.7/bin/virtualenvwrapper.sh
 if [ -e $VENVWRAPPER ]
@@ -64,7 +69,7 @@ then
   source $VENVWRAPPER
 fi
 
-alias grep='GREP_COLOR="1;37;41" LANG=C grep -PIn --color=auto --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws"'
+alias grep='GREP_COLOR="1;37;41" LANG=C grep -PIn --color=auto --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
 alias ls='ls -G'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && growlnotify -t 'Process Completed' -m 'Get back to work.'"
 alias rsyncgi="rsync -avz --exclude '.git' `git clean -dXn | perl -p -e 's/Would remove (.*)/--exclude "$1"/g' | tr \"\\n\" \" \"`"
@@ -142,3 +147,6 @@ function server() {
 	open "http://localhost:${port}/"
 	python -m SimpleHTTPServer "$port"
 }
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
