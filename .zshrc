@@ -29,7 +29,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew git gnu-utils heroku mvn osx pip python)
+plugins=(brew git gnu-utils heroku mvn osx pip python ruby rvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,7 +42,7 @@ set -o vi
 #source ~/.bashcolors
 
 export HISTCONTROL=ignoredups
-export PATH=/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p125/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin:/usr/local/share/npm/bin
+export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin:/usr/local/share/npm/bin
 export NODE_PATH=/usr/local/lib/node_modules
 export EDITOR=vim
 export SVN_EDITOR=vim
@@ -147,3 +147,5 @@ function server() {
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
