@@ -21,3 +21,6 @@
 	path = /usr/local/bin/p4merge
 [mergetool]
 	prompt = false
+[grep]
+	patternType = perl
+	lineNumber = true

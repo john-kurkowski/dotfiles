@@ -42,7 +42,7 @@ def install(args):
         pass
 
     vimrc = os.path.join(dest, '.vimrc')
-    tabstop_cmd = """perl -pi -e 's/set ts=4/set ts=%d/g' %s""" % (args.tabstop, vimrc)
+    tabstop_cmd = """perl -pi -e 's/set tabstop=4/set tabstop=%d/g' %s""" % (args.tabstop, vimrc)
     call(tabstop_cmd)
 
     gitrc = os.path.join(dest, '.gitconfig')

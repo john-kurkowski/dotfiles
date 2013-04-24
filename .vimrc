@@ -3,7 +3,8 @@ set background=dark
 colorscheme desert
 
 set hlsearch
-set ts=2
+set tabstop=2
+set shiftwidth=2
 set nocompatible
 set laststatus=2
 set autoindent
@@ -13,7 +14,7 @@ set number
 set ruler
 set wildignore+=*.class,*.pyc,.svn,.git,*/classes/*,*/target/*,*/project/boot/*,*.jar
 let mapleader = ","
-filetype plugin on
+filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
 augroup filetypedetect
