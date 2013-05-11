@@ -42,6 +42,9 @@ set -o vi
 #source ~/.bashcolors
 
 export HISTCONTROL=ignoredups
+bindkey '\e[A' history-beginning-search-backward
+bindkey '\e[B' history-beginning-search-forward
+
 export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin:/usr/local/share/npm/bin
 export NODE_PATH=/usr/local/lib/node_modules
 export EDITOR=vim
@@ -70,6 +73,7 @@ then
 fi
 
 alias grep='GREP_COLOR="1;37;41" LANG=C grep -PIn --color=auto --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
+alias ag='ag --pager=less'
 alias ls='ls -G'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && growlnotify -t 'Process Completed' -m 'Get back to work.'"
 alias rsyncgi="rsync -avz --exclude '.git' `git clean -dXn | perl -p -e 's/Would remove (.*)/--exclude "$1"/g' | tr \"\\n\" \" \"`"

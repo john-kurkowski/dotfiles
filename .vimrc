@@ -27,4 +27,8 @@ au BufWritePost *.coffee,*.java,*.js,*.php,*.py,*.rb,*.scala silent! !ctags -R &
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
+" For local replace
+nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+nnoremap gR :s/<C-R>///gc<left><left><left>
+
 execute pathogen#infect()
