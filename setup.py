@@ -3,6 +3,7 @@
 from __future__ import with_statement
 
 import argparse
+import errno
 import glob
 import os
 import re
@@ -23,6 +24,13 @@ def call(cmd):
 def dotfiles():
     return call('git ls-files .*').splitlines()
 
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if not (exc.errno == errno.EEXIST and os.path.isdir(path)):
+            raise
+
 def install(args):
     if args.settings in ('gravity', 'gravity-mbp'):
       args.tabstop = 2
@@ -30,7 +38,12 @@ def install(args):
 
     dest = os.path.expanduser('~/')
     for f in dotfiles():
-        shutil.copy2(os.path.join(MOD_DIR, f), dest)
+        dest_dotfile = os.path.join(dest, f)
+        dest_dotfile_dir = os.path.dirname(dest_dotfile)
+        mkdir_p(dest_dotfile_dir)
+
+        src = os.path.join(MOD_DIR, f)
+        shutil.copy2(src, dest_dotfile)
 
     hostspecific = os.path.join(dest, '.hostspecific')
     if args.settings:
@@ -55,7 +68,7 @@ def export(args):
     """The inverse of install."""
     src = os.path.expanduser('~/')
     for f in dotfiles():
-        shutil.copy2(os.path.join(src, f), MOD_DIR)
+        shutil.copy2(os.path.join(src, f), os.path.join(MOD_DIR, f))
 
 if __name__ == "__main__":
     settings_choices = [os.path.basename(f) for f in glob.glob(os.path.join(MOD_DIR, 'settings', '[A-Za-z]*'))]
