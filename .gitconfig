@@ -1,8 +1,8 @@
 [user]
 	name = John Kurkowski
-	email = jkurkowski@gravity.com
+	email = john.kurkowski@gmail.com
 [core]
-	excludesfile = /Users/John/.gitignore
+	excludesfile = ~/.gitignore
 	editor = mvim -f
 [color]
 	ui = true
@@ -13,7 +13,7 @@
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
