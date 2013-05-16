@@ -1,12 +1,12 @@
-apple-gcc42
 autoconf
 automake
 casperjs
+colordiff
 coreutils
+cscope
 ctags
 gdbm
 git
-grep
 icu4c
 libgpg-error
 libksba
