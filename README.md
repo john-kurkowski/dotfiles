@@ -12,7 +12,10 @@ Well it's not quite a one-liner...
 Install Homebrew then
 
     git clone https://john.kurkowski@bitbucket.org/john.kurkowski/dotfiles
+
+    brew tap homebrew/dupes
     brew install parallel
     parallel -j 1 brew install {} < dotfiles/brewlist
+
     dotfiles/setup.py install gravity
     chsh -s zsh # TODO
