@@ -36,6 +36,7 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 setopt extendedglob
+unsetopt share_history
 
 set -o vi
 
