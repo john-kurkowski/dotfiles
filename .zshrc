@@ -84,7 +84,7 @@ function griot() {
 
 source ~/.hostspecific
 
-function gup
+function gupper
 {
   # subshell for `set -e` and `trap`
   (
