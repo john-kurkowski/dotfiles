@@ -67,13 +67,13 @@ alias sbtdj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS -Xd
 
 alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
-VENVWRAPPER=/usr/local/Cellar/python/2.7/bin/virtualenvwrapper.sh
+VENVWRAPPER=`which virtualenvwrapper.sh`
 if [ -e $VENVWRAPPER ]
 then
   source $VENVWRAPPER
 fi
 
-alias grep='GREP_COLOR="1;37;41" LANG=C grep -PIn --color=auto --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
+alias grep='GREP_COLOR="1;37;41" LANG=C ggrep -PIn --color=always --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
 alias ag='ag --pager=less'
 alias ls='ls -G'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && growlnotify -t 'Process Completed' -m 'Get back to work.'"

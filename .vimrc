@@ -21,6 +21,8 @@ augroup filetypedetect
   au BufNewFile,BufRead *.pig set filetype=pig syntax=pig
 augroup END
 
+au FileType python setl ts=4 sw=4
+
 au BufWritePre * :%s/\s\+$//e
 au BufWritePost *.coffee,*.java,*.js,*.php,*.py,*.rb,*.scala silent! !ctags -R &
 
