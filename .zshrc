@@ -46,7 +46,7 @@ export HISTCONTROL=ignoredups
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
-export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin:/usr/local/share/npm/bin
+export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin
 export NODE_PATH=/usr/local/lib/node_modules
 export EDITOR=vim
 export SVN_EDITOR=vim
@@ -58,8 +58,7 @@ export MAVEN_COLOR=true
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 export SCALA_HOME=/usr/share/java
-#export SBT_OPTS='-noverify -javaagent:/opt/jrebel/jrebel.jar -Xms512M -Xmx2536M -Xss2M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=512M -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'
-export SBT_OPTS='-Xms512M -Xmx2536M -Xss2M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=1024M -XX:ReservedCodeCacheSize=1024M'
+export SBT_OPTS='-Xmx2048M -XX:MaxPermSize=768m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled'
 
 alias sbtd='SBT_OPTS="$SBT_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005" sbt'
 alias sbtj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS" sbt'
@@ -154,3 +153,4 @@ function server() {
 export PATH="/usr/local/heroku/bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh  # This loads NVM
