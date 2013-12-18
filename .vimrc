@@ -13,6 +13,7 @@ set ignorecase
 set number
 set ruler
 set wildignore+=*.class,*.pyc,.svn,.git,*/classes/*,*/target/*,*/project/boot/*,*.jar
+set backupcopy=yes
 let mapleader = ","
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
