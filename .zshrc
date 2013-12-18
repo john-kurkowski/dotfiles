@@ -106,7 +106,7 @@ function gupper
     TEMPFILE="`mktemp -t gup.XXXXXX`"
     trap '{ rm -f "$TEMPFILE"; }' EXIT
     # if we're behind upstream, we need to update
-    if git status | grep "# Your branch" > "$TEMPFILE"
+    if git status | grep "Your branch" > "$TEMPFILE"
     then
       # extract tracking branch from message
       UPSTREAM=$(cat "$TEMPFILE" | cut -d "'" -f 2)
