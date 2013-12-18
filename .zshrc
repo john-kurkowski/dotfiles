@@ -46,8 +46,7 @@ export HISTCONTROL=ignoredups
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
-export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/opt/local/apache2/bin/:/usr/local/sbin:/usr/local/bin:/opt/local/bin/:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/lib/node_modules/.bin
-export NODE_PATH=/usr/local/lib/node_modules
+export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin
 export EDITOR=vim
 export SVN_EDITOR=vim
 export LESS=-FRXi
