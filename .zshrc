@@ -47,8 +47,13 @@ bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin
-export EDITOR=vim
-export SVN_EDITOR=vim
+
+if [[ `uname` == 'Darwin' ]]; then
+  export EDITOR="mvim -f"
+else
+  export EDITOR=vim
+fi
+
 export LESS=-FRXi
 export WORKON_HOME=~/Documents/python-environments/
 export PYTHONSTARTUP=~/.pystartup
