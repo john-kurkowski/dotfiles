@@ -29,7 +29,7 @@ ZSH_THEME="robbyrussell"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew git gnu-utils heroku mvn osx pip python ruby rvm)
+plugins=(brew git gnu-utils heroku history-substring-search mvn osx pip python ruby rvm zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -43,8 +43,8 @@ set -o vi
 #source ~/.bashcolors
 
 export HISTCONTROL=ignoredups
-bindkey "${terminfo[kcuu1]}" history-beginning-search-backward
-bindkey "${terminfo[kcud1]}" history-beginning-search-forward
+bindkey "${terminfo[kcuu1]}" history-substring-search-up
+bindkey "${terminfo[kcud1]}" history-substring-search-down
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin
 
