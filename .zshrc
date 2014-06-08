@@ -79,7 +79,7 @@ fi
 alias grep='GREP_COLOR="1;37;41" LANG=C ggrep -PIn --color=always --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
 alias ag='ag --pager=less'
 alias ls='ls -G'
-alias pd="afplay /System/Library/Sounds/Glass.aiff && growlnotify -t 'Process Completed' -m 'Get back to work.'"
+alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 alias rsyncgi="rsync -avz --exclude '.git' `git clean -dXn | perl -p -e 's/Would remove (.*)/--exclude "$1"/g' | tr \"\\n\" \" \"`"
 alias unsort="perl -MList::Util -e 'print List::Util::shuffle <>'"
 function griot() {
