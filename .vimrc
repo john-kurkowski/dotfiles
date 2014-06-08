@@ -27,7 +27,9 @@ au FileType gitcommit,markdown setl spell
 au FileType python setl ts=4 sw=4
 
 au BufWritePre * :%s/\s\+$//e
-au BufWritePost *.coffee,*.java,*.js,*.php,*.py,*.rb,*.scala silent! !ctags -R &
+
+let g:easytags_dynamic_files = 1
+let g:easytags_updatetime_min = 30000
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
