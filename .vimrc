@@ -28,6 +28,9 @@ au FileType python setl ts=4 sw=4
 
 au BufWritePre * :%s/\s\+$//e
 
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+autocmd FileType go compiler go
+
 let g:easytags_dynamic_files = 1
 let g:easytags_updatetime_min = 30000
 
