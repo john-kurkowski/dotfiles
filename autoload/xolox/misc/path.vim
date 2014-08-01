@@ -1,7 +1,7 @@
 " Pathname manipulation functions.
 "
 " Author: Peter Odding <peter@peterodding.com>
-" Last Change: June 25, 2013
+" Last Change: July 7, 2014
 " URL: http://peterodding.com/code/vim/misc/
 
 let s:windows_compatible = xolox#misc#os#is_win()
@@ -72,8 +72,12 @@ function! xolox#misc#path#split(path) " {{{1
         " UNC pathname.
         return split(a:path, '\%>2c[\/]\+')
       else
-        " If it's not a UNC path we can simply split on slashes & backslashes.
-        return split(a:path, '[\/]\+')
+        " If it's not a UNC pathname we can simply split on slashes and
+        " backslashes, although we should preserve a leading slash (which
+        " denotes a pathname that is 'absolute to the current drive').
+        let absolute = (a:path =~ '^[\/]')
+        let segments = split(a:path, '[\/]\+')
+        return absolute ? insert(segments, a:path[0]) : segments
       endif
     else
       " Everything else is treated as UNIX.
@@ -135,6 +139,10 @@ function! xolox#misc#path#absolute(path) " {{{1
       " Also normalize the two leading "directory separators" (I'm not
       " sure what else to call them :-) in Windows UNC pathnames.
       let parts[0] = repeat(xolox#misc#path#directory_separator(), 2) . parts[0][2:]
+    elseif s:windows_compatible && parts[0] =~ '^[\/]$'
+      " If a pathname is relative to the current drive we should add
+      " the drive letter in order to make the pathname absolute.
+      let parts[0] = matchstr(getcwd(), '^\a:')
     endif
     return xolox#misc#path#join(parts)
   endif
@@ -153,7 +161,6 @@ function! xolox#misc#path#relative(path, base) " {{{1
   let distance = repeat(['..'], len(base))
   return xolox#misc#path#join(distance + path)
 endfunction
-
 
 function! xolox#misc#path#merge(parent, child, ...) " {{{1
   " Join a directory pathname and filename into a single pathname.
@@ -190,6 +197,16 @@ function! xolox#misc#path#commonprefix(paths) " {{{1
   return xolox#misc#path#join(common)
 endfunction
 
+function! xolox#misc#path#starts_with(a, b) " {{{1
+  " Check whether the first pathname starts with the second pathname (expected
+  " to be a directory). This does not perform a regular string comparison;
+  " first it normalizes both pathnames, then it splits them into their
+  " pathname segments and then it compares the segments.
+  let a = xolox#misc#path#split(xolox#misc#path#absolute(a:a))
+  let b = xolox#misc#path#split(xolox#misc#path#absolute(a:b))
+  return a[0 : len(b) - 1] == b
+endfunction
+
 function! xolox#misc#path#encode(path) " {{{1
   " Encode a pathname so it can be used as a filename. This uses URL encoding
   " to encode special characters.
@@ -202,7 +219,6 @@ function! xolox#misc#path#encode(path) " {{{1
   endif
   return substitute(a:path, mask, '\=printf("%%%x", char2nr(submatch(0)))', 'g')
 endfunction
-
 
 function! xolox#misc#path#decode(encoded_path) " {{{1
   " Decode a pathname previously encoded with `xolox#misc#path#encode()`.
