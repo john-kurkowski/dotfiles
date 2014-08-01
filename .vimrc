@@ -32,6 +32,7 @@ autocmd FileType go autocmd BufWritePre <buffer> Fmt
 autocmd FileType go compiler go
 
 let g:easytags_dynamic_files = 1
+let g:easytags_file = '~/.vim/easytags'
 let g:easytags_updatetime_min = 30000
 
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
