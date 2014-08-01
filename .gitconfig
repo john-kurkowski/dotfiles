@@ -8,8 +8,7 @@
 [color]
 	ui = true
 [alias]
-  svnpush = !sh -c 'git stash && git svn dcommit && git stash pop'
-  svnpull = !sh -c 'git stash && git svn rebase && git stash pop'
+  branchdate = for-each-ref --sort=-committerdate refs/heads/ --format="%(authordate:short)%09%(objectname:short)%09%1B[0;33m%(refname:short)%1B[m%09"
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 
 [difftool "sourcetree"]
