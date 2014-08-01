@@ -48,8 +48,7 @@ def install(args):
     hostspecific = os.path.join(dest, '.hostspecific')
     if args.settings:
       settings = os.path.join(MOD_DIR, 'settings', args.settings)
-      settings_cmd = 'cat %s > %s' % (settings, hostspecific)
-      subprocess.check_call(settings_cmd, shell=True)
+      shutil.copy2(settings, hostspecific)
     else:
       with open(hostspecific, 'w') as f:
         pass
