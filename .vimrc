@@ -9,6 +9,7 @@ set nocompatible
 set laststatus=2
 set autoindent
 set expandtab
+set nojoinspaces
 set ignorecase
 set number
 set ruler
