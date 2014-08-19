@@ -13,9 +13,10 @@ set nojoinspaces
 set ignorecase
 set number
 set ruler
-set wildignore+=*.class,*.pyc,.svn,.git,*/classes/*,*/target/*,*/project/boot/*,*.jar
+set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
 let mapleader = ","
+let g:ctrlp_custom_ignore = '\.git$'
 let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
