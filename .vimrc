@@ -17,6 +17,7 @@ set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
 let mapleader = ","
 let g:ctrlp_custom_ignore = '\.git$'
+let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
