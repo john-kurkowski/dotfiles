@@ -37,8 +37,8 @@ from the source code of the miscellaneous scripts using the Python module
 
 <!-- Start of generated documentation -->
 
-The documentation of the 94 functions below was extracted from
-19 Vim scripts on July 19, 2014 at 13:11.
+The documentation of the 95 functions below was extracted from
+19 Vim scripts on October 28, 2014 at 02:06.
 
 ### Asynchronous Vim script evaluation
 
@@ -740,6 +740,10 @@ characters.
 #### The `xolox#misc#str#ucfirst()` function
 
 Uppercase the first character in a string (the first argument).
+
+#### The `xolox#misc#str#unescape()` function
+
+Remove back slash escapes from a string (the first argument).
 
 #### The `xolox#misc#str#compact()` function
 
