@@ -3,7 +3,7 @@ execute pathogen#infect()
 
 syntax enable
 set background=dark
-colorscheme desert
+colorscheme flatlandia
 
 set hlsearch
 set tabstop=2
