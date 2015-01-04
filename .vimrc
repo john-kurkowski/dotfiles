@@ -1,3 +1,6 @@
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
 syntax enable
 set background=dark
 colorscheme desert
@@ -44,5 +47,3 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " For local replace
 nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
 nnoremap gR :s/<C-R>///gc<left><left><left>
-
-execute pathogen#infect()
