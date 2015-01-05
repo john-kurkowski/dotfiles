@@ -21,6 +21,13 @@ def call(cmd):
       raise subprocess.CalledProcessError(p.returncode, split_cmd)
     return stdout
 
+def dotdirs():
+    def extract_dir(path):
+        spl = path.split(os.sep, 1)
+        return spl[0] if len(spl) > 1 else None
+
+    return set(filter(bool, (extract_dir(d) for d in dotfiles())))
+
 def dotfiles():
     return call('git ls-files .*').splitlines()
 
@@ -37,6 +44,11 @@ def install(args):
       args.email = 'jkurkowski@gravity.com'
 
     dest = os.path.expanduser('~/')
+
+    for f in dotdirs():
+        dest_dotdir = os.path.join(dest, f)
+        shutil.rmtree(dest_dotdir)
+
     for f in dotfiles():
         dest_dotfile = os.path.join(dest, f)
         dest_dotfile_dir = os.path.dirname(dest_dotfile)
