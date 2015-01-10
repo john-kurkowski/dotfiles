@@ -28,10 +28,6 @@ let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
-augroup filetypedetect
-  au BufNewFile,BufRead *.pig set filetype=pig syntax=pig
-augroup END
-
 au FileType gitcommit,markdown setl spell
 au FileType python setl ts=4 sw=4
 
