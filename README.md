@@ -1,17 +1,12 @@
-# Linux
+# dotfiles
 
-Well it's not quite a one-liner...
+## Install
 
-    sudo apt-get install python-pip && sudo pip install argparse              # if Python < 2.7
     git clone https://john.kurkowski@bitbucket.org/john.kurkowski/dotfiles
-    dotfiles/setup.py install gravity
+    cd dotfiles
+    ./setup.py install personal --email john.kurkowski@company.com
     chsh -s zsh
 
-# Mac OS X
+## Export
 
-Install Homebrew then
-
-    git clone https://john.kurkowski@bitbucket.org/john.kurkowski/dotfiles
-
-    dotfiles/setup.py install gravity
-    chsh -s zsh # TODO
+    ./setup.py export
