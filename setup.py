@@ -61,10 +61,6 @@ def install(args):
       with open(hostspecific, 'w') as f:
         pass
 
-    vimrc = os.path.join(dest, '.vimrc')
-    tabstop_cmd = """perl -pi -e 's/set tabstop=4/set tabstop=%d/g' %s""" % (args.tabstop, vimrc)
-    call(tabstop_cmd)
-
     gitrc = os.path.join(dest, '.gitconfig')
     old_email = re.escape('john.kurkowski@gmail.com')
     new_email = re.escape(args.email)
@@ -85,7 +81,6 @@ if __name__ == "__main__":
 
     install_cmd = subparsers.add_parser('install')
     install_cmd.set_defaults(func=install)
-    install_cmd.add_argument('--tabstop', '-ts', type=int, default=4, help='Vim tabstop (default: 4)')
     install_cmd.add_argument('--email', '-e', default='john.kurkowski@gmail.com', help='Git author email address (default: personal)')
     install_cmd.add_argument('settings', choices=settings_choices, help='Install a predefined suite of settings.')
 
@@ -94,4 +89,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     args.func(args)
-
