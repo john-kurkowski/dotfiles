@@ -1,1 +1,0 @@
-PS1="\u@\h \[$CYAN\]\W \[$WHITE\]\$(parse_git_branch)\[$NO_COLOR\]$ "

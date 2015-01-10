@@ -39,10 +39,6 @@ def mkdir_p(path):
             raise
 
 def install(args):
-    if args.settings in ('gravity', 'gravity-mbp'):
-      args.tabstop = 2
-      args.email = 'jkurkowski@gravity.com'
-
     dest = os.path.expanduser('~/')
 
     for f in dotdirs():
