@@ -13,13 +13,15 @@ import subprocess
 
 MOD_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 def call(cmd):
     split_cmd = shlex.split(cmd)
     p = subprocess.Popen(split_cmd, stdout=subprocess.PIPE)
     stdout, _ = p.communicate()
     if p.returncode:
-      raise subprocess.CalledProcessError(p.returncode, split_cmd)
+        raise subprocess.CalledProcessError(p.returncode, split_cmd)
     return stdout
+
 
 def dotdirs():
     def extract_dir(path):
@@ -28,8 +30,10 @@ def dotdirs():
 
     return set(filter(bool, (extract_dir(d) for d in dotfiles())))
 
+
 def dotfiles():
     return call('git ls-files .*').splitlines()
+
 
 def mkdir_p(path):
     try:
@@ -37,6 +41,7 @@ def mkdir_p(path):
     except OSError as exc:
         if not (exc.errno == errno.EEXIST and os.path.isdir(path)):
             raise
+
 
 def install(args):
     dest = os.path.expanduser('~/')
@@ -55,17 +60,18 @@ def install(args):
 
     hostspecific = os.path.join(dest, '.hostspecific')
     if args.settings:
-      settings = os.path.join(MOD_DIR, 'settings', args.settings)
-      shutil.copy2(settings, hostspecific)
+        settings = os.path.join(MOD_DIR, 'settings', args.settings)
+        shutil.copy2(settings, hostspecific)
     else:
-      with open(hostspecific, 'w') as f:
-        pass
+        with open(hostspecific, 'w') as f:
+            pass
 
     gitrc = os.path.join(dest, '.gitconfig')
     old_email = re.escape('john.kurkowski@gmail.com')
     new_email = re.escape(args.email)
     email_cmd = """perl -pi -e 's/%s/%s/g' %s""" % (old_email, new_email, gitrc)
     call(email_cmd)
+
 
 def export(args):
     """The inverse of install."""
