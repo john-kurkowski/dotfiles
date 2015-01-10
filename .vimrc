@@ -1,6 +1,15 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
+" == c-l escapes and saves, avoid the pinky stretch
+vmap <C-l> <Esc><Cr>
+imap <C-l> <Esc>l
+map <c-l> <Esc>
+"while selecting (for use in snippets c-l cancels out)
+smap <C-l> <Esc>
+" While commanding
+cmap <C-l> <C-c>
+
 syntax enable
 set background=dark
 colorscheme flatlandia
@@ -9,6 +18,12 @@ highlight clear SignColumn
 call gitgutter#highlight#define_highlights()
 
 set hlsearch
+" Clear search highlight when escape is pressed.
+" Is really horrible on terminals.
+if has("gui_running")
+  nnoremap <esc> :noh<return><esc>
+endif
+
 set tabstop=2
 set shiftwidth=2
 set nocompatible
@@ -21,6 +36,7 @@ set number
 set ruler
 set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
+set switchbuf+=usetab,newtab
 let mapleader = ","
 let g:ctrlp_custom_ignore = '\.git$'
 let g:ctrlp_show_hidden = 1
