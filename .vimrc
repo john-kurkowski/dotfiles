@@ -38,7 +38,7 @@ set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
 set switchbuf+=usetab,newtab
 let mapleader = ","
-let g:ctrlp_custom_ignore = '\.git$'
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
