@@ -12,7 +12,11 @@ cmap <C-l> <C-c>
 
 syntax enable
 set background=dark
-colorscheme flatlandia
+if has("gui_running")
+  colorscheme flatlandia
+else
+  colorscheme solarized
+endif
 
 highlight clear SignColumn
 call gitgutter#highlight#define_highlights()
