@@ -41,6 +41,12 @@ set ruler
 set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
 set switchbuf+=usetab,newtab
+
+if has("gui_running")
+  set guioptions-=T
+  set macmeta
+endif
+
 let mapleader = ","
 let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
