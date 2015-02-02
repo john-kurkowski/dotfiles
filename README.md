@@ -62,6 +62,14 @@ The plug-in will try to determine the location where Exuberant Ctags is installe
 
 If you rely entirely on language-specific configuration and don't have a general ctags program, set this to the empty string.
 
+### The `g:easytags_opts` option
+
+If you need to pass custom command line option(s) to the program specified by `g:easytags_cmd` you can set this option to a list of strings to be passed to Exuberant Ctags. Make sure to only use options that are valid in any context, for example the concatenation of `g:easytags_cmd`, `g:easytags_opts` and `--list-languages` should work as expected. Here's an example:
+
+    :let g:easytags_opts = ['--options=$VIM\ctags\ctags.cnf']
+
+The example above (based on [issue 98] [98]) overrides the location of Exuberant Ctags' configuration file. As you can see the command line option(s) may contain environment variables, these will be expanded before passing the options to Exuberant Ctags (to make sure it works in all environments).
+
 ### The `g:easytags_async` option
 
 By default vim-easytags runs Exuberant Ctags and updates your tags file in the foreground, blocking Vim in the process. As your tags files get larger this becomes more annoying. It has been the number one complaint about vim-easytags since I published the first release online.
@@ -349,6 +357,7 @@ This software is licensed under the [MIT license](http://en.wikipedia.org/wiki/M
 Thanks go out to everyone who has helped to improve the vim-easytags plug-in (whether through pull requests, bug reports or personal e-mails).
 
 
+[98]: https://github.com/xolox/vim-easytags/issues/98
 [canon]: http://en.wikipedia.org/wiki/Canonicalization
 [code_complete]: http://www.vim.org/scripts/script.php?script_id=1764
 [ctags]: http://en.wikipedia.org/wiki/Ctags
