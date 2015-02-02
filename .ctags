@@ -58,10 +58,30 @@
 
 --langdef=css
 --langmap=css:.css
---langmap=css:+.scss
---langmap=css:+.sass
---langmap=css:+.styl
---langmap=css:+.less
 --regex-css=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
 --regex-css=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
 --regex-css=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+
+--langdef=scss
+--langmap=scss:.scss
+--regex-scss=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-scss=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-scss=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+
+--langdef=sass
+--langmap=sass:.sass
+--regex-sass=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-sass=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-sass=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+
+--langdef=styl
+--langmap=styl:.styl
+--regex-styl=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-styl=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-styl=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+
+--langdef=less
+--langmap=less:.less
+--regex-less=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-less=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-less=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
