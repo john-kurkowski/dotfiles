@@ -17,8 +17,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[difftool "icdiff"]
-	cmd = icdiff \"$LOCAL\" \"$REMOTE\"
 [mergetool "p4merge"]
 	path = /usr/local/bin/p4merge
 [mergetool]
