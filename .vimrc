@@ -28,12 +28,9 @@ if has("gui_running")
   nnoremap <esc> :noh<return><esc>
 endif
 
-set tabstop=2
-set shiftwidth=2
 set nocompatible
 set laststatus=2
 set autoindent
-set expandtab
 set nojoinspaces
 set ignorecase
 set number
@@ -55,7 +52,6 @@ filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
 au FileType gitcommit,markdown setl spell
-au FileType python setl ts=4 sw=4
 
 au BufWritePre * :%s/\s\+$//e
 
