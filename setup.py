@@ -48,7 +48,11 @@ def install(args):
 
     for f in dotdirs():
         dest_dotdir = os.path.join(dest, f)
-        shutil.rmtree(dest_dotdir)
+        try:
+            shutil.rmtree(dest_dotdir)
+        except OSError as exc:
+            if exc.errno != errno.ENOENT:
+                raise
 
     for f in dotfiles():
         dest_dotfile = os.path.join(dest, f)
