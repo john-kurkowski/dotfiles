@@ -60,7 +60,9 @@ def install(args):
         mkdir_p(dest_dotfile_dir)
 
         src = os.path.join(MOD_DIR, f)
-        shutil.copy2(src, dest_dotfile)
+        is_empty_dir = os.path.isdir(src) and not os.listdir(src)
+        if not is_empty_dir:
+            shutil.copy2(src, dest_dotfile)
 
     hostspecific = os.path.join(dest, '.hostspecific')
     if args.settings:
