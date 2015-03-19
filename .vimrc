@@ -62,6 +62,14 @@ set tags=tags
 let g:easytags_dynamic_files = 2
 let g:easytags_updatetime_min = 30000
 
-" For local replace
-nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
-nnoremap gR :s/<C-R>///gc<left><left><left>
+nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
+xnoremap <Leader>fr :call VisualFindAndReplaceWithSelection()<CR>
+
+function! VisualFindAndReplace()
+    :OverCommandLine%s/
+    :w
+endfunction
+function! VisualFindAndReplaceWithSelection() range
+    :'<,'>OverCommandLine s/
+    :w
+endfunction
