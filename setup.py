@@ -83,7 +83,9 @@ def export(args):
     """The inverse of install."""
     src = os.path.expanduser('~/')
     for f in dotfiles():
-        shutil.copy2(os.path.join(src, f), os.path.join(MOD_DIR, f))
+        is_empty_dir = os.path.isdir(f) and not os.listdir(f)
+        if not is_empty_dir:
+            shutil.copy2(os.path.join(src, f), os.path.join(MOD_DIR, f))
 
 if __name__ == "__main__":
     settings_choices = [os.path.basename(f) for f in glob.glob(os.path.join(MOD_DIR, 'settings', '[A-Za-z]*'))]
