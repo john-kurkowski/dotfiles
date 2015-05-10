@@ -161,3 +161,4 @@ export NVM_DIR=~/.nvm
 [[ -d $NVM_DIR ]] || mkdir $NVM_DIR
 source $(brew --prefix nvm)/nvm.sh
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
