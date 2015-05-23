@@ -55,7 +55,6 @@ else
 fi
 
 export LESS=-FRXi
-export WORKON_HOME=~/Documents/python-environments/
 export PYTHONSTARTUP=~/.pystartup
 export MAVEN_COLOR=true
 
@@ -69,12 +68,6 @@ alias sbtj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS" sbt
 alias sbtdj='SBT_OPTS="-noverify -javaagent:/opt/jrebel/jrebel.jar $SBT_OPTS -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005" sbt'
 
 alias sniff="sudo ngrep -W byline -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
-
-VENVWRAPPER=`which virtualenvwrapper.sh`
-if [ -e $VENVWRAPPER ]
-then
-  source $VENVWRAPPER
-fi
 
 alias cgrep='GREP_COLOR="1;37;41" LANG=C ggrep -PIn --color=always --exclude-dir=.git --exclude-dir=target --exclude=tags --exclude="*TEST*" --exclude="*.iml" --exclude="*.ipr" --exclude="*.iws" --exclude-dir=.idea'
 alias ag='ag --pager=less'
@@ -162,3 +155,4 @@ export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
