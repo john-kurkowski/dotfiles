@@ -14,6 +14,7 @@ syntax enable
 set background=dark
 if has("gui_running")
   colorscheme flatlandia
+  highlight LineNr guifg=grey50
 else
   colorscheme solarized
 endif
