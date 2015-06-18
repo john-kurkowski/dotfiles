@@ -25,3 +25,5 @@
 [grep]
 	patternType = perl
 	lineNumber = true
+[push]
+	default = simple
