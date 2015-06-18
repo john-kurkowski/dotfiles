@@ -12,6 +12,7 @@
 .idea
 .project
 .pydevproject
+.python-version
 .settings
 tags
 build/
