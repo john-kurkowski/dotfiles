@@ -42,7 +42,8 @@ set switchbuf+=usetab,newtab
 
 if has("gui_running")
   set guifont=Input\ Mono
-  set guioptions-=eT
+  set guioptions-=T
+  set guioptions-=e
   set macmeta
 endif
 
