@@ -30,17 +30,26 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
+  autopep8
+  bower
   brew
+  brew-cask
+  ember-cli
   git
   gnu-utils
   heroku
   history-substring-search
+  jira
+  mosh
   mvn
+  node
+  npm
+  nvm
   osx
   pip
+  pyenv
   python
-  ruby
-  rvm
+  rsync
   zsh-syntax-highlighting
 )
 
