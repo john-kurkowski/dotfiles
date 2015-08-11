@@ -95,7 +95,6 @@ alias cgrep='GREP_COLOR="1;37;41" LANG=C ggrep -PIn --color=always --exclude-dir
 alias ag='ag --pager=less'
 alias ls='ls -G'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
-alias rsyncgi="rsync -avz --exclude '.git' `git clean -dXn | perl -p -e 's/Would remove (.*)/--exclude "$1"/g' | tr \"\\n\" \" \"`"
 alias unsort="perl -MList::Util -e 'print List::Util::shuffle <>'"
 function griot() {
   lynx "http://rapgenius.com/search?q=`echo $@ | perl -p -e 's/\s+/+/g'`";
