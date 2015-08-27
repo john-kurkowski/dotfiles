@@ -1,4 +1,4 @@
-# vim-javascript v0.9.0
+# vim-javascript v0.10.0
 
 JavaScript bundle for vim, this bundle provides syntax and indent plugins.
 
@@ -35,8 +35,7 @@ And install it:
 
 ### Install with [pathogen](https://github.com/tpope/vim-pathogen)
 
-      cd ~/.vim/bundle
-      git clone https://github.com/pangloss/vim-javascript.git
+      git clone https://github.com/pangloss/vim-javascript.git ~/.vim/bundle/vim-javascript
 
 ## Configuration
 
@@ -74,6 +73,8 @@ variables:
     let g:javascript_conceal_undefined  = "¿"
     let g:javascript_conceal_NaN        = "ℕ"
     let g:javascript_conceal_prototype  = "¶"
+    let g:javascript_conceal_static     = "•"
+    let g:javascript_conceal_super      = "Ω"
 
 ## Contributing
 
