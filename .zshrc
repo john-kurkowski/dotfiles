@@ -56,12 +56,12 @@ plugins=(
   ember-cli
   git
   heroku
-  history-substring-search
   nvm
   osx
   pip
   rsync
   zsh-syntax-highlighting
+  history-substring-search
 )
 
 source $ZSH/oh-my-zsh.sh
