@@ -25,7 +25,7 @@ def dotdirs():
 
 
 def dotfiles():
-    return subprocess.check_output('git ls-files .*', shell=True).splitlines()
+    return subprocess.check_output(['git', 'ls-files', '.*']).splitlines()
 
 
 def mkdir_p(path):
