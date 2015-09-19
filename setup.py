@@ -24,9 +24,12 @@ def call(cmd):
 
 
 def dotdirs():
+    '''The unique custom dirs tracked by this repo. Ignores intermediate dirs
+    if they don't contain any tracked files.'''
     def extract_dir(path):
-        spl = path.split(os.sep, 1)
-        return spl[0] if len(spl) > 1 else None
+        spl = path.rsplit(os.sep, 1)
+        is_dir = len(spl) > 1
+        return spl[0] if is_dir else None
 
     return set(filter(bool, (extract_dir(d) for d in dotfiles())))
 
