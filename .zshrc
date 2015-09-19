@@ -50,25 +50,16 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  autopep8
   bower
   brew
   brew-cask
   ember-cli
   git
-  gnu-utils
   heroku
   history-substring-search
-  jira
-  mosh
-  mvn
-  node
-  npm
   nvm
   osx
   pip
-  pyenv
-  python
   rsync
   zsh-syntax-highlighting
 )
