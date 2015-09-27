@@ -215,23 +215,12 @@ function! flagship#tabcwds(...) abort
   let path = []
   for t in tabnr ? [tabnr] : range(1, tabpagenr('$'))
     let types = map(tabpagebuflist(t), 'getbufvar(v:val, "&buftype")')
-    let untyped = len(filter(copy(types), 'empty(v:val)'))
+    let all_typed = empty(filter(copy(types), 'empty(v:val)'))
     for w in range(1, tabpagewinnr(t, '$'))
-      if empty(types[w-1]) || !untyped
+      if empty(types[w-1]) || all_typed
         call add(path, call('flagship#cwd', [t, w] + args))
       endif
     endfor
-    if untyped < 2
-      let file = bufname(tabpagebuflist(t)[tabpagewinnr(t)-1])
-      if file !~# ':[\/]\|^$'
-        let file = fnamemodify(file, ':p')
-      endif
-      let cwd = gettabwinvar(t, tabpagewinnr(t), 'flagship_cwd')
-      let cwd = (empty(cwd) ? gcwd : cwd) . s:slash()
-      if strpart(file, 0, len(cwd)) ==# cwd
-        let path[-1] .= pathshorten(file[len(cwd)-1 : -1])
-      endif
-    endif
   endfor
   if index(args, 'raw') < 0
     call flagship#uniq(path)
@@ -295,6 +284,41 @@ function! flagship#winleave() abort
   else
     unlet! w:flagship_cwd
     let g:flagship_cwd = getcwd()
+  endif
+  let cwds = g:flagship_cwd
+  for t in range(1, tabpagenr('$'))
+    for w in range(1, tabpagewinnr(t, '$'))
+      let cwds .= "\n" . gettabwinvar(t, w, 'flagship_cwd')
+    endfor
+  endfor
+  let g:FlagshipCwds = cwds
+endfunction
+
+function! flagship#session_load_post() abort
+  if &sessionoptions =~ 'sesdir'
+    let g:flagship_cwd = fnamemodify(v:this_session, ':h')
+  endif
+  if &sessionoptions =~# 'globals' && exists('g:FlagshipCwds')
+    let cwds = split(g:FlagshipCwds, "\n", 1)
+    let dir = remove(cwds, 0)
+    let wins = 0
+    for t in range(1, tabpagenr('$'))
+      let wins += tabpagewinnr(t, '$')
+    endfor
+    if wins !=# len(cwds)
+      return
+    endif
+    if &sessionoptions =~# 'curdir'
+      let g:flagship_cwd = dir
+    endif
+    for t in range(1, tabpagenr('$'))
+      for w in range(1, tabpagewinnr(t, '$'))
+        let dir = remove(cwds, 0)
+        if !empty(dir)
+          call settabwinvar(t, w, 'flagship_cwd', dir)
+        endif
+      endfor
+    endfor
   endif
 endfunction
 
@@ -480,7 +504,10 @@ function! flagship#setup(...) abort
     endif
   endif
   if !exists('g:tablabel') && !exists('g:tabprefix')
-    if &showtabline == 1
+    redir => blame
+    silent verbose set showtabline?
+    redir END
+    if &showtabline == 1 && blame !~# "\t"
       set showtabline=2
     endif
     if exists('&guitablabel') && empty(&guitablabel)
