@@ -13,4 +13,5 @@ endif
 augroup flagship
   autocmd!
   autocmd WinEnter,VimEnter * call flagship#enter()
+  autocmd SessionLoadPost   * call flagship#session_load_post()
 augroup END
