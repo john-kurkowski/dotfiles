@@ -109,6 +109,10 @@ function griot() {
 
 source ~/.hostspecific
 
+BREW_PREFIX=$(brew --prefix)
+
+ln -sf $BREW_PREFIX/share/git-core/contrib/diff-highlight/diff-highlight $BREW_PREFIX/bin/diff-highlight
+
 function gupper
 {
   # subshell for `set -e` and `trap`
@@ -166,7 +170,7 @@ function gupper
   )
 }
 
-. `brew --prefix`/etc/profile.d/z.sh
+. $BREW_PREFIX/etc/profile.d/z.sh
 
 function server() {
 	local port="${1:-8000}"
@@ -179,7 +183,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 export NVM_DIR=~/.nvm
 [[ -d $NVM_DIR ]] || mkdir $NVM_DIR
-source $(brew --prefix nvm)/nvm.sh
+source $BREW_PREFIX/opt/nvm/nvm.sh
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
