@@ -54,6 +54,7 @@ plugins=(
   brew
   brew-cask
   ember-cli
+  fasd
   git
   heroku
   nvm
@@ -169,8 +170,6 @@ function gupper
     fi
   )
 }
-
-. $BREW_PREFIX/etc/profile.d/z.sh
 
 function server() {
 	local port="${1:-8000}"
