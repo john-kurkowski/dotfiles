@@ -109,6 +109,7 @@ function griot() {
 }
 
 source ~/.hostspecific
+[[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
 
 BREW_PREFIX=$(brew --prefix)
 
