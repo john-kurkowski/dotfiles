@@ -61,10 +61,6 @@ au BufWritePre * :%s/\s\+$//e
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 autocmd FileType go compiler go
 
-set tags=tags
-let g:easytags_dynamic_files = 2
-let g:easytags_updatetime_min = 30000
-
 nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
 xnoremap <Leader>fr :call VisualFindAndReplaceWithSelection()<CR>
 
