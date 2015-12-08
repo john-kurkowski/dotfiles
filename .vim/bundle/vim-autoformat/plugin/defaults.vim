@@ -29,7 +29,6 @@ if !exists('g:formatdef_clangformat')
 endif
 
 
-
 " C
 if !exists('g:formatdef_astyle_c')
     let g:formatdef_astyle_c = '"astyle --mode=c --style=ansi -pcH".(&expandtab ? "s".shiftwidth() : "t")'
@@ -210,4 +209,28 @@ endif
 
 if !exists('g:formatters_dart')
     let g:formatters_dart = ['dartfmt']
+endif
+
+" Perl
+if !exists('g:formatdef_perltidy')
+  " use perltidyrc file if readable
+  if (has("win32") && (filereadable("perltidy.ini") || filereadable($HOMEPATH."/perltidy.ini"))) ||
+        \ ((has("unix") || has("mac")) && (filereadable(".perltidyrc") || filereadable("~/.perltidyrc") || filereadable("/usr/local/etc/perltidyrc") || filereadable("/etc/perltidyrc")))
+    let g:formatdef_perltidy = '"perltidy -q -st"'
+  else
+    let g:formatdef_perltidy = '"perltidy --perl-best-practices --format-skipping -q "'
+  endif
+endif
+
+if !exists('g:formatters_perl')
+  let g:formatters_perl = ['perltidy']
+endif
+
+" Haskell
+if !exists('g:formatdef_stylish_haskell')
+    let g:formatdef_stylish_haskell = '"stylish-haskell"'
+endif
+
+if !exists('g:formatters_haskell')
+    let g:formatters_haskell = ['stylish_haskell']
 endif
