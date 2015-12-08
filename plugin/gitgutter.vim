@@ -32,12 +32,18 @@ call s:set('g:gitgutter_max_signs',                 500)
 call s:set('g:gitgutter_signs',                       1)
 call s:set('g:gitgutter_highlight_lines',             0)
 call s:set('g:gitgutter_sign_column_always',          0)
+call s:set('g:gitgutter_override_sign_column_highlight', 1)
 call s:set('g:gitgutter_realtime',                    1)
 call s:set('g:gitgutter_eager',                       1)
 call s:set('g:gitgutter_sign_added',                '+')
 call s:set('g:gitgutter_sign_modified',             '~')
 call s:set('g:gitgutter_sign_removed',              '_')
-call s:set('g:gitgutter_sign_removed_first_line',   '‾')
+try
+  call s:set('g:gitgutter_sign_removed_first_line', '‾')
+catch /E239/
+  let g:gitgutter_sign_removed_first_line = '_^'
+endtry
+
 call s:set('g:gitgutter_sign_modified_removed',    '~_')
 call s:set('g:gitgutter_diff_args',                  '')
 call s:set('g:gitgutter_escape_grep',                 0)
@@ -52,39 +58,39 @@ call gitgutter#highlight#define_signs()
 
 " Primary functions {{{
 
-command GitGutterAll call gitgutter#all()
-command GitGutter    call gitgutter#process_buffer(bufnr(''), 0)
+command -bar GitGutterAll call gitgutter#all()
+command -bar GitGutter    call gitgutter#process_buffer(bufnr(''), 0)
 
-command GitGutterDisable call gitgutter#disable()
-command GitGutterEnable  call gitgutter#enable()
-command GitGutterToggle  call gitgutter#toggle()
+command -bar GitGutterDisable call gitgutter#disable()
+command -bar GitGutterEnable  call gitgutter#enable()
+command -bar GitGutterToggle  call gitgutter#toggle()
 
 " }}}
 
 " Line highlights {{{
 
-command GitGutterLineHighlightsDisable call gitgutter#line_highlights_disable()
-command GitGutterLineHighlightsEnable  call gitgutter#line_highlights_enable()
-command GitGutterLineHighlightsToggle  call gitgutter#line_highlights_toggle()
+command -bar GitGutterLineHighlightsDisable call gitgutter#line_highlights_disable()
+command -bar GitGutterLineHighlightsEnable  call gitgutter#line_highlights_enable()
+command -bar GitGutterLineHighlightsToggle  call gitgutter#line_highlights_toggle()
 
 " }}}
 
 " Signs {{{
 
-command GitGutterSignsEnable  call gitgutter#signs_enable()
-command GitGutterSignsDisable call gitgutter#signs_disable()
-command GitGutterSignsToggle  call gitgutter#signs_toggle()
+command -bar GitGutterSignsEnable  call gitgutter#signs_enable()
+command -bar GitGutterSignsDisable call gitgutter#signs_disable()
+command -bar GitGutterSignsToggle  call gitgutter#signs_toggle()
 
 " }}}
 
 " Hunks {{{
 
-command -count=1 GitGutterNextHunk call gitgutter#hunk#next_hunk(<count>)
-command -count=1 GitGutterPrevHunk call gitgutter#hunk#prev_hunk(<count>)
+command -bar -count=1 GitGutterNextHunk call gitgutter#hunk#next_hunk(<count>)
+command -bar -count=1 GitGutterPrevHunk call gitgutter#hunk#prev_hunk(<count>)
 
-command GitGutterStageHunk   call gitgutter#stage_hunk()
-command GitGutterRevertHunk  call gitgutter#revert_hunk()
-command GitGutterPreviewHunk call gitgutter#preview_hunk()
+command -bar GitGutterStageHunk   call gitgutter#stage_hunk()
+command -bar GitGutterRevertHunk  call gitgutter#revert_hunk()
+command -bar GitGutterPreviewHunk call gitgutter#preview_hunk()
 
 " Returns the git-diff hunks for the file or an empty list if there
 " aren't any hunks.
@@ -116,7 +122,7 @@ endfunction
 
 " }}}
 
-command GitGutterDebug call gitgutter#debug#debug()
+command -bar GitGutterDebug call gitgutter#debug#debug()
 
 " Maps {{{
 
