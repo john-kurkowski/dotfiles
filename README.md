@@ -139,6 +139,12 @@ It can be installed using `cargo`, the Rust package manager. Up-to-date installa
 * `dartfmt` for __Dart__.
 Part of the Dart SDK (make sure it is on your PATH). See https://www.dartlang.org/tools/dartfmt/ for more info.
 
+* `perltidy` for __Perl__.
+It can be installed from CPAN `cpanm Perl::Tidy` . See https://metacpan.org/pod/Perl::Tidy and http://perltidy.sourceforge.net/ for more info.
+
+* `stylish-haskell` for __Haskell__
+It can be installed using [`cabal`](https://www.haskell.org/cabal/) build tool. Installation instructions are available at https://github.com/jaspervdj/stylish-haskell#installation
+
 How can I change the behaviour of formatters, or add one myself?
 ----------------------------------------------------------------
 If you need a formatter that is not among the defaults, or if you are not satisfied with the default formatting behaviour that is provided by vim-autoformat, you can define it yourself.
@@ -214,17 +220,11 @@ Change log
 ----------
 ### June 2015
 * *Backward incompatible patch!*
-* Multiple formatters per filetype are now supported
-* Configuration variable names changed
-* `gq` no longer supported
-* `:Autoformat` suppports ranges
-* Composite filetypes are fully supported
-
-### Dec 9 2014
-* Added `rbeautify` to the defaults for formatting ruby files
-
-### May 30 2014
-* Added `css-beautify` to the defaults for formatting CSS files
+* Multiple formatters per filetype are now supported.
+* Configuration variable names changed.
+* `gq` is no longer supported.
+* `:Autoformat` now suppports ranges.
+* Composite filetypes are fully supported.
 
 ### December 20 2013
 * `html-beautify` is now the default for HTML since it seems to be better maintained, and seems to handle inline javascript neatly.
@@ -251,7 +251,7 @@ The `dynamic_indent_width` branch has been merged into the master branch.
 
 ### March 9 2013
 The `custom_config` branch has been merged into the master branch.
-* Customization of formatprograms can be done easily now, as explained above.
+* Customization of formatprograms can be done easily now, as explained in the readme.
 * I set the default tabwidth to 4 for all formatprograms as well as for vim itself.
 * The default parameters for astyle have been slightly modified: it will wrap spaces around operators.
 * phpCB has been removed from the defaults, due to code-breaking behaviour.
