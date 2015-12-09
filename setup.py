@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+'''Import/export dotfiles tracked by this repo.'''
+
 from __future__ import with_statement
 
 import argparse
