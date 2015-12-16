@@ -14,9 +14,6 @@
 .pydevproject
 .python-version
 .settings
-build/
-dist/
-target/
 project/boot/
 *.egg-info/
 atlassian-ide-plugin.xml
