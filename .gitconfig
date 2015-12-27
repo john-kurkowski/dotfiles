@@ -29,3 +29,9 @@
 	lineNumber = true
 [push]
 	default = simple
+[pull]
+	rebase = true
+[rebase]
+	autosquash = true
+	autostash = true
+	preserve-merges = true
