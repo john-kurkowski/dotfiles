@@ -20,10 +20,10 @@ func! sneak#init()
   let g:sneak#opt = { 'f_reset' : get(g:, 'sneak#nextprev_f', get(g:, 'sneak#f_reset', 1))
       \ ,'t_reset'      : get(g:, 'sneak#nextprev_t', get(g:, 'sneak#t_reset', 1))
       \ ,'s_next'       : get(g:, 'sneak#s_next', 0)
+      \ ,'absolute_dir' : get(g:, 'sneak#absolute_dir', 0)
       \ ,'textobject_z' : get(g:, 'sneak#textobject_z', 1)
       \ ,'use_ic_scs'   : get(g:, 'sneak#use_ic_scs', 0)
       \ ,'map_netrw'    : get(g:, 'sneak#map_netrw', 1)
-      \ ,'map_esc'      : get(g:, 'sneak#map_esc', 0)
       \ ,'streak'       : get(g:, 'sneak#streak', 0) && (v:version >= 703) && has("conceal")
       \ ,'streak_esc'   : get(g:, 'sneak#streak_esc', "\<space>")
       \ ,'prompt'       : get(g:, 'sneak#prompt', '>')
@@ -76,14 +76,18 @@ func! sneak#rpt(op, reverse) abort
     return
   endif
 
+  let l:relative_reverse = (a:reverse && !s:st.reverse) || (!a:reverse && s:st.reverse)
   call sneak#to(a:op, s:st.input, s:st.inputlen, v:count1, 1,
-        \ ((a:reverse && !s:st.reverse) || (!a:reverse && s:st.reverse)), s:st.inclusive, 0)
+        \ (g:sneak#opt.absolute_dir ? a:reverse : l:relative_reverse), s:st.inclusive, 0)
 endf
 
 " input:      may be shorter than inputlen if the user pressed <enter> at the prompt.
 " inclusive:  0 => like t, 1 => like f, 2 => like /
 func! sneak#to(op, input, inputlen, count, repeatmotion, reverse, inclusive, streak) abort "{{{
   if empty(a:input) "user canceled
+    if a:op ==# 'c'  " user <esc> during change-operation should return to previous mode.
+      call feedkeys((col('.') > 1 && col('.') < col('$') ? "\<RIGHT>" : '') . "\<C-\>\<C-G>", 'n')
+    endif
     redraw | echo '' | return
   endif
 
@@ -195,19 +199,20 @@ func! sneak#to(op, input, inputlen, count, repeatmotion, reverse, inclusive, str
   let w:sneak_hl_id = matchadd('SneakPluginTarget',
         \ (s.prefix).(s.match_pattern).(s.search).'\|'.curln_pattern.(s.search))
 
-  if g:sneak#opt.map_esc && maparg('<esc>', 'n') ==# ""
+  "Let user deactivate with <esc>
+  if (has('nvim') || has('gui_running')) && maparg('<esc>', 'n') ==# ""
     nmap <expr> <silent> <esc> sneak#cancel() . "\<esc>"
   endif
 
   "enter streak-mode iff there are >=2 _additional_ on-screen matches.
-  let target = (2 == a:streak || (a:streak && g:sneak#opt.streak)) && !max(bounds) && s.hasmatches(2)
+  let target = (2 == a:streak || (a:streak && g:sneak#opt.streak && s.hasmatches(2))) && !max(bounds)
         \ ? sneak#streak#to(s, is_v, a:reverse): ""
 
-  if !is_op
-    if "" != target && "\<Esc>" != target
-      call sneak#hl#removehl()
-    endif
-  elseif a:op !=# 'y'
+  if is_op || "" != target
+    call sneak#hl#removehl()
+  endif
+
+  if is_op && a:op !=# 'y'
     let change = a:op !=? "c" ? "" : "\<c-r>.\<esc>"
     let rpt_input = a:input . (a:inputlen > sneak#util#strlen(a:input) ? "\<cr>" : "")
     silent! call repeat#set(a:op."\<Plug>SneakRepeat".a:inputlen.a:reverse.a:inclusive.(2*!empty(target)).rpt_input.target.change, a:count)
@@ -219,7 +224,7 @@ func! s:attach_autocmds()
     autocmd!
     autocmd InsertEnter,WinLeave,BufLeave <buffer> call sneak#cancel()
     "_nested_ autocmd to skip the _first_ CursorMoved event.
-    "NOTE: CursorMoved is _not_ triggered if there is 'typeahead', i.e. during a macro or script...
+    "NOTE: CursorMoved is _not_ triggered if there is typeahead during a macro/script...
     autocmd CursorMoved <buffer> autocmd SneakPlugin CursorMoved <buffer> call sneak#cancel()
   augroup END
 endf
