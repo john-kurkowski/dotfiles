@@ -7,9 +7,23 @@ function! over#command_line#substitute#load()
 endfunction
 
 
-let s:hl_mark_begin = '`os`'
-let s:hl_mark_center = '`om`'
-let s:hl_mark_end   = '`oe`'
+let s:V = over#vital()
+let s:Rocker = s:V.import("Unlocker.Rocker")
+let s:Undo = s:V.import("Unlocker.Rocker.Undotree")
+
+
+let s:hl_mark_begin = ''
+let s:hl_mark_center = ''
+let s:hl_mark_end   = ''
+
+
+let g:over#command_line#substitute#highlight_pattern = get(g:, "over#command_line#substitute#highlight_pattern", "Search")
+
+if hlexists("Error")
+	let g:over#command_line#substitute#highlight_string = get(g:, "over#command_line#substitute#highlight_string", "Error")
+else
+	let g:over#command_line#substitute#highlight_string = get(g:, "over#command_line#substitute#highlight_string", "ErrorMsg")
+endif
 
 
 function! s:init()
@@ -17,12 +31,6 @@ function! s:init()
 		return
 	endif
 	let s:undo_flag = 0
-" 	let s:old_pos = getpos(".")
-	let s:old_scrolloff = &scrolloff
-	let &scrolloff = 0
-	let s:old_conceallevel = &l:conceallevel
-	let s:old_concealcursor = &l:concealcursor
-	let s:old_modified = &l:modified
 
 	let hl_f = "syntax match %s '%s' conceal containedin=.*"
 	execute printf(hl_f, "OverCmdLineSubstituteHiddenBegin", s:hl_mark_begin)
@@ -32,23 +40,41 @@ function! s:init()
 " 	syntax match OverCmdLineSubstituteHiddenMiddle '`om`' conceal containedin=ALL
 " 	syntax match OverCmdLineSubstituteHiddenEnd    '`oe`' conceal containedin=ALL
 	
-	let s:undo_file = tempname()
-	execute "wundo" s:undo_file
+" 	let s:undo_file = tempname()
+" 	execute "wundo" s:undo_file
+
+" 	let s:old_pos = getpos(".")
+
+	let s:locker = s:Rocker.lock(
+\		"&scrolloff",
+\		"&l:conceallevel",
+\		"&l:concealcursor",
+\		"&l:modified",
+\		"&l:undolevels",
+\	)
+	let &scrolloff = 0
+	let s:old_modified = &l:modified
+
+	let s:undo_locker = s:Undo.make().lock()
+
+	" Workaround https://github.com/osyo-manga/vim-over/issues/43
+	" substitute use undo
+	setlocal undolevels=0
+
+	let s:finished = 0
+" 	let s:buffer_text = getline(1, "$")
 endfunction
 
 
 function! s:finish()
-	if &modifiable == 0
+	if &modifiable == 0 || s:finished
 		return
 	endif
 	call s:reset_match()
+	let s:finished = 1
 " 	call setpos(".", s:old_pos)
-	let &scrolloff = s:old_scrolloff
-	let &l:conceallevel = s:old_conceallevel
-	let &l:concealcursor = s:old_concealcursor
-
-	let &l:modified = s:old_modified
-
+	call s:locker.unlock()
+	
 " 	highlight link OverCmdLineSubstitute NONE
 " 	highlight link OverCmdLineSubstitutePattern NONE
 " 	highlight link OverCmdLineSubstituteString  NONE
@@ -56,12 +82,15 @@ endfunction
 
 
 function! s:undojoin()
-	if exists("s:undo_file")
+	if exists("s:undo_locker")
 		call s:undo()
-		if filereadable(s:undo_file)
-			silent execute "rundo" s:undo_file
-		endif
-		unlet s:undo_file
+" 		call setline(1, s:buffer_text)
+		call s:undo_locker.unlock()
+" 		if filereadable(s:undo_file)
+" 			silent execute "rundo" s:undo_file
+" 		endif
+		unlet s:undo_locker
+" 		unlet s:undo_file
 	endif
 endfunction
 
@@ -83,11 +112,23 @@ function! s:undo()
 endfunction
 
 
+function! s:matchadd(group, pat)
+	if hlID(a:group)
+		try
+			let id = matchadd(a:group, a:pat, 1)
+		catch
+			return
+		endtry
+		call add(s:matchlist, id)
+	endif
+endfunction
+
+
 let s:matchlist = []
 function! s:reset_match()
 	for id in s:matchlist
 		if id != -1
-			call matchdelete(id)
+			silent! call matchdelete(id)
 		endif
 	endfor
 	let s:matchlist = []
@@ -142,7 +183,7 @@ function! s:substitute_preview(line)
 	endif
 
 	if empty(string)
-		silent! call add(s:matchlist, matchadd("Search", (&ignorecase ? '\c' : '') . pattern, 1))
+		call s:matchadd(g:over#command_line#substitute#highlight_pattern, (&ignorecase ? '\c' : '') . pattern)
 		return
 	endif
 
@@ -160,10 +201,10 @@ function! s:substitute_preview(line)
 	let &l:concealcursor = "nvic"
 	let &l:conceallevel = 3
 
-	let search_pattern = s:hl_mark_begin  . '\zs\_.\{-}\ze' . s:hl_mark_center
-	let error_pattern  = s:hl_mark_center . '\zs\_.\{-}\ze' . s:hl_mark_end
-	silent! call add(s:matchlist, matchadd("Search", search_pattern, 1))
-	silent! call add(s:matchlist, matchadd("Error",  error_pattern, 1))
+	let pattern = s:hl_mark_begin  . '\zs\_.\{-}\ze' . s:hl_mark_center
+	let string  = s:hl_mark_center . '\zs\_.\{-}\ze' . s:hl_mark_end
+	call s:matchadd(g:over#command_line#substitute#highlight_pattern, pattern)
+	call s:matchadd(g:over#command_line#substitute#highlight_string, string)
 endfunction
 
 
@@ -192,9 +233,11 @@ endfunction
 augroup over-cmdline-substitute
 	autocmd!
 	autocmd User OverCmdLineEnter call s:init()
-	autocmd User OverCmdLineExecutePre call s:finish()
-" 	autocmd User OverCmdLineLeave call s:finish()
 	autocmd User OverCmdLineExecutePre call s:undojoin()
+	autocmd User OverCmdLineExecutePre call s:finish()
+	autocmd User OverCmdLineLeave call s:finish()
+	autocmd User OverCmdLineException call s:finish()
+	autocmd User OverCmdLineException call s:undojoin()
 	autocmd User OverCmdLineCancel call s:undojoin()
 	autocmd User OverCmdLineChar call s:substitute_preview(over#command_line#getline())
 	autocmd user OverCmdLineCharPre call s:on_charpre()

@@ -11,7 +11,7 @@ endif
 unlet! b:did_indent
 let b:did_indent = 1
 
-setlocal autoindent et
+setlocal autoindent
 setlocal indentexpr=GetJadeIndent()
 setlocal indentkeys=o,O,*<Return>,},],0),!^F
 
@@ -52,7 +52,7 @@ function! GetJadeIndent()
     return indent
   elseif line =~ '^/\%(\[[^]]*\]\)\=$'
     return increase
-  elseif line =~ '^\%(if\|else\|unless\|for\|each\|block\|mixin\|append\)'
+  elseif line =~ '^\%(if\|else\|unless\|for\|each\|block\|mixin\|append\|case\|when\)'
     return increase
   elseif line =~ '^'.s:tag.'[&!]\=[=~-].*,\s*$'
     return increase
@@ -60,7 +60,7 @@ function! GetJadeIndent()
     return increase
   elseif line =~? '^\v%('.g:jade_self_closing_tags.')>'
     return indent
-  elseif group =~? '\v^%(jadeAttributesDelimiter|jadeClass|jadeId|htmlTagName|htmlSpecialTagName|jadeFilter)$'
+  elseif group =~? '\v^%(jadeAttributesDelimiter|jadeClass|jadeId|htmlTagName|htmlSpecialTagName|jadeFilter|jadeTagBlockChar)$'
     return increase
   else
     return indent

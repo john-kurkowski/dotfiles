@@ -8,6 +8,7 @@ Features:
 * Ensures signs are always as up to date as possible (but without running more than necessary).
 * Quick jumping between blocks of changed lines ("hunks").
 * Stage/revert/preview individual hunks.
+* Handles line endings correctly, even with repos that do CRLF conversion.
 * Optional line highlighting.
 * Fully customisable (signs, sign column, line highlights, mappings, extra git-diff arguments, etc).
 * Can be toggled on/off.
@@ -18,6 +19,8 @@ Features:
 Constraints:
 
 * Supports git only.
+
+If you work with other version control systems, I recommend [vim-signify](https://github.com/mhinz/vim-signify).
 
 
 ### Screenshot
@@ -34,8 +37,6 @@ In the screenshot above you can see:
 ### Installation
 
 Before installation, please check your Vim supports signs by running `:echo has('signs')`.  `1` means you're all set; `0` means you need to install a Vim with signs support.  If you're compiling Vim yourself you need the 'big' or 'huge' feature set.  [MacVim][] supports signs.
-
-Your vim `shell` option needs to point to a POSIX-compatible shell.  For example if you use Fish, add `set shell=/bin/bash` to your vimrc.
 
 If you don't have a preferred installation method, I recommend installing [pathogen.vim][pathogen], and then simply copy and paste:
 
@@ -54,9 +55,13 @@ Add `Plugin 'airblade/vim-gitgutter'` to your `~/.vimrc` and then:
 If you are on Windows you may find the command prompt pops up briefly every time vim-gitgutter runs.  You can avoid this by installing both [vim-misc](https://github.com/xolox/vim-misc) and [vim-shell](https://github.com/xolox/vim-shell).  If you have those two plugins but don't want vim-gitgutter to use them, you can opt out with `let g:gitgutter_avoid_cmd_prompt_on_windows = 0` in your `~/.vimrc`.
 
 
-### Usage
+### Getting started
 
-You don't have to do anything: it just works.
+When you make a change to a file tracked by git, the diff markers should appear automatically.  The delay is governed by vim's `updatetime` option; the default value is 4 seconds but I suggest reducing it to around 250ms (add `set updatetime=250` to your vimrc).
+
+You can jump between hunks with `[c` and `]c`.  You can preview, stage, and revert hunks with `<leader>hp`, `<leader>hs`, and `<leader>hr` respectively.
+
+You cannot currently unstage a staged hunk.
 
 
 #### Activation

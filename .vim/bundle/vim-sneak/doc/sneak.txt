@@ -55,9 +55,10 @@ Type dzad to delete from the cursor to the first instance of "ad": >
 
     Note: See |sneak-mappings| to change these mappings.
 
-Sneak default NORMAL-mode mappings:
 
-    Normal-Mode Key Sequence | Description
+NORMAL-mode mappings~
+
+    Key Sequence             | Description
     -------------------------|----------------------------------------------
     s{char}{char}            | Go to the next occurrence of {char}{char}
     S{char}{char}            | Go to the previous occurrence of {char}{char}
@@ -69,8 +70,8 @@ Sneak default NORMAL-mode mappings:
     , or \                   | Go to the [count]'th previous match
     s                        | Go to the [count]'th next match (see NOTE)
     S                        | Go to the [count]'th previous match (see NOTE)
-    {range}s{char}{char}     | Invoke |sneak-vertical-scope|
-    {range}S{char}{char}     | Invoke backwards |sneak-vertical-scope|
+    [count]s{char}{char}     | Invoke |sneak-vertical-scope|
+    [count]S{char}{char}     | Invoke backwards |sneak-vertical-scope|
     {operator}z{char}{char}  | Perform {operator} from the cursor to the next
                              | occurrence of {char}{char}
     {operator}Z{char}{char}  | Perform {operator} from the cursor to the 
@@ -79,9 +80,10 @@ Sneak default NORMAL-mode mappings:
     NOTE: s and S go to the next/previous match only immediately after
     invoking Sneak; moving the cursor resets this behavior. |sneak-clever-s|
 
-Sneak default VISUAL-mode mappings:
 
-    Visual-Mode Key Sequence | Description
+VISUAL-mode mappings~
+
+    Key Sequence             | Description
     -------------------------|----------------------------------------------
     s{char}{char}            | Go to the next occurrence of {char}{char}
     Z{char}{char}            | Go to the previous occurrence of {char}{char}
@@ -94,11 +96,12 @@ Sneak default VISUAL-mode mappings:
     s                        | Go to the [count]'th next match (NOTE above)
     S                        | Go to the [count]'th previous match (NOTE above)
 
-STREAK-mode mappings (|sneak-streak-mode|):
+
+STREAK-mode mappings~
 
     Key Sequence             | Description
     -------------------------|----------------------------------------------
-    <space>                  | Exit streak-mode at the current cursor
+    <space>                  | Exit |sneak-streak-mode| at the current cursor
                              | position.
 
 
@@ -126,7 +129,7 @@ behavior of [count]f and [count]t.
     Note: If your mapleader is |,| then Sneak maps |\| instead of |,|.
     You can override this by specifying some other mapping, eg: >
 
-    nmap ? <Plug>SneakPrevious
+    nmap gS <Plug>SneakPrevious
 <
                                                               *sneak-clever-s*
 Similar to the clever-f[3] plugin, immediately after invoking Sneak, you can
@@ -202,20 +205,24 @@ sneak#reset(key)                                                *sneak#reset()*
 sneak#state()                                                   *sneak#state()*
         Returns a read-only dictionary representing the current behavior.
 
+        Values set at invocation (_not_ for repeat):
             KEY             VALUE~
             bounds          [left, right] integer pair representing the current
                             |sneak-vertical-scope| or [0, 0] if not scoped
-            inclusive       0: |f|-like motion
-                            1: |t|-like motion
+            inclusive       0: |t|-like motion
+                            1: |f|-like motion
                             2: |exclusive| motion like |/|
             input           current search string
             inputlen        length of the current search string
             reverse         0: invoked as forward motion `s`
                             1: invoked as backward motion `S`
-            rptreverse      0: repeated motion in "next" direction |;|
-                            1: repeated motion in "previous" direction |,|
             rst             0: |;| and |,| should repeat the most recent Sneak
                             1: after calling |sneak#reset()|
+
+        Values updated on each repeat (|;| |,|):
+            KEY             VALUE~
+            rptreverse      0: repeat was effectively forward
+                            1: repeat was effectively backward
 
         For example, to create a mapping that behaves differently depending
         on the current Sneak direction (`rptreverse` key):
@@ -271,8 +278,8 @@ To enable "passive" or "smart" streak-mode:                   *g:sneak#streak*
 >
     let g:sneak#streak = 1
 >
-With this setting, sneak with automatically enter streak-mode _only_ if there
-are ≥2 visible (on-screen) matches
+With this setting, Sneak enters streak-mode _only_ if there are ≥2 visible
+(on-screen) matches
 
 To force streak-mode always (instead of passively letting Sneak decide when
 to enter streak-mode), create a mapping to <Plug>(SneakStreak). For example:
@@ -346,6 +353,15 @@ g:sneak#s_next = 0
         persists until you move the cursor.
         Note: You can still use |;| and |,| as usual.
 
+g:sneak#absolute_dir = 0
+
+    0 : Relative direction. |;| goes to the next match in the direction of the
+        initial s/S invocation and |,| goes in the opposite direction.
+
+    1 : Absolute direction. Repeat via |;| or |,| always goes forwards or
+        backwards respectively.
+        Note: With |sneak-clever-s|, s and S behave the same as |;| and |,|.
+
 g:sneak#textobject_z = 1
 
     0 : Prevent the default {operator}z mapping. You can map to something
@@ -358,18 +374,6 @@ g:sneak#use_ic_scs = 0
     0 : Always case-sensitive
 
     1 : Case sensitivity is determined by 'ignorecase' and 'smartcase'.
-
-g:sneak#map_esc = 0
-
-    0 : Disable temporary remapping of <esc>. This is the default because of
-        possible interference with ALT/META maps, F-keys, arrow keys, etc.
-            https://github.com/justinmk/vim-sneak/issues/133
-
-    1 : Allows you to clear the Sneak highlighting by pressing <esc>.
-        Typically, remapping <esc> is not a good idea, especially in non-GUI
-        Vim. With `g:sneak#map_esc`, the plugin creates a temporary mapping
-        so quirks are mitigated (but not eliminated).
-            https://github.com/justinmk/vim-sneak/issues/106
 
 g:sneak#map_netrw = 1
 
@@ -509,12 +513,12 @@ your |vimrc|: >
 <
 Here are some examples: >
 
-    nmap <leader>s <Plug>Sneak_s
-    nmap <leader>S <Plug>Sneak_S
-    xmap <leader>s <Plug>Sneak_s
-    xmap <leader>S <Plug>Sneak_S
-    omap <leader>s <Plug>Sneak_s
-    omap <leader>S <Plug>Sneak_S
+    nmap gs <Plug>Sneak_s
+    nmap gS <Plug>Sneak_S
+    xmap gs <Plug>Sneak_s
+    xmap gS <Plug>Sneak_S
+    omap gs <Plug>Sneak_s
+    omap gS <Plug>Sneak_S
 
     nmap <Space> <Plug>(SneakStreak)
 
