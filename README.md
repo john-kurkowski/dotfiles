@@ -27,16 +27,22 @@
 ### It's great for quick refactoring
 ![Example1](assets/example1.gif?raw=true)
 
+Vim command sequence: `2Gfp<C-n><C-n><C-n>cname`
+
 ### Add a cursor to each line of your visual selection
 ![Example2](assets/example2.gif?raw=true)
+
+Vim command sequence: `2Gvip<C-n>i"<Right><Right><Right>",<Esc>vipJ$r]Idays = [`
 
 ### Do it backwards too! This is not just a replay of the above gif :)
 ![Example3](assets/example3.gif?raw=true)
 
+Vim command sequence: `2Gdf[$r,0f,v<C-n>…<C-n>c<CR><Up><Del><Right><Right><Right><Del>`
+
 ### Add multiple cursors using regexes
 ![Example4](assets/example4.gif?raw=true)
 
-To see what keystrokes are used for the above example, see [this issue](https://github.com/terryma/vim-multiple-cursors/issues/39).
+To see what keystrokes are used for the above examples, see [this issue](https://github.com/terryma/vim-multiple-cursors/issues/39).
 
 ## Features
 - Live update in Insert mode
@@ -50,7 +56,7 @@ Install using [Pathogen], [Vundle], [Neobundle], or your favorite Vim package ma
 Requires vim 7.4 or later for full functionality.
 
 ## Quick Start
-Out of the box, all you need to know is a single key `Ctrl-n`. Pressing the key in Normal mode highlights the current word under the cursor in Visual mode and places a virtual cursor at the end of it. Pressing it again finds the next ocurrence and places another virtual cursor at the end of the visual selection. If you select multiple lines in Visual mode, pressing the key puts a virtual cursor at every line and leaves you in Normal mode.
+Out of the box, all you need to know is a single key `Ctrl-n`. Pressing the key in Normal mode highlights the current word under the cursor in Visual mode and places a virtual cursor at the end of it. Pressing it again finds the next occurrence and places another virtual cursor at the end of the visual selection. If you select multiple lines in Visual mode, pressing the key puts a virtual cursor at every line and leaves you in Normal mode.
 
 After you've marked all your locations with `Ctrl-n`, you can change the visual selection with normal Vim motion commands in Visual mode. You could go to Normal mode by pressing `v` and wield your motion commands there. Single key command to switch to Insert mode such as `c` or `s` from Visual mode or `i`, `a`, `I`, `A` in Normal mode should work without any issues.
 
@@ -85,18 +91,25 @@ By default, the 'next' key is also used to enter multicursor mode. If you want t
 let g:multi_cursor_start_key='<F6>'
 ```
 
-Note that when multicursor mode is started, it selects current word without boundaries, i.e. it behaves like `g*`. If you want to use word boundaries in Normal mode (as `*` does) but still have old behaviour up your sleeve, you can do the following:
+Note that when multicursor mode is started, it selects current word with boundaries, i.e. it behaves like `*`. If you want to avoid word boundaries in Normal mode (as `g*` does) but still have old behaviour up your sleeve, you can do the following:
 ```viml
-let g:multi_cursor_start_key='g<C-n>'
-let g:multi_cursor_start_word_key='<C-n>'
+let g:multi_cursor_start_key='<C-n>'
+let g:multi_cursor_start_word_key='g<C-n>'
 ```
-In this configuration `<C-n>` will start multicursor mode using word boundaries (but only in Normal mode, as it does not make much sense to use it in Visual mode). Old behaviour without word boundaries is still available using `g<C-n>`.
+In this configuration `<C-n>` will start multicursor mode without word boundaries (but only in Normal mode, as it does not make much sense to use it in Visual mode). Old behaviour with word boundaries is still available using `g<C-n>`.
 
 **IMPORTANT:** Please note that currently only single keystrokes and special keys can be mapped. This means that a mapping like `<Leader>n` will NOT work correctly. For a list of special keys that are supported, see `help :key-notation`
 
 **NOTE:** Please make sure to always map something to `g:multi_cursor_quit_key`, otherwise you'll have a tough time quitting from multicursor mode.
 
 **NOTE:** Prior to version 1.3, the recommended way to map the keys is using the expression quote syntax in Vim, using something like `"\<C-n>"` or `"\<Esc>"` (see h: expr-quote). After 1.3, the recommended way is to use a raw string like above. If your key mappings don't appear to work, give the new syntax a try.
+
+You can also map your own keys to quit, if ``g:multi_cursor_quit_key`` won't work:
+
+```
+let g:multi_cursor_quit_key='<C-c>'
+nnoremap <C-c> :call multiple_cursors#quit()<CR>
+```
 
 ## Settings
 Currently there are four additional global settings one can tweak:
@@ -113,17 +126,25 @@ to pause for `timeoutlen` waiting for map completion just like normal vim.
 Otherwise keys mapped in insert mode are ignored when multiple cursors are
 active. For example, setting it to `{'\':1}` will make insert-mode mappings
 beginning with the default leader key work in multi-cursor mode. You have to
-manually set this because vim doesn't provide a way to see which keys *start*
+manually set this because vim doesn't provide a way to see which keys _start_
 mappings.
 
-### ```g:multi_cursor_normal_maps``` (Default: `{}`)
+### ```g:multi_cursor_normal_maps``` (Default: see below)
+Default value: `{'!':1, '@':1, '=':1, 'q':1, 'r':1, 't':1, 'T':1, 'y':1, '[':1, ']':1, '\':1, 'd':1, 'f':1, 'F':1, 'g':1, '"':1, 'z':1, 'c':1, 'm':1, '<':1, '>':1}`
+
 Any key in this map (values are ignored) will cause multi-cursor _Normal_ mode
 to pause for map completion just like normal vim. Otherwise keys mapped in
 normal mode will "fail to replay" when multiple cursors are active. For example,
-setting it to `{'d':1}` will make normal-mode mappings beginning with `d` (such
-as `dw` to delete a word) work in multi-cursor mode. You have to
-manually set this because vim doesn't provide a way to see which keys *start*
-mappings; setting it to include motion commands like `j` can break things.
+changing it from `{}` to `{'d':1}` makes normal-mode mappings beginning with `d`
+(such as `dw` to delete a word) work in multi-cursor mode.
+
+The default list contents should work for anybody, unless they have remapped a
+key from an operator-pending command to a non-operator-pending command or
+vice versa.
+
+These keys must be manually listed because vim doesn't provide a way to
+automatically see which keys _start_ mappings, and trying to run motion commands
+such as `j` as if they were operator-pending commands can break things.
 
 ### Interactions with other plugins
 
@@ -172,9 +193,11 @@ highlight link multiple_cursors_visual Visual
 
 ## Known Issues
 - Select mode is not implemented
-- I and A do not work in Visual mode yet (See #55)
+- `I` and `A` do not work in Visual mode yet (See [#55](../../issues/55))
   
- Single key command to switch to Insert mode such as c or s from Visual mode or i, a, I, A in Normal mode should work without any issues. **NOTE**: vim's Visual block mode also supports I and A commands, however they do not work in this plugin's Visual mode at the moment. For now, to use I and A, switch to normal mode by pressing v first.
+ Single key command to switch to Insert mode such as `c` or `s` from Visual mode or `i`, `a`, `I`, `A` in Normal mode should work without any issues. 
+
+**NOTE**: Vim's Visual Block mode also supports `I` and `A` commands, however they do not work in this plugin's Visual mode at the moment. For now, to use `I` and `A`, switch to Normal mode by pressing `v` first.
 
 ## Changelog
 See [CHANGELOG.md](CHANGELOG.md)
