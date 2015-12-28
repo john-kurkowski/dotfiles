@@ -61,8 +61,14 @@
   box-decoration-break: auto;
 }
 
-.cascade {
-  all: unset;
+.cascade-3 {
+  all: initial;
+  display: unset;
+}
+
+@import "test.css" supports(display: auto);
+.cascade-4 {
+  display: revert;
 }
 
 .colors {
@@ -107,28 +113,65 @@
 @counter-style counter-style {
   system: cyclic;
   negative: symbolic;
-  prefix: numbers;
-  suffix: additive;
-  range: extends;
-  pad: cjk-decimal;
-  fallback: disclosure-open;
-  symbols: disclosure-closed;
-  additive-symbols: simp-chinese-informal;
-  speak-as: simp-chinese-formal;
+  prefix: additive;
+  suffix: extends;
+  range: bullets;
+  pad: numbers;
+  fallback: words;
+  symbols: symbols("*" "\2020" "\2021" "\A7");
+  additive-symbols: auto;
+  speak-as: auto;
+}
+
+.counter-style {
+  display: arabic-indic;
+  display: upper-armenian;
+  display: lower-armenian;
+  display: bengali;
+  display: cambodian;
+  display: khmer;
+  display: cjk-decimal;
+  display: devanagari;
+  display: gujarati;
+  display: gurmukhi;
+  display: kannada;
+  display: lao;
+  display: malayalam;
+  display: mongolian;
+  display: myanmar;
+  display: oriya;
+  display: persian;
+  display: tamil;
+  display: telugu;
+  display: thai;
+  display: tibetan;
+  display: cjk-earthly-branch;
+  display: cjk-heavenly-stem;
+  display: disclosure-closed;
+  display: disclosure-open;
+  display: japanese-informal;
+  display: japanese-formal;
+  display: korean-hangul-formal;
+  display: korean-hanja-informal;
+  display: korean-hanja-formal;
+  display: simp-chinese-informal;
+  display: simp-chinese-formal;
   display: trad-chinese-informal;
   display: trad-chinese-formal;
   display: ethiopic-numeric;
-  display: symbols("*" "\2020" "\2021" "\A7");
-  display: bullets;
-  display: words;
+}
+
+.cssom-view {
+  scroll-behavior: instant;
+  display: smooth;
 }
 
 .display {
-  display-inside: block-level;
-  display-outside: inline-level;
-  display-list: contents;
-  display-suppress: inline-list-item;
-  display: show;
+  box-suppress: flow;
+  display: flow-root;
+  display: contents;
+  display: inline-list-item;
+  display: discard;
 }
 
 .exclusions {
@@ -200,23 +243,26 @@
   display: closed;
 }
 
-.grid-layout {
+.grid {
   grid-template-columns: grid;
   grid-template-rows: inline-grid;
   grid-template-areas: minmax(0, 1);
   grid-template: repeat(4);
   grid-auto-columns: 0.2fr;
   grid-auto-rows: subgrid;
-  grid-auto-flow: rows;
-  grid-auto-position: columns;
-  grid: dense;
-  grid-row-start: span;
+  grid-auto-flow: dense;
+  grid-auto-position: span;
+  grid: auto;
+  grid-row-start: auto;
   grid-column-start: auto;
   grid-row-end: auto;
   grid-column-end: auto;
   grid-column: auto;
   grid-row: auto;
   grid-area: auto;
+  grid-column-gap: auto;
+  grid-row-gap: auto;
+  grid-gap: auto;
 }
 
 .images {
@@ -233,12 +279,12 @@
 }
 
 .inline {
-  initial-letter: ideographic;
+  dominant-baseline: mathematical;
+  alignment-baseline: ideographic;
+  baseline-shift: auto;
+  initial-letter: auto;
   initial-letter-align: auto;
-}
-
-.layout::slot(b) {
-  display: same;
+  initial-letter-wrap: auto;
 }
 
 .line-grid {
@@ -247,28 +293,6 @@
   box-snap: block-end;
   display: first-baseline;
   display: last-baseline;
-}
-
-.linebox {
-  alignment-adjust: central;
-  alignment-baseline: mathematical;
-  baseline-shift: before-edge;
-  dominate-baseline: after-edge;
-  drop-initial-after-adjust: text-before-edge;
-  drop-initial-after-align: text-after-edge;
-  drop-initial-before-adjust: use-script;
-  drop-initial-before-align: caps-height;
-  drop-initial-size: exclude-ruby;
-  drop-initial-value: include-ruby;
-  inline-box-align: consider-shift;
-  line-stacking: disregard-shift;
-  line-stacking-ruby: inline-line-height;
-  line-stacking-shift: block-line-height;
-  line-stacking-strategy: max-height;
-  text-height: grid-height;
-  display: font-size;
-  display: text-size;
-  display: max-size;
 }
 
 .lists::marker {
@@ -327,8 +351,27 @@
   display: verso;
 }
 
-.preslev {
-  presentation-level: increment;
+.page-floats-3 {
+  float-reference: inline-start;
+  float-defer: inline-end;
+  float-offset: snap-block;
+  display: snap-inline;
+  display: snap-block(2em, near);
+  display: snap-inline(2em, near);
+}
+
+.positioning {
+  offset-before: sticky;
+  offset-end: auto;
+  offset-after: auto;
+  offset-start: auto;
+}
+
+.pseudo::selection,
+.pseudo::spelling-error,
+.pseudo::grammer-error,
+.pseuod::placeholder {
+  display: block;
 }
 
 .regions:region {
@@ -337,6 +380,15 @@
   region-fragment: break;
   display: region;
   display: avoid-region;
+}
+
+@media (device-radius: 50%) {
+  .round-display-1 {
+    shape-inside: outside-shape;
+    border-boundary: shape-box;
+    polar-angle: parent;
+    polar-distance: polar;
+  }
 }
 
 .ruby {
@@ -403,7 +455,7 @@
 .selectors4:active-drop-target,
 .selectors4:valid-drop-target,
 .selectors4:invalid-drop-target,
-.selectors3:matches(:hover, :focus),
+.selectors4:matches(:hover, :focus),
 .selectors4:dir(ltr),
 .selectors4:local-link(0),
 .selectors4:current(p, li, dt, dd),
@@ -431,6 +483,14 @@
   display: contain-floats;
 }
 
+.snappoints {
+  scroll-snap-type: mandatory;
+  scroll-snap-points-x: proximity;
+  scroll-snap-points-y: auto;
+  scroll-snap-destination: auto;
+  scroll-snap-coordinate: auto;
+}
+
 .speech {
   voice-volume: 10dB;
   voice-balance: literal-punctuation;
@@ -448,7 +508,7 @@
   display: reduced;
 }
 
-.text {
+.text-3 {
   hyphens: manual;
   line-break: loose;
   overflow-wrap: strict;
@@ -456,6 +516,31 @@
   display: hanging;
   display: each-line;
   display: full-width;
+}
+
+.text-4 {
+  text-space-collapse: preserve-auto;
+  text-space-trim: preserve-trim;
+  text-wrap: preserve-breaks;
+  wrap-before: preserve-spaces;
+  wrap-after: trim-inner;
+  wrap-inside: discard-before;
+  hyphenate-character: discard-after;
+  hyphenate-limit-zone: avoid-line;
+  hyphenate-limit-chars: avoid-flex;
+  hyphenate-limit-lines: pre-wrap-auto;
+  hyphenate-limit-last: no-limit;
+  text-spacing: spread;
+  display: trim-start;
+  display: space-start;
+  display: trim-end;
+  display: space-end;
+  display: trim-adjacent;
+  display: space-adjacent;
+  display: no-compress;
+  display: ideograph-alpha;
+  display: ideograph-numeric;
+  display: punctuation;
 }
 
 .text-decor-3 {
@@ -512,32 +597,26 @@
   display: cubic-bezier(0.25, 0.1, 0.25, 1.0);
 }
 
-.ui {
-  icon: active;
-  resize: inactive;
-  box-sizing: disabled;
-  ime-mode: root;
-  nav-index: horizontal;
-  nav-up: vertical;
-  nav-right: clip;
-  nav-down: ellipsis;
-  nav-left: auto;
-  outline-offset: auto;
+.ui-3 {
+  caret-color: grab;
+  display: grabbing;
+}
+
+.ui-4 {
+  caret: fade;
+  caret-shape: fade(1em);
+  caret-animation: underscore;
 }
 
 .values {
   display: 1ch;
-  display: 1rem;
   display: 1vw;
   display: 1vh;
   display: 1vmin;
+  display: 1q;
   display: 1turn;
-  display: 1dpi;
-  display: 1dpcm;
-  display: 1dppx;
   display: calc(100%/3 - 2*1em - 2*1px);
   display: toggle(italic, normal);
-  display: initial;
 }
 
 .variables {
@@ -549,17 +628,16 @@
 }
 
 .writing-modes {
-  text-orientation: before;
-  text-combine-horizontal: after;
-  writing-mode: isolate;
-  display: isolate;
+  writing-mode: before;
+  text-orientation: after;
+  text-combine-upright: mixed;
+  glyph-orientation-vertical: upright;
   display: plaintext;
-  display: mixed;
-  display: upright;
   display: sideways;
-  display: sideways-right;
-  display: sideways-left;
-  display: use-glyph-orientation;
+  display: sideways-rl;
+  display: sideways-lr;
+  display: isolate;
+  display: isolate-override;
   display: horizontal-tb;
   display: vertical-rl;
   display: vertical-lr;
