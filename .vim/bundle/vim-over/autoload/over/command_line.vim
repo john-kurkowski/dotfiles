@@ -3,11 +3,14 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-
+let g:over#command_line#enable_import_commandline_map = get(g:, "over#command_line#enable_import_cmap", 1)
 
 function! over#command_line#load()
 	" dummy
 endfunction
+
+let s:V = over#vital()
+let s:Highlight = s:V.import("Coaster.Highlight")
 
 
 unlet! s:_cmdline
@@ -26,6 +29,10 @@ call s:main.connect(s:cmdline().get_module("KeyMapping").make_emacs())
 call s:main.connect("BufferComplete")
 call s:main.connect("ExceptionMessage")
 " call s:main.connect("Paste")
+
+if g:over#command_line#enable_import_commandline_map == 0
+	call s:main.disconnect("KeyMapping_vim_cmdline_mapping")
+endif
 
 
 let g:over#command_line#paste_escape_chars = get(g:, "over#command_line#paste_escape_chars", '')
@@ -109,7 +116,24 @@ endfunction
 call s:main.connect(s:module)
 
 
-function! over#command_line#start(prompt, input)
+let g:over#command_line#enable_Digraphs = get(g:, "over#command_line#enable_Digraphs", 1)
+
+function! over#command_line#start(prompt, input, ...)
+	let context = get(a:, 1, {})
+
+	if g:over#command_line#enable_Digraphs
+\	&& empty(over#command_line#get().get_module("Digraphs"))
+		call over#command_line#get().connect("Digraphs")
+	else
+		call over#command_line#get().disconnect("Digraphs")
+	endif
+
+	if get(context, "line1", 1) != get(context, "line2", 1)
+		call s:main.connect(s:hl_visualmode)
+	else
+		call s:main.disconnect("HighlightVisualMode")
+	endif
+
 	if exists("*strchars") && has("conceal")
 		call s:main.set_prompt(a:prompt)
 		let exit_code = s:main.start(a:input)
@@ -118,8 +142,8 @@ function! over#command_line#start(prompt, input)
 		endif
 	else
 		echohl ErrorMsg
-		echo "Vim 7.3 or above."
-		echo "Need strchars() and +conceal."
+		echo "Vim 7.3 or above and +conceal."
+		echo "Need strchars()."
 		echohl NONE
 	endif
 endfunction
@@ -184,6 +208,39 @@ endfunction
 call over#command_line#substitute#load()
 call over#command_line#search#load()
 call over#command_line#global#load()
+
+
+function! over#command_line#do(input)
+	call s:main.start(a:input)
+	return s:main.getline()
+endfunction
+
+
+function! over#command_line#get()
+	return s:main
+endfunction
+
+
+
+let s:hl_visualmode = {
+\	"name" : "HighlightVisualMode"
+\}
+
+function! s:hl_visualmode.on_enter(...)
+	if &selection == "exclusive"
+		let pat = '\%''<\|\%>''<.*\%<''>'
+	else
+		let pat = '\%''<\|\%>''<.*\%<''>\|\%''>'
+	endif
+
+	call s:Highlight.highlight("visualmode", "Visual", pat, 0)
+endfunction
+
+
+function! s:hl_visualmode.on_leave(...)
+	call s:Highlight.clear("visualmode")
+endfunction
+
 
 
 let &cpo = s:save_cpo
