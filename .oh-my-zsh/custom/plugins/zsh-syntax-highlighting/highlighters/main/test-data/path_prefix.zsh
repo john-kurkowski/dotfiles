@@ -1,6 +1,5 @@
-#!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2010-2011 zsh-syntax-highlighting contributors
+# Copyright (c) 2015 zsh-syntax-highlighting contributors
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -28,7 +27,8 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
-# Assumes that [[ -e /bin/sh ]].
+# Assumes that '/bin/sh' exists and '/bin/s' does not exist.
+# Related to path_prefix2.zsh
 
 ZSH_HIGHLIGHT_STYLES[path_prefix]=$unused_highlight
 BUFFER='ls /bin/s'
