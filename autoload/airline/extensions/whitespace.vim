@@ -1,4 +1,4 @@
-" MIT License. Copyright (c) 2013-2014 Bailey Ling.
+" MIT License. Copyright (c) 2013-2015 Bailey Ling.
 " vim: et ts=2 sts=2 sw=2
 
 " http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
@@ -15,6 +15,7 @@ let s:default_checks = ['indent', 'trailing']
 
 let s:trailing_format = get(g:, 'airline#extensions#whitespace#trailing_format', 'trailing[%s]')
 let s:mixed_indent_format = get(g:, 'airline#extensions#whitespace#mixed_indent_format', 'mixed-indent[%s]')
+let s:long_format = get(g:, 'airline#extensions#whitespace#long_format', 'long[%s]')
 let s:indent_algo = get(g:, 'airline#extensions#whitespace#mixed_indent_algo', 0)
 
 let s:max_lines = get(g:, 'airline#extensions#whitespace#max_lines', 20000)
@@ -27,9 +28,11 @@ function! s:check_mixed_indent()
     " spaces before or between tabs are not allowed
     let t_s_t = '(^\t* +\t\s*\S)'
     " <tab>(<space> x count)
-    " count of spaces at the end of tabs should be less then tabstop value
+    " count of spaces at the end of tabs should be less than tabstop value
     let t_l_s = '(^\t+ {' . &ts . ',}' . '\S)'
     return search('\v' . t_s_t . '|' . t_l_s, 'nw')
+  elseif s:indent_algo == 2
+    return search('\v(^\t* +\t\s*\S)', 'nw')
   else
     return search('\v(^\t+ +)|(^ +\t+)', 'nw')
   endif
@@ -54,7 +57,12 @@ function! airline#extensions#whitespace#check()
       let mixed = s:check_mixed_indent()
     endif
 
-    if trailing != 0 || mixed != 0
+    let long = 0
+    if index(checks, 'long') > -1 && &tw > 0
+      let long = search('\%>'.&tw.'v.\+', 'nw')
+    endif
+
+    if trailing != 0 || mixed != 0 || long != 0
       let b:airline_whitespace_check = s:symbol
       if s:show_message
         if trailing != 0
@@ -62,6 +70,9 @@ function! airline#extensions#whitespace#check()
         endif
         if mixed != 0
           let b:airline_whitespace_check .= (g:airline_symbols.space).printf(s:mixed_indent_format, mixed)
+        endif
+        if long != 0
+          let b:airline_whitespace_check .= (g:airline_symbols.space).printf(s:long_format, long)
         endif
       endif
     endif
