@@ -49,6 +49,10 @@ if !exists('g:EditorConfig_verbose')
     let g:EditorConfig_verbose = 0
 endif
 
+if !exists('g:EditorConfig_preserve_formatoptions')
+    let g:EditorConfig_preserve_formatoptions = 0
+endif
+
 if !exists('g:EditorConfig_max_line_indicator')
     let g:EditorConfig_max_line_indicator = 'line'
 endif
@@ -113,17 +117,18 @@ function! s:FindPythonFiles() " {{{1
     let l:old_shellslash = &shellslash
     set shellslash
 
-    let l:python_core_files_dir = substitute(
+    let l:python_core_files_dir = fnamemodify(
                 \ findfile(g:EditorConfig_python_files_dir . '/main.py',
-                \ ','.&runtimepath), '/main.py$', '', '')
+                \ ','.&runtimepath), ':p:h')
 
     if empty(l:python_core_files_dir)
-        return ''
-    endif
+        let l:python_core_files_dir = ''
+    else
 
     " expand python core file path to full path, and remove the appending '/'
     let l:python_core_files_dir = substitute(
                 \ fnamemodify(l:python_core_files_dir, ':p'), '/$', '', '')
+    endif
 
     let &shellslash = l:old_shellslash
 
@@ -398,7 +403,7 @@ ec_data['conf_file'] = ".editorconfig"
 
 try:
     ec_data['options'] = editorconfig.get_properties(ec_data['filename'])
-except editorconfig_except.EditorConfigError, e:
+except editorconfig_except.EditorConfigError as e:
     if int(vim.eval('g:EditorConfig_verbose')) != 0:
         print >> sys.stderr, str(e)
     vim.command('let l:ret = 1')
@@ -454,11 +459,19 @@ function! s:SpawnExternalParser(cmd) " {{{2
         " In Windows, 'shellslash' also changes the behavior of 'shellescape'.
         " It makes 'shellescape' behave like in UNIX environment. So ':setl
         " noshellslash' before evaluating 'shellescape' and restore the
-        " settings afterwards.
-        let l:old_shellslash = &l:shellslash
-        setlocal noshellslash
+        " settings afterwards when 'shell' does not contain 'sh' somewhere.
+        if has('win32') && empty(matchstr(&shell, 'sh'))
+            let l:old_shellslash = &l:shellslash
+            setlocal noshellslash
+        endif
+
         let l:cmd = l:cmd . ' ' . shellescape(expand('%:p'))
-        let &l:shellslash = l:old_shellslash
+
+        " restore 'shellslash'
+        if exists('l:old_shellslash')
+            let &l:shellslash = l:old_shellslash
+        endif
+
         let l:parsing_result = split(system(l:cmd), '\n')
 
         " if editorconfig core's exit code is not zero, give out an error
@@ -568,8 +581,16 @@ function! s:ApplyConfig(config) " {{{1
     augroup END
 
     if has_key(a:config, "insert_final_newline")
-        if a:config["insert_final_newline"] == "false"
-            silent! SetNoEOL    " Use the PreserveNoEOL plugin to accomplish it
+        if exists('+fixendofline')
+            if a:config["insert_final_newline"] == "false"
+                setl nofixendofline
+            else
+                setl fixendofline
+            endif
+        elseif  exists(':SetNoEOL') == 2
+            if a:config["insert_final_newline"] == "false"
+                silent! SetNoEOL    " Use the PreserveNoEOL plugin to accomplish it
+            endif
         endif
     endif
 
@@ -579,6 +600,9 @@ function! s:ApplyConfig(config) " {{{1
 
         if l:max_line_length >= 0
             let &l:textwidth = l:max_line_length
+            if g:EditorConfig_preserve_formatoptions == 0
+                setlocal formatoptions+=tc
+            endif
         endif
 
         if exists('+colorcolumn')
