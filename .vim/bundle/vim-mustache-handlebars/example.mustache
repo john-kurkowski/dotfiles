@@ -15,13 +15,13 @@
 
       <de>{{d d d}}
 
-      {{Everything will be hilighted here}}
+      {{Everything will be highlighted here}}
 
-      Mustaches hilighted in
+      Mustaches highlighted in
       <span class="color:{{awesome_color}};font-size:1.2em">attribute value</span>
 
       {{#repo}}
-      This is an mustache [enumerable] section
+      This is a mustache [enumerable] section
       <li>{{ name }}</li>
       {{/repo}}
 
@@ -36,10 +36,16 @@
 
       Another {{!-- comment --}}, this one is a block comment.
 
+      {{!-- TODO: some remark
+      <div>
+        Multiline {{comments}} with
+        {{variables}}
+      </div> --}}
+
       This is a partial   {{> partial1 }}
       Yet another partial {{< partial2 }}, for ctemplate
 
-      {{=<% %>=}}Sorry, cusomized delimiter not handled yet<%={{}}=%>
+      {{=<% %>=}}Sorry, customized delimiter not handled yet<%={{}}=%>
 
       {{#if some_helper}}
         And here is an example of handlebars if...
@@ -50,6 +56,9 @@
       Thanks goes to {{@defunkt}}
       Feedback/blames go to {{@juvenn}}
       {{Frustrations}} go to /dev/null
+
+      Multiline {{comments}} with
+      {{variables}}
     </div>
 
   </body>
