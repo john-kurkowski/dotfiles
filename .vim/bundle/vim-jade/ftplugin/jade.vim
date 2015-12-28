@@ -11,6 +11,8 @@ endif
 let s:save_cpo = &cpo
 set cpo-=C
 
+setlocal iskeyword+=-
+
 " Define some defaults in case the included ftplugins don't set them.
 let s:undo_ftplugin = ""
 let s:browsefilter = "All Files (*.*)\t*.*\n"
@@ -44,6 +46,8 @@ if exists("loaded_matchit")
 endif
 
 setlocal comments=://-,:// commentstring=//\ %s
+
+setlocal suffixesadd+=.jade
 
 let b:undo_ftplugin = "setl cms< com< "
       \ " | unlet! b:browsefilter b:match_words | " . s:undo_ftplugin
