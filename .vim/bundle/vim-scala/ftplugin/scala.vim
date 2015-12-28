@@ -1,14 +1,33 @@
-setlocal textwidth=140
-setlocal shiftwidth=2
-setlocal softtabstop=2
-setlocal expandtab
-setlocal formatoptions=tcqr
-setlocal commentstring=//%s
+" Vim filetype plugin
+" Language:             Scala
+" Maintainer:           Derek Wyatt
+" URL:                  https://github.com/derekwyatt/vim-scala
+" License:              Apache 2
+" ----------------------------------------------------------------------------
 
-set makeprg=sbt\ -Dsbt.log.noformat=true\ compile
-set efm=%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ %p^,%-C%.%#,%Z,
-       \%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,
-       \%-G%.%#
+if exists('b:did_ftplugin') || &cp
+  finish
+endif
+let b:did_ftplugin = 1
+
+" j is fairly new in Vim, so don't complain if it's not there
+setlocal formatoptions-=t formatoptions+=croqnl
+silent! setlocal formatoptions+=j
+
+" Just like c.vim, but additionally doesn't wrap text onto /** line when
+" formatting. Doesn't bungle bulleted lists when formatting.
+setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/**,mb:*,ex:*/,s1:/*,mb:*,ex:*/,://
+setlocal commentstring=//\ %s
+
+setlocal shiftwidth=2 softtabstop=2 expandtab
+
+setlocal include='^\s*import'
+setlocal includeexpr='substitute(v:fname,"\\.","/","g")'
+
+setlocal path+=src/main/scala,src/test/scala
+setlocal suffixesadd=.scala
+
+compiler sbt
 
 if globpath(&rtp, 'plugin/fuf.vim') != ''
     "
@@ -117,50 +136,37 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
         return scala#GetDirForFuzzyFinder(a:from, 'src/../')
     endfunction
 
-    nnoremap <buffer> <silent> ,ft :FufFile <c-r>=scala#GetTestDirForFuzzyFinder('%:p:h')<cr><cr>
-    nnoremap <buffer> <silent> ,fs :FufFile <c-r>=scala#GetMainDirForFuzzyFinder('%:p:h')<cr><cr>
-    nnoremap <buffer> <silent> ,fr :FufFile <c-r>=scala#GetRootDirForFuzzyFinder('%:p:h')<cr><cr>
+    " If you want to disable the default key mappings, write the following line in
+    " your ~/.vimrc
+    "     let g:scala_use_default_keymappings = 0
+    if get(g:, 'scala_use_default_keymappings', 1)
+      nnoremap <buffer> <silent> <Leader>ft :FufFile <c-r>=scala#GetTestDirForFuzzyFinder('%:p:h')<cr><cr>
+      nnoremap <buffer> <silent> <Leader>fs :FufFile <c-r>=scala#GetMainDirForFuzzyFinder('%:p:h')<cr><cr>
+      nnoremap <buffer> <silent> <Leader>fr :FufFile <c-r>=scala#GetRootDirForFuzzyFinder('%:p:h')<cr><cr>
+    endif
 endif
 
-" If you want to disable the default key mappings, write the following line in
-" your ~/.vimrc
-"     let g:scala_use_default_keymappings = 0
-if get(g:, 'scala_use_default_keymappings', 1)
-    nnoremap <buffer> ,jt :call JustifyCurrentLine()<cr>
-endif
+function! s:CreateOrExpression(keywords)
+  return '('.join(a:keywords, '|').')'
+endfunction
 
-"
-" TagBar
-"
-let g:tagbar_type_scala = {
-    \ 'ctagstype' : 'scala',
-    \ 'kinds'     : [
-      \ 'p:packages:1',
-      \ 'V:values',
-      \ 'v:variables',
-      \ 'T:types',
-      \ 't:traits',
-      \ 'o:objects',
-      \ 'a:aclasses',
-      \ 'c:classes',
-      \ 'r:cclasses',
-      \ 'm:methods'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'T' : 'type',
-        \ 't' : 'trait',
-        \ 'o' : 'object',
-        \ 'a' : 'abstract class',
-        \ 'c' : 'class',
-        \ 'r' : 'case class'
-    \ },
-    \ 'scope2kind' : {
-      \ 'type' : 'T',
-      \ 'trait' : 't',
-      \ 'object' : 'o',
-      \ 'abstract class' : 'a',
-      \ 'class' : 'c',
-      \ 'case class' : 'r'
-    \ }
-\ }
+function! s:NextSection(backwards)
+  if a:backwards
+    let dir = '?'
+  else
+    let dir = '/'
+  endif
+  let keywords = [ 'def', 'class', 'trait', 'object' ]
+  let keywordsOrExpression = s:CreateOrExpression(keywords)
+
+  let modifiers = [ 'public', 'private', 'private\[\w*\]', 'protected', 'abstract', 'case', 'override', 'implicit', 'final', 'sealed']
+  let modifierOrExpression = s:CreateOrExpression(modifiers)
+
+  let regex = '^ *('.modifierOrExpression.' )* *'.keywordsOrExpression."\r"
+  execute 'silent normal! ' . dir . '\v'.regex
+endfunction
+
+noremap <script> <buffer> <silent> ]] :call <SID>NextSection(0)<cr>
+noremap <script> <buffer> <silent> [[ :call <SID>NextSection(1)<cr>
+
+" vim:set sw=2 sts=2 ts=8 et:
