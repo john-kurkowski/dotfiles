@@ -34,4 +34,5 @@
 [rebase]
 	autosquash = true
 	autostash = true
+	instructionFormat = %d %s (%cr) <%an>
 	preserve-merges = true
