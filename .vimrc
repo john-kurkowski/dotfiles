@@ -54,8 +54,10 @@ let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['jscs', 'jshint']
 
 au FileType gitcommit,markdown setl spell
 
