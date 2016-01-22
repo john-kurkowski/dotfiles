@@ -54,6 +54,9 @@ let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
 
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 au FileType gitcommit,markdown setl spell
 
 au BufWritePre * :%s/\s\+$//e
