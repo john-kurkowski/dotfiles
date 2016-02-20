@@ -108,6 +108,15 @@ _zsh_highlight_main_highlighter()
   emulate -L zsh
   setopt localoptions extendedglob bareglobqual
 
+  # At the PS3 prompt and in vared, highlight nothing.
+  #
+  # (We can't check this in _zsh_highlight_main_highlighter_predicate because
+  # if the predicate returns false, the previous value of region_highlight
+  # would be reused.)
+  if [[ $CONTEXT == (select|vared) ]]; then
+    return
+  fi
+
   ## Variable declarations and initializations
   local start_pos=0 end_pos highlight_glob=true arg style
   local in_array_assignment=false # true between 'a=(' and the matching ')'
@@ -116,6 +125,7 @@ _zsh_highlight_main_highlighter()
   typeset -a ZSH_HIGHLIGHT_TOKENS_CONTROL_FLOW
   local -a options_to_set # used in callees
   local buf="$PREBUFFER$BUFFER"
+  integer len="${#buf}"
   region_highlight=()
 
   if (( path_dirs_was_set )); then
@@ -225,11 +235,13 @@ _zsh_highlight_main_highlighter()
       # indistinguishable from 'echo foo echo bar' (one command with three
       # words for arguments).
       local needle=$'[;\n]'
-      integer offset=${${buf[start_pos+1,-1]}[(i)$needle]}
+      # Len-start_pos drops one character, but it should do it, as start_pos
+      # starts from next, not from "start_pos", character
+      integer offset=${${buf: start_pos: len-start_pos}[(i)$needle]}
       (( start_pos += offset - 1 ))
       (( end_pos = start_pos + $#arg ))
     else
-      ((start_pos+=${#buf[$start_pos+1,-1]}-${#${buf[$start_pos+1,-1]##([[:space:]]|\\[[:space:]])#}}))
+      ((start_pos+=(len-start_pos)-${#${${buf: start_pos: len-start_pos}##([[:space:]]|\\[[:space:]])#}}))
       ((end_pos=$start_pos+${#arg}))
     fi
 
@@ -294,9 +306,28 @@ _zsh_highlight_main_highlighter()
         *': suffix alias')
                         style=$ZSH_HIGHLIGHT_STYLES[suffix-alias]
                         ;;
-        *': alias')     style=$ZSH_HIGHLIGHT_STYLES[alias]
-                        local aliased_command="${"$(alias -- $arg)"#*=}"
-                        [[ -n ${(M)ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS:#"$aliased_command"} && -z ${(M)ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS:#"$arg"} ]] && ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS+=($arg)
+        *': alias')     () {
+                          integer insane_alias
+                          case $arg in 
+                            # Issue #263: aliases with '=' on their LHS.
+                            #
+                            # There are three cases:
+                            #
+                            # - Unsupported, breaks 'alias -L' output, but invokable:
+                            ('='*) :;;
+                            # - Unsupported, not invokable:
+                            (*'='*) insane_alias=1;;
+                            # - The common case:
+                            (*) :;;
+                          esac
+                          if (( insane_alias )); then
+                            style=$ZSH_HIGHLIGHT_STYLES[unknown-token]
+                          else
+                            style=$ZSH_HIGHLIGHT_STYLES[alias]
+                            local aliased_command="${"$(alias -- $arg)"#*=}"
+                            [[ -n ${(M)ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS:#"$aliased_command"} && -z ${(M)ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS:#"$arg"} ]] && ZSH_HIGHLIGHT_TOKENS_PRECOMMANDS+=($arg)
+                          fi
+                        }
                         ;;
         *': builtin')   style=$ZSH_HIGHLIGHT_STYLES[builtin];;
         *': function')  style=$ZSH_HIGHLIGHT_STYLES[function];;
