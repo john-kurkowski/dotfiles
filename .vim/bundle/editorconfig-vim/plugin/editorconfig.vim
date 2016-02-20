@@ -36,6 +36,8 @@ let g:loaded_EditorConfig = 1
 let s:saved_cpo = &cpo
 set cpo&vim
 
+let s:pyscript_path = expand('<sfile>:p:r') . '.py'
+
 " variables {{{1
 if !exists('g:EditorConfig_exec_path')
     let g:EditorConfig_exec_path = ''
@@ -119,15 +121,15 @@ function! s:FindPythonFiles() " {{{1
 
     let l:python_core_files_dir = fnamemodify(
                 \ findfile(g:EditorConfig_python_files_dir . '/main.py',
-                \ ','.&runtimepath), ':p:h')
+                \ fnameescape(','.&runtimepath)), ':p:h')
 
     if empty(l:python_core_files_dir)
         let l:python_core_files_dir = ''
     else
 
-    " expand python core file path to full path, and remove the appending '/'
-    let l:python_core_files_dir = substitute(
-                \ fnamemodify(l:python_core_files_dir, ':p'), '/$', '', '')
+        " expand python core file path to full path, and remove the appending '/'
+        let l:python_core_files_dir = substitute(
+                    \ fnamemodify(l:python_core_files_dir, ':p'), '/$', '', '')
     endif
 
     let &shellslash = l:old_shellslash
@@ -231,48 +233,23 @@ function! s:InitializePythonBuiltin(editorconfig_core_py_dir) " {{{2
 
     let s:builtin_python_initialized = 1
 
-    let l:ret = 0
-
-    if !has('python')
+    if has('python')
+        let s:pyfile_cmd = 'pyfile'
+        let s:py_cmd = 'py'
+    elseif has('python3')
+        let s:pyfile_cmd = 'py3file'
+        let s:py_cmd = 'py3'
+    else
         return 1
     endif
 
-    python << EEOOFF
+    let l:ret = 0
+    " The following line modifies l:ret. This is a bit confusing but
+    " unfortunately to be compatible with Vim 7.3, we cannot use pyeval. This
+    " should be changed in the future.
+    execute s:pyfile_cmd fnameescape(s:pyscript_path)
 
-try:
-    import vim
-    import sys
-except:
-    vim.command('let l:ret = 2')
-
-EEOOFF
-
-    if l:ret != 0
-        return l:ret
-    endif
-
-    python << EEOOFF
-
-try:
-    sys.path.insert(0, vim.eval('a:editorconfig_core_py_dir'))
-
-    import editorconfig
-    import editorconfig.exceptions as editorconfig_except
-
-except:
-    vim.command('let l:ret = 3')
-
-del sys.path[0]
-
-ec_data = {}  # used in order to keep clean Python namespace
-
-EEOOFF
-
-    if l:ret != 0
-        return l:ret
-    endif
-
-    return 0
+    return l:ret
 endfunction
 
 " Do some initalization for the case that the user has specified core mode {{{1
@@ -350,14 +327,19 @@ endif
 
 function! s:UseConfigFiles()
 
+    let l:buffer_name = expand('%:p')
     " ignore buffers without a name
-    if empty(expand('%:p'))
+    if empty(l:buffer_name)
         return
+    endif
+
+    if g:EditorConfig_verbose
+        echo 'Applying EditorConfig on file "' . l:buffer_name . '"'
     endif
 
     " Ignore specific patterns
     for pattern in g:EditorConfig_exclude_patterns
-        if expand('%:p') =~ pattern
+        if l:buffer_name =~ pattern
             return
         endif
     endfor
@@ -388,48 +370,29 @@ augroup END
 function! s:UseConfigFiles_Python_Builtin() " {{{2
 " Use built-in python to run the python EditorConfig core
 
-    let l:config = {}
-    let l:ret = 0
-
     " ignore buffers that do not have a file path associated
     if empty(expand('%:p'))
         return 0
     endif
 
-    python << EEOOFF
+    let l:config = {}
 
-ec_data['filename'] = vim.eval("expand('%:p')")
-ec_data['conf_file'] = ".editorconfig"
-
-try:
-    ec_data['options'] = editorconfig.get_properties(ec_data['filename'])
-except editorconfig_except.EditorConfigError as e:
-    if int(vim.eval('g:EditorConfig_verbose')) != 0:
-        print >> sys.stderr, str(e)
-    vim.command('let l:ret = 1')
-
-EEOOFF
+    let l:ret = 0
+    execute s:py_cmd 'ec_UseConfigFiles()'
     if l:ret != 0
         return l:ret
     endif
 
-    python << EEOOFF
-for key, value in ec_data['options'].items():
-    vim.command("let l:config['" + key.replace("'", "''") + "'] = " +
-        "'" + value.replace("'", "''") + "'")
-
-EEOOFF
-
     call s:ApplyConfig(l:config)
 
-    return 0
+    return l:ret
 endfunction
 
 function! s:UseConfigFiles_Python_External() " {{{2
 " Use external python interp to run the python EditorConfig Core
 
-    let l:cmd = s:editorconfig_python_interp . ' ' .
-                \ s:editorconfig_core_py_dir . '/main.py'
+    let l:cmd = shellescape(s:editorconfig_python_interp) . ' ' .
+                \ shellescape(s:editorconfig_core_py_dir . '/main.py')
 
     call s:SpawnExternalParser(l:cmd)
 
@@ -485,6 +448,11 @@ function! s:SpawnExternalParser(cmd) " {{{2
             echo l:parsing_result
             echohl None
             return
+        endif
+
+        if g:EditorConfig_verbose
+            echo 'Output from EditorConfig core executable:'
+            echo l:parsing_result
         endif
 
         for one_line in l:parsing_result
@@ -609,7 +577,9 @@ function! s:ApplyConfig(config) " {{{1
             if l:max_line_length > 0
                 if g:EditorConfig_max_line_indicator == 'line'
                     let &l:colorcolumn = l:max_line_length + 1
-                elseif g:EditorConfig_max_line_indicator == 'fill'
+                elseif g:EditorConfig_max_line_indicator == 'fill' &&
+                            \ l:max_line_length < &l:columns
+                    " Fill only if the columns of screen is large enough
                     let &l:colorcolumn = join(
                                 \ range(l:max_line_length+1,&l:columns),',')
                 endif
