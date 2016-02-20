@@ -35,8 +35,15 @@ endif
 
 " Generic C, C++, Objective-C
 if !exists('g:formatdef_clangformat')
-    let g:formatdef_clangformat = "'clang-format -lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: WebKit, AlignTrailingComments: true, '.(&textwidth ? 'ColumnLimit: '.&textwidth.', ' : '').(&expandtab ? 'UseTab: Never, IndentWidth: '.shiftwidth() : 'UseTab: Always').'}\"'"
+    let s:configfile_def = "'clang-format -lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=file'"
+    let s:noconfigfile_def = "'clang-format -lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: WebKit, AlignTrailingComments: true, '.(&textwidth ? 'ColumnLimit: '.&textwidth.', ' : '').(&expandtab ? 'UseTab: Never, IndentWidth: '.shiftwidth() : 'UseTab: Always').'}\"'"
+    let g:formatdef_clangformat = "g:ClangFormatConfigFileExists() ? (" . s:configfile_def . ") : (" . s:noconfigfile_def . ")"
 endif
+
+function! g:ClangFormatConfigFileExists()
+    return len(findfile(".clang-format", expand("%:p:h").";")) || len(findfile("_clang-format", expand("%:p:h").";"))
+endfunction
+
 
 
 " C
@@ -67,7 +74,7 @@ endif
 
 " Java
 if !exists('g:formatdef_astyle_java')
-    let g:formatdef_astyle_java = '"astyle --mode=java --style=ansi -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+    let g:formatdef_astyle_java = '"astyle --mode=java --style=java -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 endif
 
 if !exists('g:formatters_java')
@@ -223,17 +230,22 @@ endif
 
 " Perl
 if !exists('g:formatdef_perltidy')
-  " use perltidyrc file if readable
-  if (has("win32") && (filereadable("perltidy.ini") || filereadable($HOMEPATH."/perltidy.ini"))) ||
-        \ ((has("unix") || has("mac")) && (filereadable(".perltidyrc") || filereadable("~/.perltidyrc") || filereadable("/usr/local/etc/perltidyrc") || filereadable("/etc/perltidyrc")))
-    let g:formatdef_perltidy = '"perltidy -q -st"'
-  else
-    let g:formatdef_perltidy = '"perltidy --perl-best-practices --format-skipping -q "'
-  endif
+    " use perltidyrc file if readable
+    if (has("win32") && (filereadable("perltidy.ini") ||
+                \ filereadable($HOMEPATH."/perltidy.ini"))) ||
+                \ ((has("unix") ||
+                \ has("mac")) && (filereadable(".perltidyrc") ||
+                \ filereadable("~/.perltidyrc") ||
+                \ filereadable("/usr/local/etc/perltidyrc") ||
+                \ filereadable("/etc/perltidyrc")))
+        let g:formatdef_perltidy = '"perltidy -q -st"'
+    else
+        let g:formatdef_perltidy = '"perltidy --perl-best-practices --format-skipping -q "'
+    endif
 endif
 
 if !exists('g:formatters_perl')
-  let g:formatters_perl = ['perltidy']
+    let g:formatters_perl = ['perltidy']
 endif
 
 " Haskell
