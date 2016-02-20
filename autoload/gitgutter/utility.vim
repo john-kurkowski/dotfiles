@@ -2,12 +2,23 @@ let s:file = ''
 let s:using_xolox_shell = -1
 let s:exit_code = 0
 let s:fish = &shell =~# 'fish'
+let s:jobs = {}
 
 function! gitgutter#utility#warn(message)
   echohl WarningMsg
   echo 'vim-gitgutter: ' . a:message
   echohl None
   let v:warningmsg = a:message
+endfunction
+
+function! gitgutter#utility#warn_once(message, key)
+  if empty(getbufvar(s:bufnr, a:key))
+    call setbufvar(s:bufnr, a:key, '1')
+    echohl WarningMsg
+    redraw | echo 'vim-gitgutter: ' . a:message
+    echohl None
+    let v:warningmsg = a:message
+  endif
 endfunction
 
 " Returns truthy when the buffer's file should be processed; and falsey when it shouldn't.
@@ -151,4 +162,18 @@ endfunction
 
 function! gitgutter#utility#strip_trailing_new_line(line)
   return substitute(a:line, '\n$', '', '')
+endfunction
+
+function! gitgutter#utility#pending_job(job_id)
+  let s:jobs[a:job_id] = 1
+endfunction
+
+function! gitgutter#utility#is_pending_job(job_id)
+  return has_key(s:jobs, a:job_id)
+endfunction
+
+function! gitgutter#utility#job_output_received(job_id, event)
+  if has_key(s:jobs, a:job_id)
+    unlet s:jobs[a:job_id]
+  endif
 endfunction
