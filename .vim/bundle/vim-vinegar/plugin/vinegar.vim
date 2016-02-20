@@ -44,13 +44,11 @@ function! s:opendir(cmd) abort
     let currdir = fnamemodify(b:netrw_curdir, ':t')
     execute s:netrw_up
     call s:seek(currdir)
+  elseif expand('%') =~# '^$\|^term:[\/][\/]'
+    execute a:cmd '.'
   else
-    if empty(expand('%'))
-      execute a:cmd '.'
-    else
-      execute a:cmd '%:h/'
-      call s:seek(expand('#:t'))
-    endif
+    execute a:cmd '%:h/'
+    call s:seek(expand('#:t'))
   endif
 endfunction
 
@@ -79,7 +77,7 @@ endfunction
 function! s:setup_vinegar() abort
   if empty(s:netrw_up)
     " save netrw mapping
-    let s:netrw_up = maparg('-', 'n')
+    let s:netrw_up = substitute(maparg('-', 'n'), '\c^:\%(<c-u>\)\=', '', '')
     " saved string is like this:
     " :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>172_NetrwBrowseChgDir(1,'../'))<CR>
     " remove <CR> at the end (otherwise raises "E488: Trailing characters")
