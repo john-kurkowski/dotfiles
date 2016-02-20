@@ -40,6 +40,21 @@
   box-shadow: auto;
 }
 
+.background-4 {
+  background-position-x: x-start;
+  background-position-y: x-end;
+  background-position-inline: y-start;
+  background-position-block: y-end;
+  corner-shape: bevel;
+  corners: scoop;
+  border-limit: notch;
+  border-clip: auto;
+  border-clip-top: auto;
+  border-clip-right: auto;
+  border-clip-bottom: auto;
+  border-clip-left: auto;
+}
+
 .box {
   overflow-style: scrollbar;
   overflow-x: panner;
@@ -55,7 +70,7 @@
 }
 
 .break {
-  break-after: any;
+  break-after: auto;
   break-before: auto;
   break-inside: auto;
   box-decoration-break: auto;
@@ -166,6 +181,10 @@
   display: smooth;
 }
 
+.cssom {
+  display: auto;
+}
+
 .display {
   box-suppress: flow;
   display: flow-root;
@@ -179,6 +198,13 @@
   wrap-through: maximum;
 }
 
+.filter-effects {
+  flood-color: sRGB;
+  flood-opacity: linearRGB;
+  color-interpolation-filters: auto;
+  lighting-color: auto;
+}
+
 .flexbox {
   flex-direction: flex;
   flex-wrap: inline-flex;
@@ -188,6 +214,10 @@
   flex-grow: wrap;
   flex-shrink: wrap-reverse;
   flex-basis: main-size;
+}
+
+.font-loading-3 {
+  display: auto;
 }
 
 .fonts {
@@ -241,6 +271,10 @@
   display: target-text(attr(href url));
   display: open;
   display: closed;
+}
+
+.geometry-1 {
+  display: auto;
 }
 
 .grid {
@@ -321,6 +355,13 @@
   mask-border-repeat: auto;
   mask-border: auto;
   mask-type: auto;
+}
+
+.motion-1 {
+  motion-path: path(M 100 100 L 300 100 L 200 300 z);
+  motion-offset: auto;
+  motion-rotation: auto;
+  motion: auto;
 }
 
 .multicol {
@@ -467,6 +508,10 @@
   display: auto;
 }
 
+.selectors-nonelement-1::attr(title) {
+  display: auto;
+}
+
 .shapes {
   shape-outside: margin-box;
   shape-image-threshold: inset(50% 50% 50% 50%);
@@ -506,6 +551,10 @@
   display: 10st;
   display: moderate;
   display: reduced;
+}
+
+.syntax {
+  display: auto;
 }
 
 .text-3 {
@@ -621,6 +670,16 @@
 
 .variables {
   var-foo: var(foo);
+}
+
+@viewport {
+  min-zoom: auto;
+  max-zoom: auto;
+  user-zoom: auto;
+}
+
+.web-animations {
+  display: auto;
 }
 
 .will-change {
