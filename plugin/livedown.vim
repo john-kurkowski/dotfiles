@@ -15,14 +15,24 @@ if !exists('g:livedown_port')
 endif
 
 function! s:LivedownPreview()
-  call system("livedown start '" . expand('%:p') . "'" .
-        \ (g:livedown_open ? " --open" : "") .
-        \ " --port " . g:livedown_port .
-        \ " &")
+  if has('win32')
+    silent! call system("start /B " . "livedown start \"" . expand('%:p') . "\"" .
+      \ (g:livedown_open ? " --open" : "") .
+      \ " --port " . g:livedown_port)
+  else 
+    call system("livedown start '" . expand('%:p') . "'" .
+      \ (g:livedown_open ? " --open" : "") .
+      \ " --port " . g:livedown_port .
+      \ " &")
+  endif
 endfunction
 
 function! s:LivedownKill()
-  call system("livedown stop --port " . g:livedown_port . " &")
+  if has('win32')
+    silent! call system("start /B livedown stop --port " . g:livedown_port)
+  else 
+    call system("livedown stop --port " . g:livedown_port . " &")
+  endif
 endfunction
 
 function! s:LivedownToggle()
