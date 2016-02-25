@@ -84,7 +84,13 @@ endif
 
 " Javascript
 if !exists('g:formatdef_jsbeautify_javascript')
-    let g:formatdef_jsbeautify_javascript = '"js-beautify -f - -".(&expandtab ? "s ".shiftwidth() : "t").(&textwidth ? " -w ".&textwidth : "")'
+    if filereadable('.jsbeautifyrc')
+        let g:formatdef_jsbeautify_javascript = '"js-beautify"'
+    elseif filereadable(expand('~/.jsbeautifyrc'))
+        let g:formatdef_jsbeautify_javascript = '"js-beautify"'
+    else
+        let g:formatdef_jsbeautify_javascript = '"js-beautify -f - -".(&expandtab ? "s ".shiftwidth() : "t").(&textwidth ? " -w ".&textwidth : "")'
+    endif
 endif
 
 if !exists('g:formatdef_pyjsbeautify_javascript')
@@ -206,8 +212,12 @@ if !exists('g:formatdef_gofmt_2')
     let g:formatdef_gofmt_2 = '"gofmt"'
 endif
 
+if !exists('g:formatdef_goimports')
+    let g:formatdef_goimports = '"goimports"'
+endif
+
 if !exists('g:formatters_go')
-    let g:formatters_go = ['gofmt_1', 'gofmt_2']
+    let g:formatters_go = ['gofmt_1', 'goimports', 'gofmt_2']
 endif
 
 " Rust
