@@ -61,7 +61,9 @@ plugins=(
   osx
   pip
   rsync
+  vi-mode
   zsh-syntax-highlighting
+  # zsh-syntax-highlighting must come before history-substring-search, according to its README
   history-substring-search
 )
 
@@ -69,8 +71,6 @@ source $ZSH/oh-my-zsh.sh
 
 setopt extendedglob
 unsetopt share_history
-
-set -o vi
 
 export HISTCONTROL=ignoredups
 bindkey "${terminfo[kcuu1]}" history-substring-search-up
