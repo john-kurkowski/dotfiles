@@ -70,9 +70,9 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 setopt extendedglob
+setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
-export HISTCONTROL=ignoredups
 bindkey "${terminfo[kcuu1]}" history-substring-search-up
 bindkey "${terminfo[kcud1]}" history-substring-search-down
 
