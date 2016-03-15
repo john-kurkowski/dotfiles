@@ -36,3 +36,5 @@
 	autostash = true
 	instructionFormat = %d %s (%cr) <%an>
 	preserve-merges = true
+[rerere]
+	enabled = true
