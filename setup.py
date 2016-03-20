@@ -6,7 +6,6 @@ from __future__ import with_statement
 
 import argparse
 import errno
-import glob
 import os
 import re
 import shutil
@@ -63,16 +62,6 @@ def copy_dotfiles(dest):
             shutil.copy2(src, dest_dotfile)
 
 
-def copy_host_specific_dotfiles(dest, host_specific_settings):
-    hostspecific = os.path.join(dest, '.hostspecific')
-    if host_specific_settings:
-        settings = os.path.join(MOD_DIR, 'settings', host_specific_settings)
-        shutil.copy2(settings, hostspecific)
-    else:
-        with open(hostspecific, 'w') as _:
-            pass
-
-
 def install_user(dest, email):
     '''Set the email for Git commits on the system.'''
     gitrc = os.path.join(dest, '.gitconfig')
@@ -87,7 +76,6 @@ def install(args):
     dest = os.path.expanduser('~/')
     clear_tracked(dest)
     copy_dotfiles(dest)
-    copy_host_specific_dotfiles(dest, args.settings)
     install_user(dest, args.email)
 
 
@@ -102,9 +90,6 @@ def export(dummy_args):
 
 def main():
     '''Parse args and execute their subcommand.'''
-    setting_paths = glob.glob(os.path.join(MOD_DIR, 'settings', '[A-Za-z]*'))
-    settings_choices = [os.path.basename(p) for p in setting_paths]
-
     parser = argparse.ArgumentParser(description="Install dotfiles")
     subparsers = parser.add_subparsers(title='subcommands')
 
@@ -112,8 +97,6 @@ def main():
     install_cmd.set_defaults(func=install)
     install_cmd.add_argument('--email', '-e', default='john.kurkowski@gmail.com',
                              help='Git author email address (default: personal)')
-    install_cmd.add_argument('settings', choices=settings_choices,
-                             help='Install a predefined suite of settings.')
 
     export_cmd = subparsers.add_parser('export')
     export_cmd.set_defaults(func=export)
