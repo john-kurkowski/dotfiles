@@ -704,7 +704,7 @@ function! s:Git(bang, args) abort
   let args = matchstr(a:args,'\v\C.{-}%($|\\@<!%(\\\\)*\|)@=')
   if exists(':terminal')
     let dir = s:repo().tree()
-    tabedit %
+    -tabedit %
     execute 'lcd' fnameescape(dir)
     execute 'terminal' git args
   else
@@ -863,7 +863,9 @@ function! s:StageUndo() abort
   let hash = repo.git_chomp('hash-object', '-w', filename)
   if !empty(hash)
     if section ==# 'untracked'
-      call delete(s:repo().tree(filename))
+      call repo.git_chomp_in_tree('clean', '--', filename)
+    elseif section ==# 'unmerged'
+      call repo.git_chomp_in_tree('rm', '--', filename)
     elseif section ==# 'unstaged'
       call repo.git_chomp_in_tree('checkout', '--', filename)
     else
@@ -1087,7 +1089,7 @@ function! s:Commit(args, ...) abort
         if bufname('%') == '' && line('$') == 1 && getline(1) == '' && !&mod
           execute 'keepalt edit '.s:fnameescape(msgfile)
         elseif a:args =~# '\%(^\| \)-\%(-verbose\|\w*v\)\>'
-          execute 'keepalt '.(tabpagenr()-1).'tabedit '.s:fnameescape(msgfile)
+          execute 'keepalt -tabedit '.s:fnameescape(msgfile)
         elseif s:buffer().type() ==# 'index'
           execute 'keepalt edit '.s:fnameescape(msgfile)
           execute (search('^#','n')+1).'wincmd+'
@@ -1566,6 +1568,7 @@ function! s:Write(force,...) abort
 
   unlet! restorewinnr
   let zero = s:repo().translate(':0:'.path)
+  silent execute 'doautocmd BufWritePost' s:fnameescape(zero)
   for tab in range(1,tabpagenr('$'))
     for winnr in range(1,tabpagewinnr(tab,'$'))
       let bufnr = tabpagebuflist(tab)[winnr-1]
@@ -2324,7 +2327,7 @@ function! s:Browse(bang,line1,count,...) abort
     let url = s:gsub(url, '[ <>]', '\="%".printf("%02X",char2nr(submatch(0)))')
     if a:bang
       if has('clipboard')
-        let @* = url
+        let @+ = url
       endif
       return 'echomsg '.string(url)
     elseif exists(':Browse') == 2
@@ -2689,7 +2692,7 @@ function! s:BufReadObject() abort
         if b:fugitive_display_format
           call s:ReplaceCmd(s:repo().git_command('cat-file',b:fugitive_type,hash))
         else
-          call s:ReplaceCmd(s:repo().git_command('show','--no-color','--pretty=format:tree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%nencoding %e%n%n%s%n%n%b',hash))
+          call s:ReplaceCmd(s:repo().git_command('show','--no-color','--pretty=format:tree%x20%T%nparent%x20%P%nauthor%x20%an%x20<%ae>%x20%ad%ncommitter%x20%cn%x20<%ce>%x20%cd%nencoding%x20%e%n%n%s%n%n%b',hash))
           keepjumps call search('^parent ')
           if getline('.') ==# 'parent '
             silent keepjumps delete_
