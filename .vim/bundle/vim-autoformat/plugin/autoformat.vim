@@ -69,10 +69,10 @@ function! s:TryAllFormatters(...) range
     " Make sure formatters are defined and detected
     if !call('<SID>find_formatters', a:000)
         " No formatters defined
-        if g:autoformat_autoindent == 1
-            " Autoindent code
-            exe "normal gg=G"
+        if verbose
+            echomsg "No format definitions are defined for this filetype."
         endif
+        call s:Fallback()
         return 0
     endif
 
@@ -97,7 +97,7 @@ function! s:TryAllFormatters(...) range
 
         " Eval twice, once for getting definition content,
         " once for getting the final expression
-        let &formatprg = eval(eval(formatdef_var))
+        let b:formatprg = eval(eval(formatdef_var))
 
         " Detect if +python or +python3 is available, and call the corresponding function
         if !has("python") && !has("python3")
@@ -106,10 +106,10 @@ function! s:TryAllFormatters(...) range
                 \ echohl None
             return 1
         endif
-        if has("python")
-            let success = s:TryFormatterPython()
-        else
+        if has("python3")
             let success = s:TryFormatterPython3()
+        else
+            let success = s:TryFormatterPython()
         endif
         if success
             if verbose
@@ -128,16 +128,37 @@ function! s:TryAllFormatters(...) range
                 echomsg "No format definitions were successful."
             endif
             " Tried all formatters, none worked
-            if g:autoformat_autoindent == 1
-                if verbose
-                    echomsg "Trying to autoindent code."
-                endif
-                " Autoindent code
-                exe "normal gg=G"
-            endif
+            call s:Fallback()
             return 0
         endif
     endwhile
+endfunction
+
+function! s:Fallback()
+    " Detect verbosity
+    let verbose = &verbose || g:autoformat_verbosemode == 1
+
+    if exists('b:autoformat_remove_trailing_spaces') ? b:autoformat_remove_trailing_spaces == 1 : g:autoformat_remove_trailing_spaces == 1
+        if verbose
+            echomsg "Removing trailing whitespace..."
+        endif
+        call s:RemoveTrailingSpaces()
+    endif
+
+    if exists('b:autoformat_retab') ? b:autoformat_retab == 1 : g:autoformat_retab == 1
+        if verbose
+            echomsg "Retabbing..."
+        endif
+        retab
+    endif
+
+    if exists('b:autoformat_autoindent') ? b:autoformat_autoindent == 1 : g:autoformat_autoindent == 1
+        if verbose
+            echomsg "Autoindenting..."
+        endif
+        " Autoindent code
+        exe "normal gg=G"
+    endif
 
 endfunction
 
@@ -154,17 +175,21 @@ function! s:TryFormatterPython()
 python << EOF
 import vim, subprocess, os
 from subprocess import Popen, PIPE
-
 text = os.linesep.join(vim.current.buffer[:]) + os.linesep
-formatprg = vim.eval('&formatprg')
+formatprg = vim.eval('b:formatprg')
 verbose = bool(int(vim.eval('verbose')))
+
 env = os.environ.copy()
 if int(vim.eval('exists("g:formatterpath")')):
     extra_path = vim.eval('g:formatterpath')
     env['PATH'] = ':'.join(extra_path) + ':' + env['PATH']
 
+# When an entry is unicode, Popen can't deal with it in Python 2.
+# As a pragmatic fix, we'll omit that entry.
+env = {key : val for key, val in env.iteritems() if type(key) == type(val) == str}
 p = subprocess.Popen(formatprg, env=env, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 stdoutdata, stderrdata = p.communicate(text)
+
 if stderrdata:
     if verbose:
         formattername = vim.eval('b:formatters[s:index]')
@@ -204,7 +229,7 @@ import vim, subprocess, os
 from subprocess import Popen, PIPE
 
 text = bytes(os.linesep.join(vim.current.buffer[:]) + os.linesep, 'utf-8')
-formatprg = vim.eval('&formatprg')
+formatprg = vim.eval('b:formatprg')
 verbose = bool(int(vim.eval('verbose')))
 env = os.environ.copy()
 if int(vim.eval('exists("g:formatterpath")')):
@@ -282,3 +307,15 @@ endfunction
 command! NextFormatter call s:NextFormatter()
 command! PreviousFormatter call s:PreviousFormatter()
 command! CurrentFormatter call s:CurrentFormatter()
+
+" Other commands
+function! s:RemoveTrailingSpaces()
+    let user_gdefault = &gdefault
+    try
+        set nogdefault
+        silent! %s/\s\+$
+    finally
+        let &gdefault = user_gdefault
+    endtry
+endfunction
+command! RemoveTrailingSpaces call s:RemoveTrailingSpaces()
