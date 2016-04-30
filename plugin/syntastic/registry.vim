@@ -102,6 +102,7 @@ let s:_DEFAULT_CHECKERS = {
         \ 'xquery':        ['basex'],
         \ 'yacc':          ['bison'],
         \ 'yaml':          ['jsyaml'],
+        \ 'yang':          ['pyang'],
         \ 'z80':           ['z80syntaxchecker'],
         \ 'zpt':           ['zptlint'],
         \ 'zsh':           ['zsh'],
@@ -184,7 +185,7 @@ endfunction " }}}2
 " not run).
 function! g:SyntasticRegistry.getCheckers(ftalias, hints_list) abort " {{{2
     let ft = s:_normalise_filetype(a:ftalias)
-    call self._loadCheckersFor(ft)
+    call self._loadCheckersFor(ft, 0)
 
     let checkers_map = self._checkerMap[ft]
     if empty(checkers_map)
@@ -233,7 +234,7 @@ endfunction " }}}2
 
 function! g:SyntasticRegistry.getNamesOfAvailableCheckers(ftalias) abort " {{{2
     let ft = s:_normalise_filetype(a:ftalias)
-    call self._loadCheckersFor(ft)
+    call self._loadCheckersFor(ft, 0)
     return keys(filter( copy(self._checkerMap[ft]), 'v:val.isAvailable()' ))
 endfunction " }}}2
 
@@ -320,9 +321,8 @@ function! g:SyntasticRegistry._filterCheckersByName(checkers_map, list) abort " 
     return filter( map(copy(a:list), 'get(a:checkers_map, v:val, {})'), '!empty(v:val)' )
 endfunction " }}}2
 
-function! g:SyntasticRegistry._loadCheckersFor(filetype, ...) abort " {{{2
-    " XXX: a:1 == 1 means re-scan checkers for filetype
-    if has_key(self._checkerMap, a:filetype) && (!a:0 || !a:1)
+function! g:SyntasticRegistry._loadCheckersFor(filetype, force) abort " {{{2
+    if !a:force && has_key(self._checkerMap, a:filetype)
         return
     endif
 
