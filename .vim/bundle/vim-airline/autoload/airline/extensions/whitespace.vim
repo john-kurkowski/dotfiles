@@ -13,10 +13,9 @@ let s:long_format = get(g:, 'airline#extensions#whitespace#long_format', 'long[%
 let s:mixed_indent_file_format = get(g:, 'airline#extensions#whitespace#mixed_indent_file_format', 'mix-indent-file[%s]')
 let s:indent_algo = get(g:, 'airline#extensions#whitespace#mixed_indent_algo', 0)
 let s:skip_check_ft = {'make': ['indent', 'mixed-indent-file'] }
-
 let s:max_lines = get(g:, 'airline#extensions#whitespace#max_lines', 20000)
-
 let s:enabled = get(g:, 'airline#extensions#whitespace#enabled', 1)
+let s:c_like_langs = get(g:, 'airline#extensions#c_like_langs', [ 'c', 'cpp', 'cuda', 'javascript', 'ld', 'php' ])
 
 function! s:check_mixed_indent()
   if s:indent_algo == 1
@@ -35,8 +34,8 @@ function! s:check_mixed_indent()
 endfunction
 
 function! s:check_mixed_indent_file()
-  if stridx(&ft, 'c') == 0 || stridx(&ft, 'cpp') == 0 || stridx(&ft, 'javascript') == 0
-    " for C/CPP only allow /** */ comment style with one space before the '*'
+  if index(s:c_like_langs, &ft) > -1
+    " for C-like languages: allow /** */ comment style with one space before the '*'
     let head_spc = '\v(^ +\*@!)'
   else
     let head_spc = '\v(^ +)'
@@ -140,4 +139,3 @@ function! airline#extensions#whitespace#init(...)
     autocmd CursorHold,BufWritePost * unlet! b:airline_whitespace_check
   augroup END
 endfunction
-
