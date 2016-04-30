@@ -11,6 +11,8 @@ let s:hunk_re = '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@'
 
 let s:fish = &shell =~# 'fish'
 
+let s:c_flag = gitgutter#utility#git_supports_command_line_config_override()
+
 let s:temp_index = tempname()
 let s:temp_buffer = tempname()
 
@@ -63,7 +65,7 @@ function! gitgutter#diff#run_diff(realtime, preserve_full_diff)
   endif
 
   if a:realtime
-    let blob_name = ':'.gitgutter#utility#shellescape(gitgutter#utility#file_relative_to_repo_root())
+    let blob_name = g:gitgutter_diff_base.':'.gitgutter#utility#shellescape(gitgutter#utility#file_relative_to_repo_root())
     let blob_file = s:temp_index
     let buff_file = s:temp_buffer
     let extension = gitgutter#utility#extension()
@@ -88,11 +90,16 @@ function! gitgutter#diff#run_diff(realtime, preserve_full_diff)
     call setpos("']", op_mark_end)
   endif
 
-  let cmd .= 'git -c "diff.autorefreshindex=0" diff --no-ext-diff --no-color -U0 '.g:gitgutter_diff_args.' -- '
+  let cmd .= 'git'
+  if s:c_flag
+    let cmd .= ' -c "diff.autorefreshindex=0"'
+  endif
+  let cmd .= ' diff --no-ext-diff --no-color -U0 '.g:gitgutter_diff_args.' '
+
   if a:realtime
-    let cmd .= blob_file.' '.buff_file
+    let cmd .= ' -- '.blob_file.' '.buff_file
   else
-    let cmd .= gitgutter#utility#shellescape(gitgutter#utility#filename())
+    let cmd .= g:gitgutter_diff_base.' -- '.gitgutter#utility#shellescape(gitgutter#utility#filename())
   endif
 
   if !a:preserve_full_diff && s:grep_available
@@ -116,28 +123,20 @@ function! gitgutter#diff#run_diff(realtime, preserve_full_diff)
     endif
   end
 
-  if !tracked
-    call setbufvar(bufnr, 'gitgutter_tracked', 1)
-  endif
+  let cmd = gitgutter#utility#command_in_directory_of_file(cmd)
 
-  if has('nvim') && !a:preserve_full_diff
-    let cmd = gitgutter#utility#command_in_directory_of_file(cmd)
-    " Note that when `cmd` doesn't produce any output, i.e. the diff is empty,
-    " the `stdout` event is not fired on the job handler.  Therefore we keep
-    " track of the jobs ourselves so we can spot empty diffs.
-    let job_id = jobstart([&shell, '-c', cmd], {
-          \ 'on_stdout': function('gitgutter#handle_diff_job'),
-          \ 'on_stderr': function('gitgutter#handle_diff_job'),
-          \ 'on_exit':   function('gitgutter#handle_diff_job')
-          \ })
-    call gitgutter#utility#pending_job(job_id)
+  if g:gitgutter_async && gitgutter#async#available() && !a:preserve_full_diff
+    call gitgutter#async#execute(cmd)
     return 'async'
+
   else
-    let diff = gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file(cmd))
+    let diff = gitgutter#utility#system(cmd)
+
     if gitgutter#utility#shell_error()
       " A shell error indicates the file is not tracked by git (unless something bizarre is going on).
       throw 'diff failed'
     endif
+
     return diff
   endif
 endfunction
@@ -282,11 +281,11 @@ endfunction
 " Generates a zero-context diff for the current hunk.
 "
 " diff - the full diff for the buffer
-" type - stage | revert | preview
+" type - stage | undo | preview
 function! gitgutter#diff#generate_diff_for_hunk(diff, type)
-  let diff_for_hunk = gitgutter#diff#discard_hunks(a:diff, a:type == 'stage' || a:type == 'revert')
+  let diff_for_hunk = gitgutter#diff#discard_hunks(a:diff, a:type == 'stage' || a:type == 'undo')
 
-  if a:type == 'stage' || a:type == 'revert'
+  if a:type == 'stage' || a:type == 'undo'
     let diff_for_hunk = gitgutter#diff#adjust_hunk_summary(diff_for_hunk, a:type == 'stage')
   endif
 
@@ -311,17 +310,17 @@ function! gitgutter#diff#discard_hunks(diff, keep_header)
   endfor
 
   if a:keep_header
-    return join(modified_diff, "\n") . "\n"
+    return gitgutter#utility#stringify(modified_diff)
   else
     " Discard hunk summary too.
-    return join(modified_diff[1:], "\n") . "\n"
+    return gitgutter#utility#stringify(modified_diff[1:])
   endif
 endfunction
 
 " Adjust hunk summary (from's / to's line number) to ignore changes above/before this one.
 "
 " diff_for_hunk - a diff containing only the hunk of interest
-" staging       - truthy if the hunk is to be staged, falsy if it is to be reverted
+" staging       - truthy if the hunk is to be staged, falsy if it is to be undone
 "
 " TODO: push this down to #discard_hunks?
 function! gitgutter#diff#adjust_hunk_summary(diff_for_hunk, staging)
@@ -339,6 +338,6 @@ function! gitgutter#diff#adjust_hunk_summary(diff_for_hunk, staging)
     endif
     call add(adj_diff, line)
   endfor
-  return join(adj_diff, "\n") . "\n"
+  return gitgutter#utility#stringify(adj_diff)
 endfunction
 

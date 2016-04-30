@@ -25,6 +25,7 @@ function! gitgutter#process_buffer(bufnr, realtime)
         endif
       endif
     catch /diff failed/
+      call gitgutter#debug#log('diff failed')
       call gitgutter#hunk#reset()
     endtry
   else
@@ -33,29 +34,11 @@ function! gitgutter#process_buffer(bufnr, realtime)
 endfunction
 
 
-function! gitgutter#handle_diff_job(job_id, data, event)
-  if a:event == 'stdout'
-    " a:data is a list
-    call gitgutter#utility#job_output_received(a:job_id, 'stdout')
-    call gitgutter#handle_diff(join(a:data,"\n")."\n")
-
-  elseif a:event == 'exit'
-    " If the exit event is triggered without a preceding stdout event,
-    " the diff was empty.
-    if gitgutter#utility#is_pending_job(a:job_id)
-      call gitgutter#handle_diff("")
-      call gitgutter#utility#job_output_received(a:job_id, 'exit')
-    endif
-
-  else
-    call gitgutter#hunk#reset()
-    call gitgutter#utility#job_output_received(a:job_id, 'stderr')
-
-  endif
-endfunction
-
-
 function! gitgutter#handle_diff(diff)
+  call gitgutter#debug#log(a:diff)
+
+  call setbufvar(gitgutter#utility#bufnr(), 'gitgutter_tracked', 1)
+
   call gitgutter#hunk#set_hunks(gitgutter#diff#parse_diff(a:diff))
   let modified_lines = gitgutter#diff#process_hunks(gitgutter#hunk#hunks())
 
@@ -201,7 +184,7 @@ function! gitgutter#stage_hunk()
   endif
 endfunction
 
-function! gitgutter#revert_hunk()
+function! gitgutter#undo_hunk()
   if gitgutter#utility#is_active()
     " Ensure the working copy of the file is up to date.
     " It doesn't make sense to stage a hunk otherwise.
@@ -212,14 +195,14 @@ function! gitgutter#revert_hunk()
     if empty(gitgutter#hunk#current_hunk())
       call gitgutter#utility#warn('cursor is not in a hunk')
     else
-      let diff_for_hunk = gitgutter#diff#generate_diff_for_hunk(diff, 'revert')
+      let diff_for_hunk = gitgutter#diff#generate_diff_for_hunk(diff, 'undo')
       call gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file('git apply --reverse --unidiff-zero - '), diff_for_hunk)
 
       " reload file
       silent edit
     endif
 
-    silent! call repeat#set("\<Plug>GitGutterRevertHunk", -1)<CR>
+    silent! call repeat#set("\<Plug>GitGutterUndoHunk", -1)<CR>
   endif
 endfunction
 
