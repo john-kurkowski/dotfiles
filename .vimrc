@@ -47,6 +47,7 @@ let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 filetype plugin indent on
+runtime macros/matchit.vim
 set ofu=syntaxcomplete#Complete
 
 let g:syntastic_aggregate_errors = 1
