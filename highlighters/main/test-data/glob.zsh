@@ -30,9 +30,9 @@
 BUFFER=': foo* bar? *baz qux\?'
 
 expected_region_highlight=(
-  "1 1 $ZSH_HIGHLIGHT_STYLES[builtin]" # :
-  "3 6 $ZSH_HIGHLIGHT_STYLES[globbing]" # foo*
-  "8 11 $ZSH_HIGHLIGHT_STYLES[globbing]" # bar?
-  "13 16 $ZSH_HIGHLIGHT_STYLES[globbing]" # *baz
-  "18 22 $ZSH_HIGHLIGHT_STYLES[default]" # qux\?
+  "1 1 builtin" # :
+  "3 6 globbing" # foo*
+  "8 11 globbing" # bar?
+  "13 16 globbing" # *baz
+  "18 22 default" # qux\?
 )
