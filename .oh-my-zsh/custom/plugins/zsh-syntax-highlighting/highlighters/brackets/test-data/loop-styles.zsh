@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2015 zsh-syntax-highlighting contributors
+# Copyright (c) 2016 zsh-syntax-highlighting contributors
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -27,15 +27,25 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
-BUFFER='tar cf - * | (cd /target; tar xfp -) | { cat }'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]=
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]=
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]=
+
+BUFFER=': ({[({[(x)]})]})'
 
 expected_region_highlight=(
-  "1 3 command" # tar
-  "14 14 reserved-word" # (
-  "15 16 builtin" # cd
-  "27 29 command" # tar
-  "36 36 reserved-word" # )
-  "40 40 reserved-word" # {
-  "42 44 command" # cat
-  "46 46 reserved-word" # }
+  "3  3  bracket-level-1"
+  "4  4  bracket-level-2"
+  "5  5  bracket-level-3"
+  "6  6  bracket-level-1"
+  "7  7  bracket-level-2"
+  "8  8  bracket-level-3"
+  "9  9  bracket-level-1"
+  "11 11 bracket-level-1"
+  "12 12 bracket-level-3"
+  "13 13 bracket-level-2"
+  "14 14 bracket-level-1"
+  "15 15 bracket-level-3"
+  "16 16 bracket-level-2"
+  "17 17 bracket-level-1"
 )

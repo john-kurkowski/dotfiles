@@ -27,21 +27,20 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
-ZSH_HIGHLIGHT_STYLES[redirection]=$unused_highlight
 BUFFER='sudo -u >/tmp otheruser ls; sudo ls; sudo -i ls'
 
 expected_region_highlight=(
-  "1 4 $ZSH_HIGHLIGHT_STYLES[precommand]" # sudo
-  "6 7 $ZSH_HIGHLIGHT_STYLES[single-hyphen-option]" # -u
-  "9 9 $ZSH_HIGHLIGHT_STYLES[redirection]" # >
-  "10 13 $ZSH_HIGHLIGHT_STYLES[path]" # /tmp
-  "15 23 $ZSH_HIGHLIGHT_STYLES[default]" # otheruser
-  "25 26 $ZSH_HIGHLIGHT_STYLES[command]" # ls
-  "27 27 $ZSH_HIGHLIGHT_STYLES[commandseparator]" # ;
-  "29 32 $ZSH_HIGHLIGHT_STYLES[precommand]" # sudo
-  "34 35 $ZSH_HIGHLIGHT_STYLES[command]" # ls
-  "36 36 $ZSH_HIGHLIGHT_STYLES[commandseparator]" # ;
-  "38 41 $ZSH_HIGHLIGHT_STYLES[precommand]" # sudo
-  "43 44 $ZSH_HIGHLIGHT_STYLES[single-hyphen-option]" # -i
-  "46 47 $ZSH_HIGHLIGHT_STYLES[command]" # ls
+  "1 4 precommand" # sudo
+  "6 7 single-hyphen-option" # -u
+  "9 9 redirection" # >
+  "10 13 path" # /tmp
+  "15 23 default" # otheruser
+  "25 26 command" # ls
+  "27 27 commandseparator" # ;
+  "29 32 precommand" # sudo
+  "34 35 command" # ls
+  "36 36 commandseparator" # ;
+  "38 41 precommand" # sudo
+  "43 44 single-hyphen-option" # -i
+  "46 47 command" # ls
 )

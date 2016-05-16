@@ -30,9 +30,9 @@
 BUFFER='ps aux | grep java'
 
 expected_region_highlight=(
-  "1  2  $ZSH_HIGHLIGHT_STYLES[command]" # ps
-  "4  6  $ZSH_HIGHLIGHT_STYLES[default]" # aux
-  "8  8  $ZSH_HIGHLIGHT_STYLES[default]" # |
-  "10 13 $ZSH_HIGHLIGHT_STYLES[command]" # grep
-  "15 18 $ZSH_HIGHLIGHT_STYLES[default]" # java
+  "1  2  command" # ps
+  "4  6  default" # aux
+  "8  8  commandseparator" # |
+  "10 13 command" # grep
+  "15 18 default" # java
 )

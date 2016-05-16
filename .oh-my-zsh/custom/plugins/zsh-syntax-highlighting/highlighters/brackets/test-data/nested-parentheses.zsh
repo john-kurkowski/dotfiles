@@ -27,13 +27,17 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]=
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]=
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]=
+
 BUFFER='echo $(echo ${(z)array})'
 
 expected_region_highlight=(
-  "7  7  $ZSH_HIGHLIGHT_STYLES[bracket-level-1]" # (
-  "14 14 $ZSH_HIGHLIGHT_STYLES[bracket-level-2]" # {
-  "15 15 $ZSH_HIGHLIGHT_STYLES[bracket-level-3]" # (
-  "17 17 $ZSH_HIGHLIGHT_STYLES[bracket-level-3]" # )
-  "23 23 $ZSH_HIGHLIGHT_STYLES[bracket-level-2]" # }
-  "24 24 $ZSH_HIGHLIGHT_STYLES[bracket-level-1]" # )
+  "7  7  bracket-level-1" # (
+  "14 14 bracket-level-2" # {
+  "15 15 bracket-level-3" # (
+  "17 17 bracket-level-3" # )
+  "23 23 bracket-level-2" # }
+  "24 24 bracket-level-1" # )
 )
