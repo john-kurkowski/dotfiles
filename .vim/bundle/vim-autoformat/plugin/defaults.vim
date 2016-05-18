@@ -37,15 +37,23 @@ function! g:DoesRangeEqualBuffer(first, last)
     return line('$') != a:last - a:first + 1
 endfunction
 
+" Yapf supports multiple formatter styles: pep8, google, chromium, or facebook
+if !exists('g:formatter_yapf_style')
+    let g:formatter_yapf_style = 'pep8'
+endif
+if !exists('g:formatdef_yapf')
+    let g:formatdef_yapf = "'yapf --style={based_on_style:'.g:formatter_yapf_style.',indent_width:'.&shiftwidth.'} -l '.a:firstline.'-'.a:lastline"
+endif
+
 if !exists('g:formatters_python')
-    let g:formatters_python = ['autopep8']
+    let g:formatters_python = ['autopep8','yapf']
 endif
 
 
 " C#
 if !exists('g:formatdef_astyle_cs')
     if filereadable('.astylerc')
-        let g:formatdef_astyle_cs = '"astyle --mode=cs --options=.astyle"'
+        let g:formatdef_astyle_cs = '"astyle --mode=cs --options=.astylerc"'
     elseif filereadable(expand('~/.astylerc')) || exists('$ARTISTIC_STYLE_OPTIONS')
         let g:formatdef_astyle_cs = '"astyle --mode=cs"'
     else
@@ -74,7 +82,7 @@ endfunction
 " C
 if !exists('g:formatdef_astyle_c')
     if filereadable('.astylerc')
-        let g:formatdef_astyle_c = '"astyle --mode=c --options=.astyle"'
+        let g:formatdef_astyle_c = '"astyle --mode=c --options=.astylerc"'
     elseif filereadable(expand('~/.astylerc')) || exists('$ARTISTIC_STYLE_OPTIONS')
         let g:formatdef_astyle_c = '"astyle --mode=c"'
     else
@@ -90,7 +98,7 @@ endif
 " C++
 if !exists('g:formatdef_astyle_cpp')
     if filereadable('.astylerc')
-        let g:formatdef_astyle_cpp = '"astyle --mode=c --options=.astyle"'
+        let g:formatdef_astyle_cpp = '"astyle --mode=c --options=.astylerc"'
     elseif filereadable(expand('~/.astylerc')) || exists('$ARTISTIC_STYLE_OPTIONS')
         let g:formatdef_astyle_cpp = '"astyle --mode=c"'
     else
@@ -112,7 +120,7 @@ endif
 " Java
 if !exists('g:formatdef_astyle_java')
     if filereadable('.astylerc')
-        let g:formatdef_astyle_java = '"astyle --mode=java --options=.astyle"'
+        let g:formatdef_astyle_java = '"astyle --mode=java --options=.astylerc"'
     elseif filereadable(expand('~/.astylerc')) || exists('$ARTISTIC_STYLE_OPTIONS')
         let g:formatdef_astyle_java = '"astyle --mode=java"'
     else
