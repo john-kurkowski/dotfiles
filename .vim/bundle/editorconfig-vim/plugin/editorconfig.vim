@@ -121,7 +121,7 @@ function! s:FindPythonFiles() " {{{1
 
     let l:python_core_files_dir = fnamemodify(
                 \ findfile(g:EditorConfig_python_files_dir . '/main.py',
-                \ fnameescape(','.&runtimepath)), ':p:h')
+                \ ','.&runtimepath), ':p:h')
 
     if empty(l:python_core_files_dir)
         let l:python_core_files_dir = ''
@@ -563,7 +563,8 @@ function! s:ApplyConfig(config) " {{{1
     endif
 
     " highlight the columns following max_line_length
-    if has_key(a:config, 'max_line_length')
+    if has_key(a:config, 'max_line_length') &&
+                \ a:config['max_line_length'] != 'off'
         let l:max_line_length = str2nr(a:config['max_line_length'])
 
         if l:max_line_length >= 0
