@@ -20,6 +20,7 @@ Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'groenewege/vim-less', { 'for': ['less'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'jnwhiteh/vim-golang', { 'for': ['go'] }
+Plug 'junegunn/limelight.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'leshill/vim-json', { 'for': ['json'] }
