@@ -1,5 +1,54 @@
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin()
+
+Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bronson/vim-visual-star-search'
+Plug 'Chiel92/vim-autoformat'
+Plug 'danhart/flatlandia'
+Plug 'derekwyatt/vim-scala', { 'for': ['scala'] }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'ervandew/supertab'
+Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
+Plug 'groenewege/vim-less', { 'for': ['less'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
+Plug 'jnwhiteh/vim-golang', { 'for': ['go'] }
+Plug 'justinmk/vim-sneak'
+Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
+Plug 'leshill/vim-json', { 'for': ['json'] }
+Plug 'lukaszkorecki/workflowish'
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars'] }
+Plug 'osyo-manga/vim-over'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'scrooloose/syntastic'
+Plug 'shime/vim-livedown', { 'commit': '9afa391', 'for': ['markdown'] }
+Plug 'szw/vim-tags'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-flagship'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-scripts/gitignore'
+
+call plug#end()
+
+autocmd VimEnter *
+  \  if !empty(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall | q
+  \| endif
 
 " == c-l escapes and saves, avoid the pinky stretch
 vmap <C-l> <Esc><Cr>
