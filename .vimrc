@@ -79,6 +79,7 @@ set autoindent
 set nojoinspaces
 set ignorecase
 set number
+set relativenumber
 set ruler
 set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 set backupcopy=yes
