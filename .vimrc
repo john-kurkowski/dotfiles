@@ -28,7 +28,7 @@ Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars'] }
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'scrooloose/syntastic'
-Plug 'shime/vim-livedown', { 'for': ['markdown'] }
+Plug 'shime/vim-livedown', { 'commit': '9afa391', 'for': ['markdown'] }
 Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
