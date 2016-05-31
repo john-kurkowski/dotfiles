@@ -38,13 +38,17 @@ there are a couple good ideas reflecting my opinion above:
     Functionality is an asset. Code is a liability. I quickly switched to the
     standard plugin.
 
-    Same story for my old Vim hacks. Why juggle e.g. all of my and teammates'
-    spacing, when [vim-sleuth](https://github.com/tpope/vim-sleuth) detects it
-    90% of the time?
+    Same story for my old Vim hacks. Why juggle e.g. all of my and my
+    teammates' spacing preferences, when
+    [vim-sleuth](https://github.com/tpope/vim-sleuth) detects it 90% of the
+    time?
+
+    (Although if you your team can use
+    [EditorConfig](http://editorconfig.org/), all the better!)
 
     I benefit from the plugin's community's bugfixes. I can share my own. If
-    another person is using the same prompt, I can quickly identify and follow
-    along. All around, I save time.
+    another person is using the same prompt and keystrokes as me, I can more
+    quickly understand their system and collaborate. All around, I save time.
 
 2. Subtrees > submodules
 
