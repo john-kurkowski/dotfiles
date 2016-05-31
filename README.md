@@ -48,21 +48,25 @@ there are a couple good ideas reflecting my opinion above:
 
 2. Subtrees > submodules
 
-    I use the dead simple [pathogen.vim](https://github.com/tpope/vim-pathogen)
-    for Vim package management. But it doesn't fetch versions for you. What to
-    do? Hey, Git is pretty good at versioning.
+    What to do about external plugins and scripts that don't have their own
+    package manager? Hey, Git is pretty good at versioning.
 
-    Git subtrees store the squashed history of my Vim dependencies in this
+    Git subtrees store the squashed history of my such dependencies in this
     repo, but without the manual misery of Git submodules. On a new device,
-    fetching all my Vim dependencies is 1 `git clone` away. pathogen.vim loads
-    them without any code on my end, from the virtue of them being located in
-    `.vim/bundle`. Upgrading & downgrading dependencies is a concise, familiar
-    Git experience as well.
+    fetching all my dependencies is 1 `git clone` away. Upgrading & downgrading
+    dependencies is a concise, familiar Git experience as well. Forget
+    copy/pasting the dependencies' source. Git can keep them in sync. Subtrees
+    are also effective for contributing upstream.
 
     Generally I don't like the noise of external dependencies. I like to keep
-    the repo focused on what makes the repo special. So keeping subtrees in
-    here might change when the community agrees on a superior Vim package
-    manager. Until then, subtrees are the lightest way I've found.
+    the repo focused on what makes the repo special. But a few vendored
+    dependencies here and there are lightweight to manage via Git.
+
+    * (Previously this section boasted about managing Vim plugins via subtrees.
+      That can work for a few subtrees, but the history and plugin management
+      becomes a real headache when there are a lot of subtrees. `git log
+      --graph` this repo to see the mess. Vendored dependencies should be the
+      exception, not the standard.)
 
 ### Why I Don't Like It
 
