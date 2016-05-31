@@ -36,6 +36,7 @@ Plug 'tpope/vim-flagship'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -59,7 +60,6 @@ smap <C-l> <Esc>
 " While commanding
 cmap <C-l> <C-c>
 
-syntax enable
 set background=dark
 colorscheme flatlandia
 
@@ -75,7 +75,6 @@ endif
 
 set nocompatible
 set laststatus=2
-set autoindent
 set nojoinspaces
 set ignorecase
 set number
@@ -96,8 +95,6 @@ let mapleader = ","
 let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
-filetype plugin indent on
-runtime macros/matchit.vim
 set ofu=syntaxcomplete#Complete
 
 let g:syntastic_aggregate_errors = 1
