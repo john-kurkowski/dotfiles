@@ -21,6 +21,7 @@ Plug 'groenewege/vim-less', { 'for': ['less'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'jnwhiteh/vim-golang', { 'for': ['go'] }
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
+Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'leshill/vim-json', { 'for': ['json'] }
