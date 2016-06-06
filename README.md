@@ -86,8 +86,17 @@ there are a couple good ideas reflecting my opinion above:
       --graph` this repo to see the mess. Vendored dependencies should be the
       exception, not the standard.)
 
-### Why I Don't Like It
+3. Ship via standard tools
 
-There's still a 100% custom, non-standard bootstrap / installation script in
-the form of `setup.py`. It's gross and reinvents the wheel. I'd like to
-standardize on [one of these](https://dotfiles.github.io/).
+    There are a lot of [custom tools to ship your dotfiles to your `$HOME`
+    dir](https://dotfiles.github.io/). Previously, to do the same, this repo
+    was home to 100 lines of Python cleverly performing `rm` and `cp` against
+    `git`.
+
+    Can we get that down to 0 LoC? How about invoking some familiar shell
+    commands? Hey, I'm already using Git, and the Git repo is laid out the way
+    I want.
+
+    A `git clone --bare` and an `alias` later, and dotfiles import/export works
+    entirely through Git. See [this article](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)
+    for details.
