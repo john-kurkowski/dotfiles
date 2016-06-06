@@ -9,6 +9,7 @@
 .~*
 .buildpath
 .classpath
+.dotfiles
 .idea
 .project
 .pydevproject

@@ -3,16 +3,26 @@
 ## Install
 
 ```zsh
-git clone https://github.com/john-kurkowski/dotfiles.git
-cd dotfiles
-./setup.py install personal --email john.kurkowski@company.com
+git clone --bare https://github.com/john-kurkowski/dotfiles.git $HOME/.dotfiles
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+dotfiles config --local status.showUntrackedFiles no
+dotfiles config --local user.email john.kurkowski@gmail.com
+dotfiles checkout
+
+# If not a personal device
+git config --global user.email john.kurkowski@company.com
+
+# Permanently switch to zsh
 chsh -s zsh
 ```
 
-## Export Local Dotfiles
+## Update
 
 ```zsh
-./setup.py export
+dotfiles pull
+
+# If not a personal device
+git config --global user.email john.kurkowski@company.com
 ```
 
 ## What's Inside
