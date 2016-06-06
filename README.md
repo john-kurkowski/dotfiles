@@ -2,14 +2,18 @@
 
 ## Install
 
-    git clone https://github.com/john-kurkowski/dotfiles.git
-    cd dotfiles
-    ./setup.py install personal --email john.kurkowski@company.com
-    chsh -s zsh
+```zsh
+git clone https://github.com/john-kurkowski/dotfiles.git
+cd dotfiles
+./setup.py install personal --email john.kurkowski@company.com
+chsh -s zsh
+```
 
 ## Export Local Dotfiles
 
-    ./setup.py export
+```zsh
+./setup.py export
+```
 
 ## What's Inside
 
