@@ -26,7 +26,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'leshill/vim-json', { 'for': ['json'] }
 Plug 'lukaszkorecki/workflowish'
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars'] }
+Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
