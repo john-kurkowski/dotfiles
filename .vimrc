@@ -29,7 +29,7 @@ Plug 'lukaszkorecki/workflowish'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
-Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'pangloss/vim-javascript', { 'commit': '6a32a38', 'for': ['javascript'] }
 Plug 'scrooloose/syntastic'
 Plug 'shime/vim-livedown', { 'commit': '9afa391', 'for': ['markdown'] }
 Plug 'szw/vim-tags'
