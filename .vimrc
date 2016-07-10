@@ -35,6 +35,7 @@ Plug 'shime/vim-livedown', { 'for': ['markdown'] }
 Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-flagship'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
