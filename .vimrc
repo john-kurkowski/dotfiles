@@ -100,6 +100,8 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 set ofu=syntaxcomplete#Complete
 
+let g:sneak#streak = 1
+
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['jscs', 'jshint']
