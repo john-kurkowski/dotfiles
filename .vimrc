@@ -36,7 +36,6 @@ Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-flagship'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
 Plug 'tpope/vim-repeat'
@@ -101,9 +100,6 @@ let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 set ofu=syntaxcomplete#Complete
-
-let g:tablabel =
-      \ "%N%{flagship#tabmodified()} %{flagship#tabcwds('shorten',',')}"
 
 let g:sneak#streak = 1
 
