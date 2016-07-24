@@ -79,6 +79,7 @@ endif
 
 set nocompatible
 set laststatus=2
+set showtabline=2
 set nojoinspaces
 set ignorecase
 set number
@@ -100,6 +101,9 @@ let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 set ofu=syntaxcomplete#Complete
+
+let g:tablabel =
+      \ "%N%{flagship#tabmodified()} %{flagship#tabcwds('shorten',',')}"
 
 let g:sneak#streak = 1
 
