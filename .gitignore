@@ -18,6 +18,7 @@
 project/boot/
 *.egg-info/
 atlassian-ide-plugin.xml
+Session.vim
 
 obj
 Temp

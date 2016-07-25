@@ -38,6 +38,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
+Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
@@ -115,6 +116,14 @@ au BufWritePre * :%s/\s\+$//e
 
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 autocmd FileType go compiler go
+
+augroup sourcesession
+  autocmd!
+  autocmd VimEnter * nested
+    \ if !argc() && empty(v:this_session) && filereadable('Session.vim') |
+    \   source Session.vim |
+    \ endif
+augroup END
 
 nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
 xnoremap <Leader>fr :call VisualFindAndReplaceWithSelection()<CR>
