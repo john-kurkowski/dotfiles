@@ -31,7 +31,7 @@ Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'scrooloose/syntastic'
-Plug 'shime/vim-livedown', { 'for': ['markdown'] }
+Plug 'shime/vim-livedown'
 Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
