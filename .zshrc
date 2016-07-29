@@ -1,3 +1,7 @@
+if [[ ! -d ~/.tmux/plugins/tpm ]]; then;
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
