@@ -67,6 +67,7 @@ module.exports = {
   //   `project#1.0.1`
   plugins: [
     'hyperterm-snazzy',
+    'hypertile',
   ],
 
   // in development, you can create a directory under
