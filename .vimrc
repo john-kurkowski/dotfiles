@@ -12,6 +12,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Chiel92/vim-autoformat'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'danhart/flatlandia'
 Plug 'derekwyatt/vim-scala', { 'for': ['scala'] }
 Plug 'editorconfig/editorconfig-vim'
