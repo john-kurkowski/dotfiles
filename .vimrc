@@ -48,6 +48,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
+Plug 'vim-utils/vim-husk'
 
 call plug#end()
 
