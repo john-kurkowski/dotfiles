@@ -101,6 +101,7 @@ let g:sneak#streak = 1
 
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_html_checkers=['']
 let g:syntastic_javascript_checkers = ['jscs', 'jshint']
 let g:syntastic_sass_checkers = ['sass_lint']
 let g:syntastic_scss_checkers = ['sass_lint']
