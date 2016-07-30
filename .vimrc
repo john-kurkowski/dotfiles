@@ -72,6 +72,8 @@ highlight clear SignColumn
 call gitgutter#highlight#define_highlights()
 
 set hlsearch
+" Clear search highlight on opposite of /
+noremap \ :noh<return>
 " Clear search highlight when escape is pressed.
 " Is really horrible on terminals.
 if has("gui_running")
