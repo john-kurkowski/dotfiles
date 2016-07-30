@@ -16,6 +16,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'danhart/flatlandia'
 Plug 'derekwyatt/vim-scala', { 'for': ['scala'] }
 Plug 'editorconfig/editorconfig-vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'ervandew/supertab'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'groenewege/vim-less', { 'for': ['less'] }
