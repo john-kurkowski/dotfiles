@@ -57,15 +57,6 @@ autocmd VimEnter *
   \|   PlugInstall | q
   \| endif
 
-" == c-l escapes and saves, avoid the pinky stretch
-vmap <C-l> <Esc><Cr>
-imap <C-l> <Esc>l
-map <c-l> <Esc>
-"while selecting (for use in snippets c-l cancels out)
-smap <C-l> <Esc>
-" While commanding
-cmap <C-l> <C-c>
-
 set background=dark
 colorscheme flatlandia
 
