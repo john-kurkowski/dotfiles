@@ -4,7 +4,6 @@
 	logallrefupdates = true
 [core]
 	excludesfile = ~/.gitignore
-	editor = mvim -f
 	ignorecase = false
 [color]
 	ui = true

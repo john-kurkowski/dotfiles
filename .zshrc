@@ -82,7 +82,8 @@ bindkey "${terminfo[kcud1]}" history-substring-search-down
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/texbin
 
-if [[ `uname` == 'Darwin' ]]; then
+
+if [[ `uname` == 'Darwin' && -z "$TMUX" ]]; then
   export EDITOR="mvim -f"
 else
   export EDITOR=vim
