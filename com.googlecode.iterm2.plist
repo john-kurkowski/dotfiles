@@ -20,6 +20,10 @@
 	<true/>
 	<key>ClosingHotkeySwitchesSpaces</key>
 	<true/>
+	<key>ClosingTmuxTabKillsTmuxWindows</key>
+	<true/>
+	<key>ClosingTmuxTabKillsTmuxWindows_selection</key>
+	<integer>0</integer>
 	<key>CommandSelection</key>
 	<true/>
 	<key>Control</key>
@@ -706,7 +710,7 @@
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>JobName</key>
-	<true/>
+	<false/>
 	<key>LeftCommand</key>
 	<integer>7</integer>
 	<key>LeftOption</key>
@@ -750,7 +754,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>929 37 445 77 0 0 1440 877 </string>
+	<string>2849 118 445 77 1920 85 1440 877 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>269 411 606 456 0 0 1440 877 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -758,13 +762,17 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 364 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2189 207 796 473 1920 85 1440 877 </string>
+	<string>2189 220 918 512 1920 85 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 13 1438 864 0 0 1440 877 </string>
+	<string>1920 119 1438 843 1920 85 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>2690 462 570 452 1920 85 1440 877 </string>
+	<string>2690 394 570 520 1920 85 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>2117 132 570 452 1920 85 1440 877 </string>
+	<string>2117 98 570 486 1920 85 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>2138 109 570 452 1920 85 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>2159 86 570 452 1920 85 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1357,7 +1365,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Monaco 12</string>
+			<string>MesloLGMDZ-RegularForPowerline 12</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1522,6 +1530,8 @@
 			<false/>
 			<key>Use Italic Font</key>
 			<true/>
+			<key>Use Non-ASCII Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -1579,13 +1589,13 @@
 		<string>0013</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
-	<true/>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>PassOnControlClick</key>
 	<false/>
 	<key>PasteFromClipboard</key>
