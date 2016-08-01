@@ -18,6 +18,7 @@ Plug 'derekwyatt/vim-scala', { 'for': ['scala'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ervandew/supertab'
+Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'groenewege/vim-less', { 'for': ['less'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
