@@ -1628,9 +1628,9 @@
 	<key>PrefsCustomFolder</key>
 	<string>/Users/John/</string>
 	<key>PromptOnQuit</key>
-	<true/>
-	<key>QuitWhenAllWindowsClosed</key>
 	<false/>
+	<key>QuitWhenAllWindowsClosed</key>
+	<true/>
 	<key>RightCommand</key>
 	<integer>8</integer>
 	<key>RightOption</key>
