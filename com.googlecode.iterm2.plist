@@ -762,7 +762,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 364 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2189 220 918 512 1920 85 1440 877 </string>
+	<string>2189 259 796 473 1920 85 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>1920 119 1438 843 1920 85 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -1367,7 +1367,7 @@
 			<key>Normal Font</key>
 			<string>MesloLGMDZ-RegularForPowerline 12</string>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Right Option Key Sends</key>
