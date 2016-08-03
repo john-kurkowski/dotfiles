@@ -21,6 +21,7 @@ Plug 'ervandew/supertab'
 Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'groenewege/vim-less', { 'for': ['less'] }
+Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'jnwhiteh/vim-golang', { 'for': ['go'] }
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
@@ -38,6 +39,7 @@ Plug 'shime/vim-livedown'
 Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-fubitive'
+Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
