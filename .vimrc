@@ -115,6 +115,8 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 set ofu=syntaxcomplete#Complete
 
+let g:extradite_showhash = 1
+
 let g:sneak#streak = 1
 
 let g:syntastic_aggregate_errors = 1
