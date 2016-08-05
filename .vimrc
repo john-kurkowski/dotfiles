@@ -52,7 +52,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 
@@ -102,7 +101,6 @@ endif
 let mapleader = ","
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme='hybridline'
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline#extensions#tabline#enabled = 1
