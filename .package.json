@@ -1,7 +1,7 @@
 {
   "name": "dotfiles",
   "version": "1.0.0",
-  "description": "NPM packages I install globally. There's no way to `npm install` from this file, AFAIK. So it's just for reference.",
+  "description": "NPM packages I install globally. There's no way to `npm install -g` from this file, AFAIK. So it's just for reference.",
   "dependencies": {
     "bower": "^1.7.9",
     "ember-cli": "^2.7.0",
