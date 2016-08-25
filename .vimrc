@@ -92,7 +92,7 @@ set backupcopy=yes
 set switchbuf+=usetab,newtab
 
 if has("gui_running")
-  set guifont=Input\ Mono
+  set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
   set guioptions-=T
   set guioptions-=e
   set macmeta
