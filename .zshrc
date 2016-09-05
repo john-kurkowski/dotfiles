@@ -131,9 +131,11 @@ function server() {
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+NODE_VERSION='v4.2.6'
 export NVM_DIR=~/.nvm
 [[ -d $NVM_DIR ]] || mkdir $NVM_DIR
-source $BREW_PREFIX/opt/nvm/nvm.sh
+source $BREW_PREFIX/opt/nvm/nvm.sh --no-use
+export PATH="${PATH}:${NVM_DIR}/versions/node/${NODE_VERSION}/bin"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
