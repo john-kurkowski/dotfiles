@@ -14,21 +14,17 @@ Plug 'bronson/vim-visual-star-search'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'danhart/flatlandia'
-Plug 'derekwyatt/vim-scala', { 'for': ['scala'] }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ervandew/supertab'
 Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
-Plug 'groenewege/vim-less', { 'for': ['less'] }
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
-Plug 'jnwhiteh/vim-golang', { 'for': ['go'] }
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
-Plug 'leshill/vim-json', { 'for': ['json'] }
 Plug 'lukaszkorecki/workflowish'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
@@ -138,9 +134,6 @@ highlight SpellLocal term=underline cterm=underline
 au FileType gitcommit,markdown setl spell
 
 au BufWritePre * :%s/\s\+$//e
-
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-autocmd FileType go compiler go
 
 augroup sourcesession
   autocmd!
