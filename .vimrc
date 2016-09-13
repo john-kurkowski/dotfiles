@@ -93,25 +93,25 @@ endif
 " Various Vim options
 " -------------------------
 
+set backupcopy=yes
 set breakindent
-set nocompatible
-set laststatus=2
-set showtabline=2
-set splitright
-set mouse=a
-set nojoinspaces
 set ignorecase
+set laststatus=2
+set mouse=a
+set nocompatible
+set nojoinspaces
 set number
 set relativenumber
 set ruler
-set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
-set backupcopy=yes
+set showtabline=2
+set splitright
 set switchbuf+=usetab,newtab
+set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 
 if has("gui_running")
   set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
-  set guioptions-=T
   set guioptions-=e
+  set guioptions-=T
   set macmeta
 endif
 
