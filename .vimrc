@@ -73,6 +73,7 @@ if has("gui_running")
   nnoremap <esc> :noh<return><esc>
 endif
 
+set breakindent
 set nocompatible
 set laststatus=2
 set showtabline=2
