@@ -106,7 +106,6 @@ set ruler
 set showtabline=2
 set splitright
 set switchbuf+=usetab,newtab
-set wildignore+=*.class,*.pyc,.svn,*/classes/*,*/target/*,*/project/boot/*,*.jar
 
 if has("gui_running")
   set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
