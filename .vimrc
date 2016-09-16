@@ -23,6 +23,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'danhart/flatlandia'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'ervandew/supertab'
 Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
@@ -148,6 +149,13 @@ let g:syntastic_html_checkers=['']
 let g:syntastic_javascript_checkers = ['jscs', 'jshint']
 let g:syntastic_sass_checkers = ['sass_lint']
 let g:syntastic_scss_checkers = ['sass_lint']
+
+" -------------------------
+" Language specific
+" -------------------------
+
+let g:elm_format_autosave = 1
+let g:elm_syntastic_show_warnings = 1
 
 " -------------------------
 " Spelling
