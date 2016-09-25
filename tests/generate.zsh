@@ -1,5 +1,6 @@
+#!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2010-2011 zsh-syntax-highlighting contributors
+# Copyright (c) 2016 zsh-syntax-highlighting contributors
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -27,34 +28,67 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
+emulate -LR zsh
 
-# List of keyword and color pairs.
-typeset -gA ZSH_HIGHLIGHT_PATTERNS
+# Argument parsing.
+if (( $# != 3 )) || [[ $1 == -* ]]; then
+  print -r -- >&2 "$0: usage: $0 BUFFER HIGHLIGHTER BASENAME"
+  print -r -- >&2 ""
+  print -r -- >&2 "Generate highlighters/HIGHLIGHTER/test-data/BASENAME.zsh based on the"
+  print -r -- >&2 "current highlighting of BUFFER."
+  exit 1
+fi
+buffer=$1
+ZSH_HIGHLIGHT_HIGHLIGHTERS=( $2 )
+fname=${0:A:h:h}/highlighters/$2/test-data/${3%.zsh}.zsh
 
-# Whether the pattern highlighter should be called or not.
-_zsh_highlight_highlighter_pattern_predicate()
+# Load the main script.
+. ${0:A:h:h}/zsh-syntax-highlighting.zsh
+
+# Overwrite _zsh_highlight_add_highlight so we get the key itself instead of the style
+_zsh_highlight_add_highlight()
 {
-  _zsh_highlight_buffer_modified
+  region_highlight+=("$1 $2 $3")
 }
 
-# Pattern syntax highlighting function.
-_zsh_highlight_highlighter_pattern_paint()
-{
-  setopt localoptions extendedglob
-  local pattern
-  for pattern in ${(k)ZSH_HIGHLIGHT_PATTERNS}; do
-    _zsh_highlight_pattern_highlighter_loop "$BUFFER" "$pattern"
+
+# Copyright block
+year="`LC_ALL=C date +%Y`"
+if ! read -q "?Set copyright year to $year? "; then
+  year="YYYY"
+fi
+exec >$fname
+<$0 sed -n -e '1,/^$/p' | sed -e "s/2[0-9][0-9][0-9]/${year}/"
+# Assumes stdout is line-buffered
+git add -- $fname
+
+# Buffer
+print -n 'BUFFER='
+print -r -- ${(qq)buffer}
+echo ""
+
+# Expectations
+print 'expected_region_highlight=('
+() {
+  local i
+  local PREBUFFER
+  local BUFFER
+  
+  PREBUFFER=""
+  BUFFER="$buffer"
+  region_highlight=()
+  # TODO: use run_test() from tests/test-highlighting.zsh (to get a tempdir)
+  _zsh_highlight
+
+  for ((i=1; i<=${#region_highlight}; i++)); do
+    local -a highlight_zone; highlight_zone=( ${(z)region_highlight[$i]} )
+    integer start=$highlight_zone[1] end=$highlight_zone[2]
+    if (( start < end )) # region_highlight ranges are half-open
+    then
+      (( --end )) # convert to closed range, like expected_region_highlight
+      (( ++start, ++end )) # region_highlight is 0-indexed; expected_region_highlight is 1-indexed
+    fi
+    printf "  %s # %s\n" ${(qq):-"$start $end $highlight_zone[3]"} $BUFFER[start,end]
   done
 }
-
-_zsh_highlight_pattern_highlighter_loop()
-{
-  # This does *not* do its job syntactically, sorry.
-  local buf="$1" pat="$2"
-  local -a match mbegin mend
-  local MATCH; integer MBEGIN MEND
-  if [[ "$buf" == (#b)(*)(${~pat})* ]]; then
-    region_highlight+=("$((mbegin[2] - 1)) $mend[2] $ZSH_HIGHLIGHT_PATTERNS[$pat]")
-    "$0" "$match[1]" "$pat"; return $?
-  fi
-}
+print ')'

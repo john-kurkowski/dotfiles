@@ -28,22 +28,18 @@
 # -------------------------------------------------------------------------------------------------
 
 
-if [[ -o function_argzero ]]; then
+# Set $0 to the expected value, regardless of functionargzero.
+0=${(%):-%N}
+if true; then
   # $0 is reliable
-  ZSH_HIGHLIGHT_VERSION=$(<"${0:A:h}"/.version)
-  ZSH_HIGHLIGHT_REVISION=$(<"${0:A:h}"/.revision-hash)
+  typeset -g ZSH_HIGHLIGHT_VERSION=$(<"${0:A:h}"/.version)
+  typeset -g ZSH_HIGHLIGHT_REVISION=$(<"${0:A:h}"/.revision-hash)
   if [[ $ZSH_HIGHLIGHT_REVISION == \$Format:* ]]; then
     # When running from a source tree without 'make install', $ZSH_HIGHLIGHT_REVISION
     # would be set to '$Format:%H$' literally.  That's an invalid value, and obtaining
     # the valid value (via `git rev-parse HEAD`, as Makefile does) might be costly, so:
     ZSH_HIGHLIGHT_REVISION=HEAD
   fi
-else
-  # $0 is unreliable, so the call to _zsh_highlight_load_highlighters will fail.
-  # TODO: If 'zmodload zsh/parameter' is available, ${funcsourcetrace[1]%:*} might serve as a substitute?
-  # TODO: also check POSIX_ARGZERO, but not it's not available in older zsh
-  echo "zsh-syntax-highlighting: error: not compatible with NO_FUNCTION_ARGZERO" >&2
-  return 1
 fi
 
 # -------------------------------------------------------------------------------------------------
@@ -61,6 +57,13 @@ _zsh_highlight()
 {
   # Store the previous command return code to restore it whatever happens.
   local ret=$?
+
+  # Remove all highlighting in isearch, so that only the underlining done by zsh itself remains.
+  # For details see FAQ entry 'Why does syntax highlighting not work while searching history?'.
+  if [[ $WIDGET == zle-isearch-update ]] && ! (( $+ISEARCHMATCH_ACTIVE )); then
+    region_highlight=()
+    return $ret
+  fi
 
   setopt localoptions warncreateglobal
   setopt localoptions noksharrays
@@ -85,11 +88,15 @@ _zsh_highlight()
     local highlighter; for highlighter in $ZSH_HIGHLIGHT_HIGHLIGHTERS; do
 
       # eval cache place for current highlighter and prepare it
-      cache_place="_zsh_highlight_${highlighter}_highlighter_cache"
+      cache_place="_zsh_highlight__highlighter_${highlighter}_cache"
       typeset -ga ${cache_place}
 
       # If highlighter needs to be invoked
-      if "_zsh_highlight_${highlighter}_highlighter_predicate"; then
+      if ! type "_zsh_highlight_highlighter_${highlighter}_predicate" >&/dev/null; then
+        echo "zsh-syntax-highlighting: warning: disabling the ${(qq)highlighter} highlighter as it has not been loaded" >&2
+        # TODO: use ${(b)} rather than ${(q)} if supported
+        ZSH_HIGHLIGHT_HIGHLIGHTERS=( ${ZSH_HIGHLIGHT_HIGHLIGHTERS:#${highlighter}} )
+      elif "_zsh_highlight_highlighter_${highlighter}_predicate"; then
 
         # save a copy, and cleanup region_highlight
         region_highlight_copy=("${region_highlight[@]}")
@@ -97,7 +104,7 @@ _zsh_highlight()
 
         # Execute highlighter and save result
         {
-          "_zsh_highlight_${highlighter}_highlighter"
+          "_zsh_highlight_highlighter_${highlighter}_paint"
         } always {
           eval "${cache_place}=(\"\${region_highlight[@]}\")"
         }
@@ -115,7 +122,22 @@ _zsh_highlight()
     # Re-apply zle_highlight settings
 
     # region
-    (( REGION_ACTIVE )) && _zsh_highlight_apply_zle_highlight region standout "$MARK" "$CURSOR"
+    if (( REGION_ACTIVE == 1 )); then
+      _zsh_highlight_apply_zle_highlight region standout "$MARK" "$CURSOR"
+    elif (( REGION_ACTIVE == 2 )); then
+      () {
+        local needle=$'\n'
+        integer min max
+        if (( MARK > CURSOR )) ; then
+          min=$CURSOR max=$MARK
+        else
+          min=$MARK max=$CURSOR
+        fi
+        (( min = ${${BUFFER[1,$min]}[(I)$needle]} ))
+        (( max += ${${BUFFER:($max-1)}[(i)$needle]} - 1 ))
+        _zsh_highlight_apply_zle_highlight region standout "$min" "$max"
+      }
+    fi
 
     # yank / paste (zsh-5.1.1 and newer)
     (( $+YANK_ACTIVE )) && (( YANK_ACTIVE )) && _zsh_highlight_apply_zle_highlight paste standout "$YANK_START" "$YANK_END"
@@ -136,7 +158,7 @@ _zsh_highlight()
   }
 }
 
-# Apply highlighting based on entries in the zle_highligh array.
+# Apply highlighting based on entries in the zle_highlight array.
 # This function takes four arguments:
 # 1. The exact entry (no patterns) in the zle_highlight array:
 #    region, paste, isearch, or suffix
@@ -231,16 +253,30 @@ _zsh_highlight_call_widget()
 _zsh_highlight_bind_widgets()
 {
   setopt localoptions noksharrays
+  typeset -F SECONDS
+  local prefix=orig-s$SECONDS-r$RANDOM # unique each time, in case we're sourced more than once
 
   # Load ZSH module zsh/zleparameter, needed to override user defined widgets.
   zmodload zsh/zleparameter 2>/dev/null || {
-    echo 'zsh-syntax-highlighting: failed loading zsh/zleparameter.' >&2
+    print -r -- >&2 'zsh-syntax-highlighting: failed loading zsh/zleparameter.'
     return 1
   }
 
   # Override ZLE widgets to make them invoke _zsh_highlight.
+  local -U widgets_to_bind
+  widgets_to_bind=(${${(k)widgets}:#(.*|run-help|which-command|beep|set-local-history|yank)})
+
+  # Always wrap special zle-line-finish widget. This is needed to decide if the
+  # current line ends and special highlighting logic needs to be applied.
+  # E.g. remove cursor imprint, don't highlight partial paths, ...
+  widgets_to_bind+=(zle-line-finish)
+
+  # Always wrap special zle-isearch-update widget to be notified of updates in isearch.
+  # This is needed because we need to disable highlighting in that case.
+  widgets_to_bind+=(zle-isearch-update)
+
   local cur_widget
-  for cur_widget in ${${(f)"$(builtin zle -la)"}:#(.*|orig-*|run-help|which-command|beep|set-local-history|yank)}; do
+  for cur_widget in $widgets_to_bind; do
     case $widgets[$cur_widget] in
 
       # Already rebound event: do nothing.
@@ -253,21 +289,28 @@ _zsh_highlight_bind_widgets()
       # NO_function_argzero, regardless of the option's setting here.
 
       # User defined widget: override and rebind old one with prefix "orig-".
-      user:*) zle -N orig-$cur_widget ${widgets[$cur_widget]#*:}
-              eval "_zsh_highlight_widget_${(q)cur_widget}() { _zsh_highlight_call_widget orig-${(q)cur_widget} -- \"\$@\" }"
-              zle -N $cur_widget _zsh_highlight_widget_$cur_widget;;
+      user:*) zle -N $prefix-$cur_widget ${widgets[$cur_widget]#*:}
+              eval "_zsh_highlight_widget_${(q)prefix}-${(q)cur_widget}() { _zsh_highlight_call_widget ${(q)prefix}-${(q)cur_widget} -- \"\$@\" }"
+              zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
 
       # Completion widget: override and rebind old one with prefix "orig-".
-      completion:*) zle -C orig-$cur_widget ${${(s.:.)widgets[$cur_widget]}[2,3]} 
-                    eval "_zsh_highlight_widget_${(q)cur_widget}() { _zsh_highlight_call_widget orig-${(q)cur_widget} -- \"\$@\" }"
-                    zle -N $cur_widget _zsh_highlight_widget_$cur_widget;;
+      completion:*) zle -C $prefix-$cur_widget ${${(s.:.)widgets[$cur_widget]}[2,3]} 
+                    eval "_zsh_highlight_widget_${(q)prefix}-${(q)cur_widget}() { _zsh_highlight_call_widget ${(q)prefix}-${(q)cur_widget} -- \"\$@\" }"
+                    zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
 
       # Builtin widget: override and make it call the builtin ".widget".
-      builtin) eval "_zsh_highlight_widget_${(q)cur_widget}() { _zsh_highlight_call_widget .${(q)cur_widget} -- \"\$@\" }"
-               zle -N $cur_widget _zsh_highlight_widget_$cur_widget;;
+      builtin) eval "_zsh_highlight_widget_${(q)prefix}-${(q)cur_widget}() { _zsh_highlight_call_widget .${(q)cur_widget} -- \"\$@\" }"
+               zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
 
+      # Incomplete or nonexistent widget: Bind to z-sy-h directly.
+      *) 
+         if [[ $cur_widget == zle-* ]] && [[ -z $widgets[$cur_widget] ]]; then
+           _zsh_highlight_widget_${cur_widget}() { :; _zsh_highlight }
+           zle -N $cur_widget _zsh_highlight_widget_$cur_widget
+         else
       # Default: unhandled case.
-      *) echo "zsh-syntax-highlighting: unhandled ZLE widget '$cur_widget'" >&2 ;;
+           print -r -- >&2 "zsh-syntax-highlighting: unhandled ZLE widget ${(qq)cur_widget}"
+         fi
     esac
   done
 }
@@ -282,7 +325,7 @@ _zsh_highlight_load_highlighters()
 
   # Check the directory exists.
   [[ -d "$1" ]] || {
-    echo "zsh-syntax-highlighting: highlighters directory '$1' not found." >&2
+    print -r -- >&2 "zsh-syntax-highlighting: highlighters directory ${(qq)1} not found."
     return 1
   }
 
@@ -290,13 +333,26 @@ _zsh_highlight_load_highlighters()
   local highlighter highlighter_dir
   for highlighter_dir ($1/*/); do
     highlighter="${highlighter_dir:t}"
-    [[ -f "$highlighter_dir/${highlighter}-highlighter.zsh" ]] && {
+    [[ -f "$highlighter_dir/${highlighter}-highlighter.zsh" ]] &&
       . "$highlighter_dir/${highlighter}-highlighter.zsh"
-      type "_zsh_highlight_${highlighter}_highlighter" &> /dev/null &&
-      type "_zsh_highlight_${highlighter}_highlighter_predicate" &> /dev/null || {
-        echo "zsh-syntax-highlighting: '${highlighter}' highlighter should define both required functions '_zsh_highlight_${highlighter}_highlighter' and '_zsh_highlight_${highlighter}_highlighter_predicate' in '${highlighter_dir}/${highlighter}-highlighter.zsh'." >&2
-      }
-    }
+    if type "_zsh_highlight_highlighter_${highlighter}_paint" &> /dev/null &&
+       type "_zsh_highlight_highlighter_${highlighter}_predicate" &> /dev/null;
+    then
+        # New (0.5.0) function names
+    elif type "_zsh_highlight_${highlighter}_highlighter" &> /dev/null &&
+         type "_zsh_highlight_${highlighter}_highlighter_predicate" &> /dev/null;
+    then
+        # Old (0.4.x) function names
+        if false; then
+            # TODO: only show this warning for plugin authors/maintainers, not for end users
+            print -r -- >&2 "zsh-syntax-highlighting: warning: ${(qq)highlighter} highlighter uses deprecated entry point names; please ask its maintainer to update it: https://github.com/zsh-users/zsh-syntax-highlighting/issues/329"
+        fi
+        # Make it work.
+        eval "_zsh_highlight_highlighter_${(q)highlighter}_paint() { _zsh_highlight_${(q)highlighter}_highlighter \"\$@\" }"
+        eval "_zsh_highlight_highlighter_${(q)highlighter}_predicate() { _zsh_highlight_${(q)highlighter}_highlighter_predicate \"\$@\" }"
+    else
+        print -r -- >&2 "zsh-syntax-highlighting: ${(qq)highlighter} highlighter should define both required functions '_zsh_highlight_highlighter_${highlighter}_paint' and '_zsh_highlight_highlighter_${highlighter}_predicate' in ${(qq):-"$highlighter_dir/${highlighter}-highlighter.zsh"}."
+    fi
   done
 }
 
@@ -307,13 +363,13 @@ _zsh_highlight_load_highlighters()
 
 # Try binding widgets.
 _zsh_highlight_bind_widgets || {
-  echo 'zsh-syntax-highlighting: failed binding ZLE widgets, exiting.' >&2
+  print -r -- >&2 'zsh-syntax-highlighting: failed binding ZLE widgets, exiting.'
   return 1
 }
 
 # Resolve highlighters directory location.
 _zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${${0:A}:h}/highlighters}" || {
-  echo 'zsh-syntax-highlighting: failed loading highlighters, exiting.' >&2
+  print -r -- >&@ 'zsh-syntax-highlighting: failed loading highlighters, exiting.'
   return 1
 }
 
@@ -325,11 +381,13 @@ _zsh_highlight_preexec_hook()
 }
 autoload -U add-zsh-hook
 add-zsh-hook preexec _zsh_highlight_preexec_hook 2>/dev/null || {
-    echo 'zsh-syntax-highlighting: failed loading add-zsh-hook.' >&2
+    print -r -- >&2 'zsh-syntax-highlighting: failed loading add-zsh-hook.'
   }
 
 # Load zsh/parameter module if available
 zmodload zsh/parameter 2>/dev/null || true
+
+autoload -U is-at-least
 
 # Initialize the array of active highlighters if needed.
 [[ $#ZSH_HIGHLIGHT_HIGHLIGHTERS -eq 0 ]] && ZSH_HIGHLIGHT_HIGHLIGHTERS=(main) || true
