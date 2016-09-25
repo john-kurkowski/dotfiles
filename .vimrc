@@ -175,11 +175,6 @@ au FileType gitcommit,markdown setl spell
 " Autocommands
 " -------------------------
 
-" Strip trailing whitespace
-" TODO: can EditorConfig do this for me? In case a project doesn't use
-"       EditorConfig, can I use a global dotfile?
-au BufWritePre * :%s/\s\+$//e
-
 " Source session in current directory, if `vim` launched without args
 augroup sourcesession
   autocmd!
