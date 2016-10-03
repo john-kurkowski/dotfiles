@@ -34,6 +34,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'lukaszkorecki/workflowish'
+Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
@@ -115,11 +116,20 @@ if has("gui_running")
   set macmeta
 endif
 
+if executable("rg")
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
 let mapleader = ","
 
 " -------------------------
 " Vim plugin options
 " -------------------------
+"
+
+" ack.vim
+let g:ackprg = 'rg --vimgrep --no-heading'
 
 " vim-airline
 let g:airline_powerline_fonts = 1
