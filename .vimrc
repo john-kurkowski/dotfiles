@@ -121,6 +121,7 @@ let mapleader = ","
 " Vim plugin options
 " -------------------------
 
+" vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
@@ -131,16 +132,19 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_nr_type = 2
 
+" ctrlp.vim
 let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = ''
 set ofu=syntaxcomplete#Complete
 
+" vim-extradite
 let g:extradite_showhash = 1
 
+" vim-sneak
 let g:sneak#streak = 1
 
-" Syntastic
+" syntastic
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
