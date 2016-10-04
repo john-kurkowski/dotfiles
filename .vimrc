@@ -117,7 +117,7 @@ if has("gui_running")
 endif
 
 if executable("rg")
-  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepprg=rg\ --vimgrep\ --no-heading\ --with-filename
   set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
@@ -129,7 +129,7 @@ let mapleader = ","
 "
 
 " ack.vim
-let g:ackprg = 'rg --vimgrep --no-heading'
+let g:ackprg = 'rg --vimgrep --no-heading --with-filename'
 
 " vim-airline
 let g:airline_powerline_fonts = 1
