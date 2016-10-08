@@ -132,6 +132,10 @@ let mapleader = ","
 " ack.vim
 let g:ackprg = 'rg --vimgrep --no-heading --with-filename'
 
+" fzf.vim
+command! -bang -nargs=* Grep
+  \ call fzf#vim#grep('rg --column --line-number --no-heading --color=always '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
 " vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
