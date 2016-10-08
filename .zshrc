@@ -118,6 +118,7 @@ function server() {
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 NODE_VERSION='v4.2.6'
 export NVM_DIR=~/.nvm
 [[ -d $NVM_DIR ]] || mkdir $NVM_DIR

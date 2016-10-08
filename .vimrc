@@ -14,7 +14,6 @@ endif
 call plug#begin()
 
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
@@ -29,6 +28,7 @@ Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
@@ -103,6 +103,7 @@ set mouse=a
 set nocompatible
 set nojoinspaces
 set number
+set ofu=syntaxcomplete#Complete
 set relativenumber
 set ruler
 set showtabline=2
@@ -141,12 +142,6 @@ let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_nr_type = 2
-
-" ctrlp.vim
-let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_working_path_mode = ''
-set ofu=syntaxcomplete#Complete
 
 " vim-extradite
 let g:extradite_showhash = 1

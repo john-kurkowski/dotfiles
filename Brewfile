@@ -11,6 +11,7 @@ cask 'java'
 brew 'coreutils'
 brew 'ctags'
 brew 'fasd'
+brew 'fzf'
 brew 'gawk'
 brew 'git', args: ['with-pcre']
 brew 'git-fixup'
