@@ -151,7 +151,7 @@ let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_nr_type = 2
 function! AirlineInit()
   let spc = g:airline_symbols.space
-  let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
+  let g:airline_section_z = airline#section#create(['linenr', 'maxlinenr', spc.':%3v'])
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
