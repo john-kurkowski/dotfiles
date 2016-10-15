@@ -139,6 +139,7 @@ command! -bang -nargs=* Grep
   \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 " vim-airline
+let g:airline_extensions = ['branch', 'tabline', 'tmuxline']
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
