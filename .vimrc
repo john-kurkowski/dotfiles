@@ -39,7 +39,6 @@ Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.ha
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'scrooloose/syntastic'
 Plug 'shime/vim-livedown'
 Plug 'szw/vim-tags'
 Plug 'terryma/vim-multiple-cursors'
@@ -59,6 +58,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -139,7 +139,7 @@ command! -bang -nargs=* Grep
   \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 " vim-airline
-let g:airline_extensions = ['branch', 'tabline', 'tmuxline']
+let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
@@ -156,22 +156,11 @@ let g:extradite_showhash = 1
 " vim-sneak
 let g:sneak#streak = 1
 
-" syntastic
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_html_checkers=['']
-let g:syntastic_javascript_checkers = ['jscs', 'jshint']
-let g:syntastic_sass_checkers = ['sass_lint']
-let g:syntastic_scss_checkers = ['sass_lint']
-
 " -------------------------
 " Language specific
 " -------------------------
 
 let g:elm_format_autosave = 1
-let g:elm_syntastic_show_warnings = 1
 
 " -------------------------
 " Spelling
