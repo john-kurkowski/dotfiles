@@ -96,7 +96,9 @@ endif
 " -------------------------
 
 set backupcopy=yes
+set backupdir=~/.vim/backup//
 set breakindent
+set directory=~/.vim/swp//
 set ignorecase
 set laststatus=2
 set mouse=a
