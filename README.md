@@ -31,14 +31,15 @@ git config --global user.email john.kurkowski@company.com
 
 Programmers are an opinionated bunch. I'm of the opinion to [unify those
 opinions](https://xkcd.com/927/). Prompts should look the same. Code should be
-formatted the same. Keystrokes should be the same. Sharing configuration gives
-us common language and base understanding. We can spend less time on holy wars,
-e.g. tabs vs. spaces, and less time adjusting our eyes to someone else's
-layout, and more time on bigger problems. Meanwhile, nobody benefits from
-fragmentation. Nobody benefits from my idiosyncratic `.zshrc` & `.vimrc` soup.
+formatted the same. Keystrokes should be the same.
 
-There is still plenty idiosyncratic soup in this repo, to be cleaned up, but
-there are a couple good ideas reflecting my opinion above:
+Sharing configuration gives us common language and base understanding. We can
+spend less time on holy wars, e.g. tabs vs. spaces, and less time adjusting our
+eyes to someone else's layout, and more time on bigger problems. Nobody
+benefits from fragmentation, like my idiosyncratic `.zshrc` & `.vimrc` soup.
+
+There is still plenty idiosyncratic soup in this repo, but there are a couple
+good ideas reflecting my opinion above:
 
 1. Outsource to plugins
 
@@ -46,18 +47,17 @@ there are a couple good ideas reflecting my opinion above:
     myself, I go for the plugin.
 
     I built up a colored, highly custom shell prompt over the course of years.
-    The color codes and interpolated variables were inscrutable. Then came
-    along an [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) standard
-    plugin, which did the same thing 90% as good and with 0 code on my end.
-    Functionality is an asset. Code is a liability. I quickly switched to the
-    standard plugin.
+    The color codes and interpolated variables were inscrutable.
+
+    Then came along an [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
+    standard plugin, which did the same thing 90% as good and with 0 code on my
+    end. Functionality is an asset. Code is a liability. I quickly switched to
+    the standard plugin.
 
     Same story for my old Vim hacks. Why juggle e.g. all of my and my
     teammates' spacing preferences, when
     [vim-sleuth](https://github.com/tpope/vim-sleuth) detects it 90% of the
-    time?
-
-    (Although if you your team can use
+    time? (Although if you and your team use
     [EditorConfig](http://editorconfig.org/), all the better!)
 
     I benefit from the plugin's community's bugfixes. I can share my own. If
@@ -72,19 +72,20 @@ there are a couple good ideas reflecting my opinion above:
     Git subtrees store the squashed history of my such dependencies in this
     repo, but without the manual misery of Git submodules. On a new device,
     fetching all my dependencies is 1 `git clone` away. Upgrading & downgrading
-    dependencies is a concise, familiar Git experience as well. Forget
-    copy/pasting the dependencies' source. Git can keep them in sync. Subtrees
-    are also effective for contributing upstream.
+    them is a concise, familiar Git experience as well.
 
-    Generally I don't like the noise of external dependencies. I like to keep
-    the repo focused on what makes the repo special. But a few vendored
-    dependencies here and there are lightweight to manage via Git.
+    Forget copy/pasting the dependencies' source. Git can keep them in sync.
+    Subtrees are also effective for contributing upstream.
+
+    Generally I don't like the noise of external dependencies. Keep the repo
+    focused on what makes the repo special. But a few vendored dependencies
+    here and there are lightweight to manage via Git.
 
     * (Previously this section boasted about managing Vim plugins via subtrees.
       That can work for a few subtrees, but the history and plugin management
       becomes a real headache when there are a lot of subtrees. `git log
       --graph` this repo to see the mess. Vendored dependencies should be the
-      exception, not the standard.)
+      _exception_, not the standard.)
 
 3. Ship via standard tools
 
