@@ -1,8 +1,12 @@
+# Enable tmux plugins
+
 if [[ ! -d ~/.tmux/plugins/tpm ]]; then;
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
 BREW_PREFIX=$(brew --prefix)
+
+# Enable Antigen for shell helpers and theme
 
 source $BREW_PREFIX/share/antigen/antigen.zsh
 antigen use oh-my-zsh
@@ -28,12 +32,13 @@ antigen theme robbyrussell
 
 antigen apply
 
+# Global, misc. shell settings
+
 setopt extendedglob
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/Library/TeX/texbin
-
 
 if [[ `uname` == 'Darwin' && -z "$TMUX" ]]; then
   export EDITOR="mvim -f"
@@ -43,32 +48,24 @@ fi
 
 export LESS=-FRXi
 export PYTHONSTARTUP=~/.pystartup
-export MAVEN_COLOR=true
 
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
-export SCALA_HOME=/usr/share/java
-export SBT_OPTS='-Xmx2048M -XX:MaxPermSize=768m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled'
+# Local-only environment
 
-function griot() {
-  lynx "http://rapgenius.com/search?q=`echo $@ | perl -p -e 's/\s+/+/g'`";
-}
-
+# Host-specific scripts and aliases
 source ~/.hostspecific
+# Source environment variables from a dotenv file
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
+
+# Put on PATH scripts that aren't available via a package manager
 
 ln -sf $BREW_PREFIX/share/git-core/contrib/diff-highlight/diff-highlight $BREW_PREFIX/bin/diff-highlight
 
-function server() {
-	local port="${1:-8000}"
-	open "http://localhost:${port}/"
-	python -m SimpleHTTPServer "$port"
-}
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# Enable fuzzy completion of any list of strings, like filepaths
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Enable various version managers
+
 NODE_VERSION='v4.2.6'
 export NVM_DIR=~/.nvm
 [[ -d $NVM_DIR ]] || mkdir $NVM_DIR
@@ -77,6 +74,8 @@ export PATH="${PATH}:${NVM_DIR}/versions/node/${NODE_VERSION}/bin"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# Enable iTerm shell integration
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 export VIRTUAL_ENV_DISABLE_PROMPT=1
