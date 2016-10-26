@@ -194,7 +194,7 @@ augroup END
 " -------------------------
 
 " Simulate CtrlP.vim with fzf.vim.
-map <C-P> :GFiles<CR>
+map <C-P> :GFiles -oc --exclude-standard<CR>
 
 " Find/replace with visual feedback. Courtesy vim-over &
 " https://github.com/toranb/dotfiles/blob/46ae158e51dbdbba72e284081dc9a12b5e54ef8c/vimrc#L130
