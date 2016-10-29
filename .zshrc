@@ -38,7 +38,7 @@ setopt extendedglob
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/Library/TeX/texbin
+export PATH=~/.bin:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/Library/TeX/texbin
 
 if [[ `uname` == 'Darwin' && -z "$TMUX" ]]; then
   export EDITOR="mvim -f"
