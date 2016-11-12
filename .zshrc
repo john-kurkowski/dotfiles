@@ -13,7 +13,6 @@ antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
   bower
-  brew
   ember-cli
   fasd
   git
