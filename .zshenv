@@ -1,6 +1,5 @@
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-alias ack='rg'
 alias ag='rg'
 alias ls='ls -G'
 alias rg='rg --hidden'

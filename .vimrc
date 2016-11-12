@@ -34,7 +34,6 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
 Plug 'lukaszkorecki/workflowish'
-Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
@@ -130,9 +129,6 @@ let mapleader = ","
 " Vim plugin options
 " -------------------------
 "
-
-" ack.vim
-let g:ackprg = 'rg --vimgrep --no-heading --with-filename'
 
 " fzf.vim
 if has("gui_running")
