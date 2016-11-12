@@ -139,7 +139,7 @@ if has("gui_running")
   let g:fzf_launcher = "In_a_new_term_function %s"
 endif
 command! -bang -nargs=* Grep
-  \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+  \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
 
 " vim-airline
 let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
