@@ -5,7 +5,7 @@ module.exports = {
     fontSize: 12,
 
     // font family with optional fallbacks
-    fontFamily: '"Meslo LG M DZ", Menlo, PowerlineSymbols, Monaco, monospace',
+    fontFamily: '"Meslo LG M DZ for Powerline", Menlo, PowerlineSymbols, Monaco, monospace',
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: 'rgba(248,28,229,0.75)',
@@ -67,7 +67,7 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    'hyperterm-snazzy',
+    'hyper-snazzy',
     'hypertile',
   ],
 
