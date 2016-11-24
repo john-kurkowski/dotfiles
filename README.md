@@ -4,7 +4,8 @@
 
 ```zsh
 git clone --bare https://github.com/john-kurkowski/dotfiles.git $HOME/.dotfiles
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='GIT_DIR=$HOME/.dotfiles/ GIT_WORK_TREE=$HOME git'
+dotfiles config --local core.worktree $HOME
 dotfiles config --local status.showUntrackedFiles no
 dotfiles config --local user.email john.kurkowski@gmail.com
 dotfiles checkout

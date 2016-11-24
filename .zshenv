@@ -1,4 +1,5 @@
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles-env='GIT_DIR=$HOME/.dotfiles/ GIT_WORK_TREE=$HOME'
+alias dotfiles='dotfiles-env git'
 
 alias ag='rg'
 alias ls='ls -G'
