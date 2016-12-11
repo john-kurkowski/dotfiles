@@ -4,7 +4,14 @@ if [[ ! -d ~/.tmux/plugins/tpm ]]; then;
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
+# Antigen plugin options
+
 BREW_PREFIX=$(brew --prefix)
+
+# zsh-vnm options
+NODE_VERSION='v4.2.6'
+export NVM_DIR=~/.nvm
+export NVM_NO_USE=true
 
 # Enable Antigen for shell helpers and theme
 
@@ -17,7 +24,7 @@ antigen bundles <<EOBUNDLES
   fasd
   git
   heroku
-  nvm
+  lukechilds/zsh-nvm
   osx
   pip
   rsync
@@ -37,7 +44,7 @@ setopt extendedglob
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
-export PATH=~/.bin:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/Library/TeX/texbin
+export PATH=~/.bin:/usr/local/bin:/usr/bin:/bin:/opt/X11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/X11/bin:/Library/TeX/texbin:${NVM_DIR}/versions/node/${NODE_VERSION}/bin
 
 if [[ `uname` == 'Darwin' && -z "$TMUX" ]]; then
   export EDITOR="mvim -f"
@@ -65,11 +72,6 @@ ln -sf $BREW_PREFIX/share/git-core/contrib/diff-highlight/diff-highlight $BREW_P
 
 # Enable various version managers
 
-NODE_VERSION='v4.2.6'
-export NVM_DIR=~/.nvm
-[[ -d $NVM_DIR ]] || mkdir $NVM_DIR
-source $BREW_PREFIX/opt/nvm/nvm.sh --no-use
-export PATH="${PATH}:${NVM_DIR}/versions/node/${NODE_VERSION}/bin"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
