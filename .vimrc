@@ -124,6 +124,7 @@ if executable("rg")
 endif
 
 let mapleader = ","
+let maplocalleader = ","
 
 " -------------------------
 " Vim plugin options
