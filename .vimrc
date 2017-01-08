@@ -58,6 +58,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
+Plug 'wincent/terminus'
 
 call plug#end()
 
@@ -100,7 +101,6 @@ set breakindent
 set directory=~/.vim/swp//
 set ignorecase
 set laststatus=2
-set mouse=a
 set nocompatible
 set nojoinspaces
 set number
