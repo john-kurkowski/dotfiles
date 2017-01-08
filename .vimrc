@@ -58,6 +58,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
+Plug 'wincent/loupe'
 Plug 'wincent/terminus'
 
 call plug#end()
@@ -79,19 +80,6 @@ highlight clear SignColumn
 call gitgutter#highlight#define_highlights()
 
 " -------------------------
-" Search
-" -------------------------
-
-set hlsearch
-" Clear search highlight on opposite of /
-noremap \ :noh<return>
-" Clear search highlight when escape is pressed.
-" Is really horrible on terminals.
-if has("gui_running")
-  nnoremap <esc> :noh<return><esc>
-endif
-
-" -------------------------
 " Various Vim options
 " -------------------------
 
@@ -99,7 +87,6 @@ set backupcopy=yes
 set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
-set ignorecase
 set laststatus=2
 set nocompatible
 set nojoinspaces
