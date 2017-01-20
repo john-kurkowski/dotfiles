@@ -14,9 +14,7 @@ endif
 call plug#begin()
 
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
-if has("gui_running")
-  Plug 'ctrlpvim/ctrlp.vim'
-endif
+Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
@@ -31,9 +29,7 @@ Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
-if !has("gui_running")
-  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-endif
+Plug '/usr/local/opt/fzf', has('gui_running') ? { 'on': [] } : {} | Plug 'junegunn/fzf.vim', has('gui_running') ? { 'on': [] } : {}
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
