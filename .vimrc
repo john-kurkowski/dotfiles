@@ -14,6 +14,9 @@ endif
 call plug#begin()
 
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
+if has("gui_running")
+  Plug 'ctrlpvim/ctrlp.vim'
+endif
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
@@ -28,7 +31,9 @@ Plug 'int3/vim-extradite'
 Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+if !has("gui_running")
+  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+endif
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
@@ -58,6 +63,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
+Plug 'wincent/ferret'
 Plug 'wincent/loupe'
 Plug 'wincent/terminus'
 
@@ -118,13 +124,6 @@ let maplocalleader = ","
 " -------------------------
 "
 
-" fzf.vim
-if has("gui_running")
-  let g:fzf_launcher = "In_a_new_term_function %s"
-endif
-command! -bang -nargs=* Grep
-  \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
-
 " vim-airline
 let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
 let g:airline_powerline_fonts = 1
@@ -136,6 +135,21 @@ let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_nr_type = 2
+
+" Fuzzy find
+if has("gui_running")
+  " ctrlp.vim
+  let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
+  let g:ctrlp_show_hidden = 1
+  let g:ctrlp_working_path_mode = ''
+else
+  " fzf.vim
+  command! -bang -nargs=* Grep
+    \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
+
+  " Simulate ctrlp.vim with fzf.vim.
+  map <C-P> :GFiles -oc --exclude-standard<CR>
+endif
 
 " vim-extradite
 let g:extradite_showhash = 1
@@ -179,9 +193,6 @@ augroup END
 " -------------------------
 " Custom Bindings
 " -------------------------
-
-" Simulate CtrlP.vim with fzf.vim.
-map <C-P> :GFiles -oc --exclude-standard<CR>
 
 " Find/replace with visual feedback. Courtesy vim-over &
 " https://github.com/toranb/dotfiles/blob/46ae158e51dbdbba72e284081dc9a12b5e54ef8c/vimrc#L130
