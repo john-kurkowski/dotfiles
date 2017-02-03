@@ -14,12 +14,12 @@ endif
 call plug#begin()
 
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
-Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'danhart/flatlandia'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
