@@ -99,6 +99,8 @@ set ruler
 set showtabline=2
 set splitright
 set switchbuf+=usetab,newtab
+set undodir=~/.vim/undodir//
+set undofile
 
 if has("gui_running")
   set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
