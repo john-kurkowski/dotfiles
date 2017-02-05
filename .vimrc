@@ -91,6 +91,7 @@ set backupcopy=yes
 set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
+set hidden
 set laststatus=2
 set nocompatible
 set nojoinspaces
@@ -100,7 +101,7 @@ set relativenumber
 set ruler
 set showtabline=2
 set splitright
-set switchbuf+=usetab,newtab
+set switchbuf=useopen,usetab
 set undodir=~/.vim/undodir//
 set undofile
 
@@ -135,7 +136,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_type = 0
@@ -149,11 +149,14 @@ if has("gui_running")
   let g:ctrlp_working_path_mode = ''
 else
   " fzf.vim
+  let g:fzf_buffers_jump = 1
+
   command! -bang -nargs=* Grep
     \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
 
   " Simulate ctrlp.vim with fzf.vim.
-  map <C-P> :GFiles -oc --exclude-standard<CR>
+  map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
+  nnoremap <silent> <Leader>p :Buffers<CR>
 endif
 
 " vim-extradite
