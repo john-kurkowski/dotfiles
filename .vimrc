@@ -21,6 +21,7 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'danhart/flatlandia'
+Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
