@@ -63,6 +63,7 @@ Plug 'w0rp/ale'
 Plug 'wincent/ferret'
 Plug 'wincent/loupe'
 Plug 'wincent/terminus'
+Plug 'yssl/QFEnter'
 
 call plug#end()
 
@@ -122,6 +123,11 @@ let maplocalleader = ","
 " Vim plugin options
 " -------------------------
 "
+
+" QFEnter
+let g:qfenter_vopen_map = ['<C-v>']
+let g:qfenter_hopen_map = ['<C-x>']
+let g:qfenter_topen_map = ['<C-t>']
 
 " vim-airline
 let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
