@@ -26,23 +26,18 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'ervandew/supertab'
-Plug 'int3/vim-extradite'
-Plug 'gcorne/vim-sass-lint', { 'for': ['sass', 'scss'] }
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug '/usr/local/opt/fzf', has('gui_running') ? { 'on': [] } : {} | Plug 'junegunn/fzf.vim', has('gui_running') ? { 'on': [] } : {}
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
-Plug 'kchmck/vim-coffee-script', { 'for': ['coffee'] }
-Plug 'lukaszkorecki/workflowish'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'shime/vim-livedown'
 Plug 'szw/vim-tags'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-fubitive'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
@@ -158,9 +153,6 @@ else
   map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
   nnoremap <silent> <Leader>p :Buffers<CR>
 endif
-
-" vim-extradite
-let g:extradite_showhash = 1
 
 " vim-sneak
 let g:sneak#streak = 1
