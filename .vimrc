@@ -21,6 +21,7 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'danhart/flatlandia'
+Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
@@ -44,7 +45,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', { 'for': ['markdown'] }
-Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
@@ -145,10 +145,12 @@ if has("gui_running")
 else
   " fzf.vim
   let g:fzf_buffers_jump = 1
+  let g:fzf_session_path = '~/.vim/session//'
 
   command! -bang -nargs=* Grep
     \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
 
+  map <silent> <Leader>i :Sessions<CR>
   " Simulate ctrlp.vim with fzf.vim.
   map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
   nnoremap <silent> <Leader>p :Buffers<CR>
@@ -176,19 +178,6 @@ highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
 au FileType gitcommit,markdown setl spell
-
-" -------------------------
-" Autocommands
-" -------------------------
-
-" Source session in current directory, if `vim` launched without args
-augroup sourcesession
-  autocmd!
-  autocmd VimEnter * nested
-    \ if !argc() && empty(v:this_session) && filereadable('Session.vim') |
-    \   source Session.vim |
-    \ endif
-augroup END
 
 " -------------------------
 " Custom Bindings
