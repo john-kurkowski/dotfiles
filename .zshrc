@@ -6,7 +6,7 @@ fi
 
 # Antigen plugin options
 
-BREW_PREFIX=$(brew --prefix)
+BREW_PREFIX='/usr/local'
 
 # zsh-vnm options
 NODE_VERSION='v4.2.6'
