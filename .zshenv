@@ -10,6 +10,13 @@ alias stree='~/Applications/SourceTree.app/Contents/Resources/stree'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+fasd_cache="$HOME/.fasd-init-env"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
+
  # fco - checkout git branch/tag
  fco() {
    local tags branches target
