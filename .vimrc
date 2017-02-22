@@ -37,6 +37,7 @@ Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.ha
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'rickhowe/diffchar.vim'
 Plug 'shime/vim-livedown'
 Plug 'IngoHeimbach/vim-tags'
 Plug 'tommcdo/vim-fubitive'
