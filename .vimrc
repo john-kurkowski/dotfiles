@@ -16,7 +16,6 @@ call plug#begin()
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'bronson/vim-visual-star-search'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
@@ -53,7 +52,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-scripts/SearchHighlighting', { 'tag': '1.22' }
 Plug 'vim-scripts/gitignore'
+Plug 'vim-scripts/ingo-library'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
 Plug 'wincent/ferret'
