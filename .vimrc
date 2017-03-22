@@ -32,6 +32,7 @@ Plug '/usr/local/opt/fzf', has('gui_running') ? { 'on': [] } : {} | Plug 'junegu
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
+Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
