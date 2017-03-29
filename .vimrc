@@ -161,7 +161,7 @@ else
 endif
 
 " vim-sneak
-let g:sneak#streak = 1
+let g:sneak#label = 1
 
 " -------------------------
 " Language specific
