@@ -163,6 +163,9 @@ endif
 " vim-sneak
 let g:sneak#label = 1
 
+" vim-yankstack
+let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 's', 'S', 'x', 'X', 'y', 'Y']
+
 " -------------------------
 " Language specific
 " -------------------------
