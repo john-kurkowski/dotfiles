@@ -15,6 +15,7 @@ call plug#begin()
 
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-rooter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
@@ -159,6 +160,9 @@ else
   map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
   nnoremap <silent> <Leader>p :Buffers<CR>
 endif
+
+" vim-rooter
+let g:rooter_silent_chdir = 1
 
 " vim-sneak
 let g:sneak#label = 1
