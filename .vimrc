@@ -90,6 +90,7 @@ set backupcopy=yes
 set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
+set fillchars+=stlnc:=
 set hidden
 set laststatus=2
 set nocompatible
