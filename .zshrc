@@ -15,10 +15,6 @@ export NVM_NO_USE=true
 
 # Enable Antigen for shell helpers and theme
 
-# Work around https://github.com/zsh-users/antigen/issues/485
-export ZSH=~/.antigen/bundles/robbyrussell/oh-my-zsh
-export ZSH_CACHE_DIR=~/.antigen/bundles/robbyrussell/oh-my-zsh/cache/
-
 source $BREW_PREFIX/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
