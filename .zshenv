@@ -1,4 +1,4 @@
-alias dotfiles-env='GIT_DIR=$HOME/.dotfiles/ GIT_WORK_TREE=$HOME'
+alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
 
 alias ls='ls -G'
@@ -29,5 +29,5 @@ unset fasd_cache
    target=$(
      (echo "$tags"; echo "$branches") |
      fzf-tmux -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-   git checkout $(echo "$target" | awk '{print $2}')
+   git checkout "$(echo "$target" | awk '{print $2}')"
  }
