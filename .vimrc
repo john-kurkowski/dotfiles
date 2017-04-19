@@ -125,6 +125,11 @@ let maplocalleader = ","
 " -------------------------
 "
 
+" ale
+let g:ale_linters = {
+\   'html': [],
+\}
+
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-x>']
