@@ -18,6 +18,8 @@
   path =
 [interactive]
   diffFilter = diff-highlight
+[merge]
+  conflictstyle = diff3
 [mergetool "sourcetree"]
   cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
@@ -34,6 +36,7 @@
   diff = diff-highlight | less
 [push]
   default = simple
+  followTags = true
 [pull]
   rebase = true
 [rebase]
@@ -43,3 +46,5 @@
   preserve-merges = true
 [rerere]
   enabled = true
+[status]
+  showUntrackedFiles = all
