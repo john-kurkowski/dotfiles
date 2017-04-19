@@ -1,45 +1,45 @@
 [user]
-	name = John Kurkowski
-	email = john.kurkowski@gmail.com
-	logallrefupdates = true
+  name = John Kurkowski
+  email = john.kurkowski@gmail.com
+  logallrefupdates = true
 [core]
-	excludesfile = ~/.gitignore
-	ignorecase = false
+  excludesfile = ~/.gitignore
+  ignorecase = false
 [color]
-	ui = true
+  ui = true
 [alias]
   cbr = symbolic-ref --short HEAD
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 [diff]
-	indentHeuristic = on
+  indentHeuristic = on
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 [interactive]
-	diffFilter = diff-highlight
+  diffFilter = diff-highlight
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [mergetool "p4merge"]
-	path = /usr/local/bin/p4merge
+  path = /usr/local/bin/p4merge
 [mergetool]
-	prompt = false
+  prompt = false
 [grep]
-	patternType = perl
-	lineNumber = true
+  patternType = perl
+  lineNumber = true
 [pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+  log = diff-highlight | less
+  show = diff-highlight | less
+  diff = diff-highlight | less
 [push]
-	default = simple
+  default = simple
 [pull]
-	rebase = true
+  rebase = true
 [rebase]
-	autosquash = true
-	autostash = true
-	instructionFormat = %d %s (%cr) <%an>
-	preserve-merges = true
+  autosquash = true
+  autostash = true
+  instructionFormat = %d %s (%cr) <%an>
+  preserve-merges = true
 [rerere]
-	enabled = true
+  enabled = true
