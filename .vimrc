@@ -29,6 +29,9 @@ Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'ervandew/supertab'
 Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
+Plug 'john-kurkowski/ingo-library'
+  Plug 'wincent/loupe'
+  Plug 'john-kurkowski/SearchHighlighting'
 Plug '/usr/local/opt/fzf', has('gui_running') ? { 'on': [] } : {} | Plug 'junegunn/fzf.vim', has('gui_running') ? { 'on': [] } : {}
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
@@ -54,13 +57,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-scripts/SearchHighlighting', { 'tag': '1.22' }
 Plug 'vim-scripts/gitignore'
-Plug 'vim-scripts/ingo-library'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
 Plug 'wincent/ferret'
-Plug 'wincent/loupe'
 Plug 'wincent/terminus'
 Plug 'yssl/QFEnter'
 
