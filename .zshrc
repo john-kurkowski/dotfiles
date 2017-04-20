@@ -38,7 +38,7 @@ POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k/
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs virtualenv)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_STRATEGY='truncate_with_package_name'
+POWERLEVEL9K_SHORTEN_STRATEGY='truncate_from_right'
 antigen theme bhilburn/powerlevel9k powerlevel9k
 
 antigen apply
