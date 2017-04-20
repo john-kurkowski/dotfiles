@@ -9,7 +9,7 @@ fi
 BREW_PREFIX='/usr/local'
 
 # zsh-vnm options
-NODE_VERSION='v4.2.6'
+NODE_VERSION='v6.10.0'
 export NVM_DIR=~/.nvm
 export NVM_NO_USE=true
 
