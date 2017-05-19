@@ -46,6 +46,7 @@ antigen apply
 # Global, misc. shell settings
 
 setopt extendedglob
+setopt globdots
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
