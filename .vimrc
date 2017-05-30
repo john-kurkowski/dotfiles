@@ -60,7 +60,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/gitignore'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
-Plug 'wincent/ferret'
+Plug 'wincent/loupe'
 Plug 'wincent/terminus'
 Plug 'yssl/QFEnter'
 
