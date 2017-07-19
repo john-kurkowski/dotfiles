@@ -3,6 +3,7 @@
   email = john.kurkowski@gmail.com
   logallrefupdates = true
 [core]
+  attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
 [color]
@@ -13,6 +14,8 @@
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 [diff]
   indentHeuristic = on
+[diff "plist"]
+  textconv = plutil -convert xml1 -o -
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path =
