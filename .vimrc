@@ -174,6 +174,8 @@ let g:sneak#label = 1
 
 " vim-yankstack
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
+nmap p <Plug>yankstack_substitute_older_paste
+nmap P <Plug>yankstack_substitute_newer_paste
 
 " -------------------------
 " Language specific
