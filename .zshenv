@@ -1,6 +1,7 @@
 alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
 
+alias alt='git ls-files -oc --exclude-standard | alt -f -'
 alias ls='ls -G'
 alias rg='rg --hidden'
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
