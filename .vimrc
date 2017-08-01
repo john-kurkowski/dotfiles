@@ -201,6 +201,18 @@ au FileType gitcommit,markdown setl spell
 " Custom Bindings
 " -------------------------
 
+" Find the alternate file for the current path and open it
+" https://github.com/uptech/alt/blame/v2.3.0/README.md#L73-L87
+nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
+function! AltCommand(path, vim_command)
+  let l:alternate = system("alt " . a:path)
+  if empty(l:alternate)
+    echo "No alternate file for " . a:path . " exists!"
+  else
+    exec a:vim_command . " " . l:alternate
+  endif
+endfunction
+
 " Find/replace with visual feedback. Courtesy vim-over &
 " https://github.com/toranb/dotfiles/blob/46ae158e51dbdbba72e284081dc9a12b5e54ef8c/vimrc#L130
 nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
