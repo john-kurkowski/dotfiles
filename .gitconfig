@@ -12,8 +12,6 @@
   cbr = symbolic-ref --short HEAD
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
-[diff]
-  indentHeuristic = on
 [diff "plist"]
   textconv = plutil -convert xml1 -o -
 [difftool "sourcetree"]
