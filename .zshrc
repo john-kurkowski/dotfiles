@@ -63,7 +63,6 @@ path=(
   /usr/X11/bin
   /Library/TeX/texbin
   $HOME/.cargo/bin
-  $HOME/.yarn/bin
   ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
 )
 export PATH=${(j[:])path}
