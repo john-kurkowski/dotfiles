@@ -19,7 +19,6 @@ Plug 'airblade/vim-rooter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ctrlpvim/ctrlp.vim', has('gui_running') ? {} : { 'on': [] }
 Plug 'danhart/flatlandia'
 Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
@@ -32,7 +31,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'john-kurkowski/ingo-library'
   Plug 'wincent/loupe'
   Plug 'john-kurkowski/SearchHighlighting'
-Plug '/usr/local/opt/fzf', has('gui_running') ? { 'on': [] } : {} | Plug 'junegunn/fzf.vim', has('gui_running') ? { 'on': [] } : {}
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
@@ -146,25 +145,17 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_nr_type = 2
 
-" Fuzzy find
-if has("gui_running")
-  " ctrlp.vim
-  let g:ctrlp_user_command = ['.git/', 'git ls-files -oc --exclude-standard %s']
-  let g:ctrlp_show_hidden = 1
-  let g:ctrlp_working_path_mode = ''
-else
-  " fzf.vim
-  let g:fzf_buffers_jump = 1
-  let g:fzf_session_path = '~/.vim/session//'
+" fzf.vim
+let g:fzf_buffers_jump = 1
+let g:fzf_session_path = '~/.vim/session//'
 
-  command! -bang -nargs=* Grep
-    \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
+command! -bang -nargs=* Grep
+  \ call fzf#vim#grep('rg --column --hidden --line-number --no-heading --color=always ' . <q-args> . ' | tr -d "\017"', 1, <bang>0)
 
-  map <silent> <Leader>i :Sessions<CR>
-  " Simulate ctrlp.vim with fzf.vim.
-  map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
-  nnoremap <silent> <Leader>p :Buffers<CR>
-endif
+map <silent> <Leader>i :Sessions<CR>
+" Simulate ctrlp.vim with fzf.vim.
+map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
+nnoremap <silent> <Leader>p :Buffers<CR>
 
 " vim-rooter
 let g:rooter_silent_chdir = 1
