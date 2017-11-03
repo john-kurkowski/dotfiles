@@ -134,6 +134,7 @@ let g:qfenter_topen_map = ['<C-t>']
 
 " vim-airline
 let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
+let g:airline_highlighting_cache = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
