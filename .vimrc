@@ -135,7 +135,6 @@ let g:lightline = {
 \     ],
 \     'right': [
 \       [ 'lineinfo' ],
-\       [ 'percent' ],
 \     ],
 \   },
 \   'component_function': {
