@@ -137,14 +137,14 @@ let g:lightline = {
 \   'component_function': {
 \     'gitbranch': 'fugitive#head',
 \   },
-\}
-let g:lightline.separator = {
-\   'left': '',
-\   'right': '',
-\}
-let g:lightline.subseparator = {
-\   'left': '',
-\   'right': '',
+\   'separator': {
+\     'left': '',
+\     'right': '',
+\   },
+\   'subseparator': {
+\     'left': '',
+\     'right': '',
+\   },
 \}
 
 " QFEnter
