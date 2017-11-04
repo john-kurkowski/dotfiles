@@ -127,7 +127,7 @@ let g:ale_linters = {
 
 " lightline.vim
 let g:lightline = {
-\   'colorscheme': 'jellybeans',
+\   'colorscheme': 'wombat',
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
