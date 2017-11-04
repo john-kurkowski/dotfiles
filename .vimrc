@@ -133,6 +133,10 @@ let g:lightline = {
 \       [ 'mode', 'paste' ],
 \       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
 \     ],
+\     'right': [
+\       [ 'lineinfo' ],
+\       [ 'percent' ],
+\     ],
 \   },
 \   'component_function': {
 \     'gitbranch': 'LightlineFugitive',
