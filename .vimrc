@@ -37,12 +37,12 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
-Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'rickhowe/diffchar.vim', { 'commit': '21d95f9' }
 Plug 'shime/vim-livedown'
 Plug 'IngoHeimbach/vim-tags'
+Plug 'itchyny/lightline.vim'
 Plug 'tommcdo/vim-fubitive'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
@@ -55,7 +55,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'vim-airline/vim-airline'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
 Plug 'wincent/terminus'
@@ -87,7 +86,6 @@ set backupcopy=yes
 set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
-set fillchars+=stlnc:=
 set hidden
 set laststatus=2
 set nocompatible
@@ -127,23 +125,78 @@ let g:ale_linters = {
 \   'html': [],
 \}
 
+" lightline.vim
+let g:lightline = {
+\   'colorscheme': 'wombat',
+\   'active': {
+\     'left': [
+\       [ 'mode', 'paste' ],
+\       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+\     ],
+\     'right': [
+\       [ 'lineinfo' ],
+\       [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
+\     ],
+\   },
+\   'component': {
+\     'lineinfo': '%-2v',
+\   },
+\   'component_expand': {
+\     'linter_warnings': 'LightlineLinterWarnings',
+\     'linter_errors': 'LightlineLinterErrors',
+\     'linter_ok': 'LightlineLinterOK'
+\   },
+\   'component_function': {
+\     'gitbranch': 'LightlineFugitive',
+\     'readonly': 'LightlineReadonly',
+\   },
+\   'component_type': {
+\     'linter_warnings': 'warning',
+\     'linter_errors': 'error'
+\   },
+\   'separator': {
+\     'left': '',
+\     'right': '',
+\   },
+\   'subseparator': {
+\     'left': '',
+\     'right': '',
+\   },
+\}
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
+endfunction
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
+endfunction
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓ ' : ''
+endfunction
+function! LightlineReadonly()
+  return &readonly ? '' : ''
+endfunction
+function! LightlineFugitive()
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
+autocmd User ALELint call lightline#update()
+
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-x>']
 let g:qfenter_topen_map = ['<C-t>']
-
-" vim-airline
-let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
-let g:airline_highlighting_cache = 1
-let g:airline_powerline_fonts = 1
-let g:airline_section_x = ''
-let g:airline_section_y = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#tab_nr_type = 2
 
 " fzf.vim
 let g:fzf_buffers_jump = 1
