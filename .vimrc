@@ -138,6 +138,9 @@ let g:lightline = {
 \       [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
 \     ],
 \   },
+\   'component': {
+\     'lineinfo': '%-2v',
+\   },
 \   'component_expand': {
 \     'linter_warnings': 'LightlineLinterWarnings',
 \     'linter_errors': 'LightlineLinterErrors',
