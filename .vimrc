@@ -135,7 +135,8 @@ let g:lightline = {
 \     ],
 \   },
 \   'component_function': {
-\     'gitbranch': 'fugitive#head',
+\     'gitbranch': 'LightlineFugitive',
+\     'readonly': 'LightlineReadonly',
 \   },
 \   'separator': {
 \     'left': '',
@@ -146,6 +147,16 @@ let g:lightline = {
 \     'right': '',
 \   },
 \}
+function! LightlineReadonly()
+  return &readonly ? '' : ''
+endfunction
+function! LightlineFugitive()
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
 
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
