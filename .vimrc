@@ -37,12 +37,12 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
-Plug 'ntpeters/vim-airline-colornum'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'rickhowe/diffchar.vim', { 'commit': '21d95f9' }
 Plug 'shime/vim-livedown'
 Plug 'IngoHeimbach/vim-tags'
+Plug 'itchyny/lightline.vim'
 Plug 'tommcdo/vim-fubitive'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
@@ -55,7 +55,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'vim-airline/vim-airline'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
 Plug 'wincent/terminus'
@@ -126,23 +125,32 @@ let g:ale_linters = {
 \   'html': [],
 \}
 
+" lightline.vim
+let g:lightline = {
+\   'colorscheme': 'jellybeans',
+\   'active': {
+\     'left': [
+\       [ 'mode', 'paste' ],
+\       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+\     ],
+\   },
+\   'component_function': {
+\     'gitbranch': 'fugitive#head',
+\   },
+\}
+let g:lightline.separator = {
+\   'left': '',
+\   'right': '',
+\}
+let g:lightline.subseparator = {
+\   'left': '',
+\   'right': '',
+\}
+
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-x>']
 let g:qfenter_topen_map = ['<C-t>']
-
-" vim-airline
-let g:airline_extensions = ['ale', 'branch', 'tabline', 'tmuxline']
-let g:airline_highlighting_cache = 1
-let g:airline_powerline_fonts = 1
-let g:airline_section_x = ''
-let g:airline_section_y = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#tab_nr_type = 2
 
 " fzf.vim
 let g:fzf_buffers_jump = 1
