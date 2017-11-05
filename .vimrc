@@ -39,7 +39,7 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'rickhowe/diffchar.vim', { 'commit': '21d95f9' }
+Plug 'rickhowe/diffchar.vim'
 Plug 'shime/vim-livedown'
 Plug 'IngoHeimbach/vim-tags'
 Plug 'itchyny/lightline.vim'
