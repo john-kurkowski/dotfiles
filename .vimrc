@@ -88,13 +88,11 @@ set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
 set hidden
-set laststatus=2
 set nocompatible
 set nojoinspaces
 set number
 set ofu=syntaxcomplete#Complete
 set relativenumber
-set ruler
 set sessionoptions-=curdir " Increase session compatbility with vim-rooter
 set showtabline=2
 set splitright
