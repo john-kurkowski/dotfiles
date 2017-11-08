@@ -95,6 +95,7 @@ set number
 set ofu=syntaxcomplete#Complete
 set relativenumber
 set ruler
+set sessionoptions-=curdir " Increase session compatbility with vim-rooter
 set showtabline=2
 set splitright
 set switchbuf=useopen,usetab
