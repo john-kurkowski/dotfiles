@@ -136,7 +136,7 @@ let g:lightline = {
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
-\       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+\       [ 'gitbranch', 'readonly', 'relativepath', 'modified' ]
 \     ],
 \     'right': [
 \       [ 'lineinfo' ],
@@ -158,6 +158,14 @@ let g:lightline = {
 \   'component_type': {
 \     'linter_warnings': 'warning',
 \     'linter_errors': 'error'
+\   },
+\   'inactive': {
+\     'left': [
+\       [ 'relativepath' ],
+\     ],
+\     'right': [
+\       [ 'lineinfo' ],
+\     ],
 \   },
 \   'separator': {
 \     'left': '',
