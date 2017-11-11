@@ -127,6 +127,7 @@ let g:ale_fixers = {
 \}
 let g:ale_linters = {
 \   'html': [],
+\   'python': ['pycodestyle', 'pylint'],
 \}
 
 " lightline.vim
