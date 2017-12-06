@@ -26,7 +26,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'ervandew/supertab'
-Plug 'godlygeek/csapprox'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'john-kurkowski/ingo-library'
   Plug 'wincent/loupe'
@@ -73,6 +72,10 @@ autocmd VimEnter *
 " Color
 " -------------------------
 
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 set background=dark
 colorscheme iceberg
 
@@ -97,6 +100,7 @@ set sessionoptions-=curdir " Increase session compatbility with vim-rooter
 set showtabline=2
 set splitright
 set switchbuf=useopen,usetab
+set termguicolors
 set undodir=~/.vim/undodir//
 set undofile
 
