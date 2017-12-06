@@ -19,7 +19,7 @@ Plug 'airblade/vim-rooter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'danhart/flatlandia'
+Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
@@ -74,7 +74,7 @@ autocmd VimEnter *
 " -------------------------
 
 set background=dark
-colorscheme flatlandia
+colorscheme iceberg
 
 highlight clear SignColumn
 call gitgutter#highlight#define_highlights()
@@ -132,7 +132,7 @@ let g:ale_linters = {
 
 " lightline.vim
 let g:lightline = {
-\   'colorscheme': 'wombat',
+\   'colorscheme': 'iceberg',
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
