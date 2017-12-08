@@ -13,6 +13,7 @@ endif
 " List plugins I use
 call plug#begin()
 
+Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
