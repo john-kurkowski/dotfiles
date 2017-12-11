@@ -6,6 +6,7 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
+  pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
   ui = true
 [alias]
@@ -17,8 +18,6 @@
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path =
-[interactive]
-  diffFilter = diff-highlight
 [merge]
   conflictstyle = diff3
 [mergetool "sourcetree"]
@@ -31,10 +30,6 @@
 [grep]
   patternType = perl
   lineNumber = true
-[pager]
-  log = diff-highlight | less
-  show = diff-highlight | less
-  diff = diff-highlight | less
 [push]
   default = simple
   followTags = true

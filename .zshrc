@@ -83,10 +83,6 @@ source ~/.hostspecific
 # Source environment variables from a dotenv file
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
 
-# Put on PATH scripts that aren't available via a package manager
-
-ln -sf $BREW_PREFIX/share/git-core/contrib/diff-highlight/diff-highlight $BREW_PREFIX/bin/diff-highlight
-
 # Enable fuzzy completion of any list of strings, like filepaths
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
