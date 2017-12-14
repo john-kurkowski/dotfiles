@@ -43,6 +43,7 @@ Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'rickhowe/diffchar.vim'
 Plug 'shime/vim-livedown'
+Plug 'sjl/gundo.vim'
 Plug 'IngoHeimbach/vim-tags'
 Plug 'itchyny/lightline.vim'
 Plug 'tommcdo/vim-fubitive'
