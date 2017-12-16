@@ -25,7 +25,6 @@ Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'edkolev/tmuxline.vim'
 Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'ervandew/supertab'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
