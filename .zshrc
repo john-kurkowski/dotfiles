@@ -67,12 +67,7 @@ path=(
 )
 export PATH=${(j[:])path}
 
-if [[ `uname` == 'Darwin' && -z "$TMUX" ]]; then
-  export EDITOR="mvim -f"
-else
-  export EDITOR=vim
-fi
-
+export EDITOR=vim
 export LESS=-FRXi
 export PYTHONSTARTUP=~/.pystartup
 
