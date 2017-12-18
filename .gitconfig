@@ -15,6 +15,9 @@
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 [diff "plist"]
   textconv = plutil -convert xml1 -o -
+[diff "scpt"]
+  textconv = osadecompile
+  binary = true
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path =

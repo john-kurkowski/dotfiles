@@ -1,1 +1,2 @@
 *.plist diff=plist
+*.scpt diff=scpt
