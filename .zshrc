@@ -19,15 +19,11 @@ source $BREW_PREFIX/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
-  bower
-  ember-cli
   fasd
   git
   heroku
   lukechilds/zsh-nvm
-  osx
   pip
-  rsync
   vi-mode
   zsh-users/zsh-syntax-highlighting
   # zsh-syntax-highlighting must come before history-substring-search, according to its README
