@@ -19,6 +19,7 @@ source $BREW_PREFIX/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
+  docker
   fasd
   git
   heroku
