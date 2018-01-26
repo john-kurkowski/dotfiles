@@ -8,7 +8,7 @@ fi
 
 BREW_PREFIX='/usr/local'
 
-# zsh-vnm options
+# zsh-nvm options
 NODE_VERSION='v6.10.0'
 export NVM_DIR=~/.nvm
 export NVM_NO_USE=true
@@ -49,6 +49,7 @@ unsetopt share_history
 
 path=(
   ~/.bin
+  ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
   /usr/local/bin
   /usr/bin
   /bin
@@ -60,7 +61,6 @@ path=(
   /usr/X11/bin
   /Library/TeX/texbin
   $HOME/.cargo/bin
-  ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
 )
 export PATH=${(j[:])path}
 
