@@ -37,7 +37,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'majutsushi/tagbar'
-Plug 'mustache/vim-mustache-handlebars', { 'for': ['hbs', 'handlebars', 'html.handlebars'] }
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'rickhowe/diffchar.vim'
@@ -231,6 +231,22 @@ map <silent> <Leader>i :Sessions<CR>
 " Simulate ctrlp.vim with fzf.vim.
 map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
+
+" Markdown
+let g:markdown_fenced_languages = [
+\  'bash=sh',
+\  'css',
+\  'handlebars=mustache',
+\  'hbs=mustache',
+\  'html',
+\  'javascript',
+\  'js=javascript',
+\  'json',
+\  'sass',
+\  'sh',
+\  'python',
+\  'zsh',
+\]
 
 " vim-rooter
 let g:rooter_silent_chdir = 1
