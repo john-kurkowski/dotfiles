@@ -95,6 +95,7 @@ set backupdir=~/.vim/backup//
 set breakindent
 set directory=~/.vim/swp//
 set hidden
+set lazyredraw
 set nocompatible
 set nojoinspaces
 set number
