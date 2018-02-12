@@ -2,12 +2,12 @@ alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
 
 alias ls='ls -G'
-alias rg='rg --hidden'
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
 fasd_cache="$HOME/.fasd-init-env"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
