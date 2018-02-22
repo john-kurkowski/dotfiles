@@ -229,7 +229,7 @@ command! -bang -nargs=* Grep
 
 map <silent> <Leader>i :Sessions<CR>
 " Simulate ctrlp.vim with fzf.vim.
-map <silent> <C-P> :GFiles -oc --exclude-standard<CR>
+map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
 
 " Markdown
