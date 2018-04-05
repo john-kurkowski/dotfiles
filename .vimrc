@@ -234,6 +234,10 @@ map <silent> <Leader>i :Sessions<CR>
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
 
+" vim-ifionly
+
+nnoremap L :IfIOnly<CR>
+
 " Markdown
 let g:markdown_fenced_languages = [
 \  'bash=sh',
