@@ -111,6 +111,7 @@ set switchbuf=useopen,usetab
 set termguicolors
 set undodir=~/.vim/undodir//
 set undofile
+set updatetime=100
 
 if has("gui_running")
   set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
