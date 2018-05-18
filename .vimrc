@@ -86,9 +86,6 @@ endif
 set background=dark
 colorscheme iceberg
 
-highlight clear SignColumn
-call gitgutter#highlight#define_highlights()
-
 " -------------------------
 " Various Vim options
 " -------------------------
