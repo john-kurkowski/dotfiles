@@ -2,6 +2,7 @@ alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
 
 alias ls='ls -G'
+alias fd='fd --follow --hidden --exclude ".git"'
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 
