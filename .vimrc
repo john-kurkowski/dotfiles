@@ -133,6 +133,11 @@ let g:ale_linters = {
 \   'python': ['pycodestyle', 'pylint'],
 \}
 
+" gundo.vim
+if has('python3')
+  let g:gundo_prefer_python3 = 1
+endif
+
 " lightline.vim
 let g:lightline = {
 \   'colorscheme': 'iceberg',
