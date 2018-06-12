@@ -35,7 +35,6 @@ brew 'ruby'
 brew 'shellcheck'
 brew 'stash-cli'
 brew 'terminal-notifier'
-brew 'tmux'
 brew 'tree'
 brew 'universal-ctags/universal-ctags/universal-ctags', args: ['HEAD']
 brew 'vim'
