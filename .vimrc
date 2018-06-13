@@ -237,6 +237,7 @@ nnoremap <silent> <Leader>p :Buffers<CR>
 " Tsuquyomi
 
 let g:tsuquyomi_disable_quickfix = 1
+map <silent> <S-F12> <Plug>(TsuquyomiReferences)
 
 " vim-ifionly
 
