@@ -26,7 +26,6 @@ Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
-Plug 'ervandew/supertab'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'john-kurkowski/ingo-library'
   Plug 'wincent/loupe'
@@ -35,12 +34,14 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'majutsushi/tagbar'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] }
 Plug 'rickhowe/diffchar.vim'
 Plug 'shime/vim-livedown'
 Plug 'sjl/gundo.vim'
@@ -62,6 +63,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer --rust-completer' }
 Plug 'wincent/terminus'
 Plug 'yssl/QFEnter'
 
@@ -131,6 +133,7 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   'html': [],
 \   'python': ['pycodestyle', 'pylint'],
+\   'typescript': ['tslint', 'tsserver'],
 \}
 
 " gundo.vim
@@ -230,6 +233,10 @@ map <silent> <Leader>i :Sessions<CR>
 " Simulate ctrlp.vim with fzf.vim.
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
+
+" Tsuquyomi
+
+let g:tsuquyomi_disable_quickfix = 1
 
 " vim-ifionly
 
