@@ -10,19 +10,12 @@ export NVM_NO_USE=true
 # Enable Antigen for shell helpers and theme
 
 source $BREW_PREFIX/share/antigen/antigen.zsh
-antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
-  docker
-  fasd
-  git
-  heroku
   lukechilds/zsh-nvm
-  pip
-  vi-mode
   zsh-users/zsh-syntax-highlighting
   # zsh-syntax-highlighting must come before history-substring-search, according to its README
-  history-substring-search
+  zsh-users/zsh-history-substring-search
 EOBUNDLES
 
 POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/bhilburn/powerlevel9k/
@@ -35,12 +28,32 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 
 antigen apply
 
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
 # Global, misc. shell settings
 
+setopt always_to_end
+setopt auto_menu              # show completion menu on successive tab press
+setopt complete_in_word
+setopt extended_history       # record timestamp of command in HISTFILE
 setopt extendedglob
 setopt globdots
-setopt HIST_IGNORE_ALL_DUPS
-unsetopt share_history
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_all_dups   # ignore duplicate, non-consecutive commands history list
+setopt hist_ignore_dups       # ignore duplicate, consecutive commands in history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+
+# zsh vi mode
+bindkey -v
+
+# allow v to edit the command line
+zle -N edit-command-line
+autoload -Uz edit-command-line
+bindkey -M vicmd 'v' edit-command-line
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down

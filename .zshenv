@@ -1,10 +1,20 @@
 alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
-
-alias ls='ls -G'
 alias fd='fd --follow --hidden --exclude ".git"'
-alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
+alias ga='git add'
+alias gc='git commit -v'
+alias gc!='git commit -v --amend'
+alias gcn!='git commit -v --no-edit --amend'
+alias gco='git checkout'
+alias gd='git diff'
+alias gf='git fetch'
+alias gp='git push'
+alias grb='git rebase'
+alias gsh='git show'
+alias gst='git status'
+alias gup='git pull --rebase'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
+alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
