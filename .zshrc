@@ -79,6 +79,12 @@ export EDITOR=vim
 export LESS=-FRXi
 export PYTHONSTARTUP=~/.pystartup
 
+# Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
+
+alias exa='exa -g --git'
+alias ll='exa -l'
+alias ls='exa'
+
 # Local-only environment
 
 # Host-specific scripts and aliases
