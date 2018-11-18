@@ -42,6 +42,9 @@ setopt globdots
 setopt HIST_IGNORE_ALL_DUPS
 unsetopt share_history
 
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 path=(
   ~/.bin
   ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
