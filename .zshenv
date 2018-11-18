@@ -12,7 +12,8 @@ alias gp='git push'
 alias grb='git rebase'
 alias gsh='git show'
 alias gst='git status'
-alias gup='git pull --rebase'
+alias gup='git pull'
+alias gupp='git pull --prune'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 
