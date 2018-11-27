@@ -13,7 +13,7 @@ alias grb='git rebase'
 alias gsh='git show'
 alias gst='git status'
 alias gup='git pull'
-alias gupp='git pull --prune'
+alias gupp=$'git pull --prune && git branch -vv | awk \'/: gone]/{print $1}\' | xargs git branch --delete --force'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 
