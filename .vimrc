@@ -91,12 +91,14 @@ set breakindent
 set directory=~/.vim/swp//
 set hidden
 set lazyredraw
+set linebreak
 set nocompatible
 set nojoinspaces
 set number
 set ofu=syntaxcomplete#Complete
 set relativenumber
 set sessionoptions-=curdir " Increase session compatbility with vim-rooter
+set showbreak=…
 set showtabline=2
 set splitright
 set switchbuf=useopen,usetab
