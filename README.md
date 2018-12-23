@@ -1,5 +1,9 @@
 # dotfiles
 
+This is my dotfiles repo. There are many like it, but this one is mine.
+
+It is laid out exactly how it goes in the `$HOME` dir.
+
 ## Install
 
 ```zsh
@@ -17,7 +21,7 @@ git config --global user.email john.kurkowski@company.com
 chsh -s zsh
 ```
 
-## Update
+### Update
 
 ```zsh
 dotfiles pull
@@ -26,79 +30,66 @@ dotfiles pull
 git config --global user.email john.kurkowski@company.com
 ```
 
+### Usage
+
+The dotfiles are now in your home folder, in the conventional location. Your
+tools automatically pick them up.
+
+To interact with the dotfiles' version control, instead of `git`, use
+`dotfiles-env git`, or `dotfiles` for short. For example, `dotfiles add -p`,
+`dotfiles commit -v`.
+
+Why all the above commands to get this started up? There are [a lot][GitHub
+does dotfiles] of custom tools to ship your dotfiles to your `$HOME` dir. Why
+not a bespoke tool that would make this a 1-liner? I'd rather use an existing
+tool many already understand. You probably already use Git. The repo should be
+laid out the way you want. If the storage layout diverges from how it's used,
+it's harder to maintain and sync. A bare Git repo and an `alias` later, it
+works pretty seamlessly. [Read more about the best way to store dotfiles][The
+best way to store your dotfiles].
+
 ## What's Inside
 
-### Why I Like This Configuration
+My development workhorses are the terminal and Vim. They make up the majority
+of the custom code in this repo. Their entry points are `.zshrc` and `.vimrc`,
+respectively.
 
-Programmers are an opinionated bunch. I'm of the opinion to [unify those
-opinions](https://xkcd.com/927/). Prompts should look the same. Code should be
-formatted the same. Keystrokes should be the same.
+My team is IDE-agnostic, so I think it makes sense for the individual to invest
+in and sharpen such tools, for their benefit, to shorten the feedback
+loop.<sup>[1](#1)</sup>
 
-Sharing configuration gives us common language and base understanding. We can
-spend less time on holy wars, e.g. tabs vs. spaces, and less time adjusting our
-eyes to someone else's layout, and more time on bigger problems. Nobody
-benefits from fragmentation, like my idiosyncratic `.zshrc` & `.vimrc` soup.
+This is at the risk of making the configs idiosyncratic, so they're high cost
+to the author and they don't benefit others. It's a balance. When building a
+custom prompt, it can be full of inscrutable symbols and directives. When you
+see this, **outsource to plugins**. Then the majority of the custom code
+becomes listing plugins and configuring them. You'll see this in the files,
+above. Plugins do the thing 90% as good as the best dotfile hacker, with little
+code to maintain for the end user. Hitch your wagon to the community.
+Functionality is an asset. Code is a liability.
 
-There is still plenty idiosyncratic soup in this repo, but there are a couple
-good ideas reflecting my opinion above:
+The other files here configure miscellaneous tools, which come up for schleps
+and experiments with little convention.<sup>[2](#2)</sup> To fill the gaps,
+there are a lot of tools to memorize. They should be the exception rather than
+the rule. Prune your unused dotfiles aggressively.
 
-1. Outsource to plugins
+## Footnotes
 
-    Wherever I can substitute a plugin for maintaining the dotfile behavior
-    myself, I go for the plugin.
+<a name="1">1.</a> The quicker it is to try an idea or to cross reference it,
+the quicker it is to improve upon or discard the idea. While programming,
+always keep in the back of your head: programming doesn't have to be _this_
+way. It can be better. See [Inventing on Principle].
 
-    I built up a colored, highly custom shell prompt over the course of years.
-    The color codes and interpolated variables were inscrutable.
+<a name="2">2.</a> Generally, instead, configuration should be explicit and
+fleshed out _in the projects that use them_, for high convention. This enforces
+consistency across collaborators. It reduces project holy wars. Copy a dotfile
+like [`.editorconfig`][EditorConfig] into the root of your project, so all
+collaborators can agree on e.g. spaces vs. tabs, and trailing whitespace. Or
+[`.eslintrc.js`][ESLint] to enforce the best parts of JavaScript,
+[`pylintrc`][Pylint] for Python, etc. Use CI to enforce the dotfiles.
 
-    Then came along an [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh)
-    standard plugin, which did the same thing 90% as good and with 0 code on my
-    end. Functionality is an asset. Code is a liability. I quickly switched to
-    the standard plugin.
-
-    Same story for my old Vim hacks. Why juggle e.g. all of my and my
-    teammates' spacing preferences, when
-    [vim-sleuth](https://github.com/tpope/vim-sleuth) detects it 90% of the
-    time? (Although if you and your team use
-    [EditorConfig](http://editorconfig.org/), all the better!)
-
-    I benefit from the plugin's community's bugfixes. I can share my own. If
-    another person is using the same prompt and keystrokes as me, I can more
-    quickly understand their system and collaborate. All around, I save time.
-
-2. Subtrees > submodules
-
-    What to do about external plugins and scripts that don't have their own
-    package manager? Hey, Git is pretty good at versioning.
-
-    Git subtrees store the squashed history of my such dependencies in this
-    repo, but without the manual misery of Git submodules. On a new device,
-    fetching all my dependencies is 1 `git clone` away. Upgrading & downgrading
-    them is a concise, familiar Git experience as well.
-
-    Forget copy/pasting the dependencies' source. Git can keep them in sync.
-    Subtrees are also effective for contributing upstream.
-
-    Generally I don't like the noise of external dependencies. Keep the repo
-    focused on what makes the repo special. But a few vendored dependencies
-    here and there are lightweight to manage via Git.
-
-    * (Previously this section boasted about managing Vim plugins via subtrees.
-      That can work for a few subtrees, but the history and plugin management
-      becomes a real headache when there are a lot of subtrees. `git log
-      --graph` this repo to see the mess. Vendored dependencies should be the
-      _exception_, not the standard.)
-
-3. Ship via standard tools
-
-    There are a lot of [custom tools to ship your dotfiles to your `$HOME`
-    dir](https://dotfiles.github.io/). Previously, to do the same, this repo
-    was home to 100 lines of Python cleverly performing `rm` and `cp` against
-    `git`.
-
-    Can we get that down to 0 LoC? How about invoking some familiar shell
-    commands? Hey, I'm already using Git, and the Git repo is laid out the way
-    I want.
-
-    A `git clone --bare` and an `alias` later, and dotfiles import/export works
-    entirely through Git. See [this article](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)
-    for details.
+[EditorConfig]: https://editorconfig.org/
+[ESLint]: https://eslint.org/
+[GitHub does dotfiles]: https://dotfiles.github.io/
+[Inventing on Principle]: https://vimeo.com/36579366
+[Pylint]: https://www.pylint.org/
+[The best way to store your dotfiles]: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
