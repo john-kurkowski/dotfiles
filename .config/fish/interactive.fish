@@ -1,5 +1,15 @@
+# Keybindings
+
 fish_vi_key_bindings
 fzf_key_bindings
+
+# Theme
+
+set --export theme_color_scheme dracula
+set --export theme_display_cmd_duration no
+set --export theme_display_date no
+set --export theme_show_exit_status yes
+set --export theme_title_display_process yes
 
 # Interactive-only aliases (see more in aliases.fish)
 
