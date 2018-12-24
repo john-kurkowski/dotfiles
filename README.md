@@ -6,7 +6,7 @@ It is laid out exactly how it goes in the `$HOME` dir.
 
 ## Install
 
-```zsh
+```fish
 git clone --bare https://github.com/john-kurkowski/dotfiles.git $HOME/.dotfiles
 alias dotfiles='GIT_DIR=$HOME/.dotfiles/ GIT_WORK_TREE=$HOME git'
 dotfiles config --local core.worktree $HOME
@@ -17,13 +17,13 @@ dotfiles checkout
 # If not a personal device
 git config --global user.email john.kurkowski@company.com
 
-# Permanently switch to zsh
-chsh -s zsh
+# Permanently switch shell
+chsh -s fish
 ```
 
 ### Update
 
-```zsh
+```fish
 dotfiles pull
 
 # If not a personal device
@@ -51,8 +51,8 @@ best way to store your dotfiles].
 ## What's Inside
 
 My development workhorses are the terminal and Vim. They make up the majority
-of the custom code in this repo. Their entry points are `.zshrc` and `.vimrc`,
-respectively.
+of the custom code in this repo. Their entry points are
+`.config/fish/config.fish` and `.vimrc`, respectively.
 
 My team is IDE-agnostic, so I think it makes sense for the individual to invest
 in and sharpen such tools, for their benefit, to shorten the feedback

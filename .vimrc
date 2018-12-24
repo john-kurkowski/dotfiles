@@ -21,6 +21,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'cocopon/iceberg.vim'
+Plug 'dag/vim-fish'
 Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
@@ -255,6 +256,7 @@ nnoremap L :IfIOnly<CR>
 let g:markdown_fenced_languages = [
 \  'bash=sh',
 \  'css',
+\  'fish',
 \  'handlebars=mustache',
 \  'hbs=mustache',
 \  'html',
