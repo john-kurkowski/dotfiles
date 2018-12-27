@@ -5,7 +5,6 @@ fzf_key_bindings
 
 # Theme
 
-set --export theme_color_scheme dracula
 set --export theme_display_cmd_duration no
 set --export theme_display_date no
 set --export theme_show_exit_status yes
