@@ -13,6 +13,7 @@ source $BREW_PREFIX/share/antigen/antigen.zsh
 
 antigen bundles <<EOBUNDLES
   lukechilds/zsh-nvm
+  zsh-users/zsh-autosuggestions
   zsh-users/zsh-syntax-highlighting
   # zsh-syntax-highlighting must come before history-substring-search, according to its README
   zsh-users/zsh-history-substring-search
@@ -25,6 +26,8 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_STRATEGY='truncate_from_right'
 POWERLEVEL9K_STATUS_OK=false
 antigen theme bhilburn/powerlevel9k powerlevel9k
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 
 antigen apply
 
