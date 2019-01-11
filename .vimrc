@@ -148,7 +148,7 @@ let g:lightline = {
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
-\       [ 'gitbranch', 'readonly', 'relativepath', 'modified' ]
+\       [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ]
 \     ],
 \     'right': [
 \       [ 'lineinfo' ],
@@ -173,7 +173,7 @@ let g:lightline = {
 \   },
 \   'inactive': {
 \     'left': [
-\       [ 'relativepath' ],
+\       [ 'absolutepath', 'modified' ],
 \     ],
 \     'right': [
 \       [ 'lineinfo' ],
