@@ -40,8 +40,8 @@ To interact with the dotfiles' version control, instead of `git`, use
 `dotfiles commit -v`.
 
 Why all the above commands to get this started up? There are [a lot][GitHub
-does dotfiles] of custom tools to ship your dotfiles to your `$HOME` dir. Why
-not a bespoke tool that would make this a 1-liner? I'd rather use an existing
+does dotfiles] of custom tools, with their own conventions, to ship your
+dotfiles to your `$HOME` dir. I'd rather use an existing
 tool many already understand. You probably already use Git. The repo should be
 laid out the way you want. If the storage layout diverges from how it's used,
 it's harder to maintain and sync. A bare Git repo and an `alias` later, it
@@ -62,7 +62,7 @@ This is at the risk of making the configs idiosyncratic, so they're high cost
 to the author and they don't benefit others. It's a balance. When building a
 custom prompt, it can be full of inscrutable symbols and directives. When you
 see this, **outsource to plugins**. Then the majority of the custom code
-becomes listing plugins and configuring them. You'll see this in the files,
+becomes listing plugins and configuring them. You'll see this in the files
 above. Plugins do the thing 90% as good as the best dotfile hacker, with little
 code to maintain for the end user. Hitch your wagon to the community.
 Functionality is an asset. Code is a liability.
@@ -70,12 +70,12 @@ Functionality is an asset. Code is a liability.
 The other files here configure miscellaneous tools, which come up for schleps
 and experiments with little convention.<sup>[2](#2)</sup> To fill the gaps,
 there are a lot of tools to memorize. They should be the exception rather than
-the rule. Prune your unused dotfiles aggressively.
+the rule. Prune your unused dotfiles and plugins aggressively.
 
 ## Footnotes
 
 <a name="1">1.</a> The quicker it is to try an idea or to cross reference it,
-the quicker it is to improve upon or discard the idea. While programming,
+the quicker it is to improve upon or discard the idea. So while programming,
 always keep in the back of your head: programming doesn't have to be _this_
 way. It can be better. See [Inventing on Principle].
 
