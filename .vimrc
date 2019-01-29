@@ -40,7 +40,6 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
-Plug 'Quramy/tsuquyomi', { 'for': ['typescript'] }
 Plug 'rickhowe/diffchar.vim'
 Plug 'shime/vim-livedown'
 Plug 'sjl/gundo.vim'
@@ -88,6 +87,7 @@ colorscheme iceberg
 set backupcopy=yes
 set backupdir=~/.vim/backup//
 set breakindent
+set completeopt=menu,menuone,preview,noselect,noinsert
 set directory=~/.vim/swp//
 set hidden
 set lazyredraw
@@ -128,6 +128,7 @@ let maplocalleader = ","
 "
 
 " ale
+let g:ale_completion_enabled = 1
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \}
@@ -136,6 +137,7 @@ let g:ale_linters = {
 \   'python': ['pycodestyle', 'pylint'],
 \   'typescript': ['tslint', 'tsserver'],
 \}
+map <silent> <S-F12> <Plug>(ALEFindReferences)
 
 " gundo.vim
 if has('python3')
@@ -241,11 +243,6 @@ map <silent> <Leader>i :Sessions<CR>
 " Simulate ctrlp.vim with fzf.vim.
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
-
-" Tsuquyomi
-
-let g:tsuquyomi_disable_quickfix = 1
-map <silent> <S-F12> <Plug>(TsuquyomiReferences)
 
 " vim-ifionly
 
