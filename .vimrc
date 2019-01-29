@@ -134,6 +134,7 @@ let g:ale_fixers = {
 \}
 let g:ale_linters = {
 \   'html': [],
+\   'javascript': ['eslint'],
 \   'python': ['pycodestyle', 'pylint'],
 \   'typescript': ['tslint', 'tsserver'],
 \}
