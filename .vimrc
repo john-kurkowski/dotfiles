@@ -159,7 +159,7 @@ let g:lightline = {
 \     ],
 \   },
 \   'component': {
-\     'lineinfo': '%-2v',
+\     'lineinfo': '%c%V',
 \   },
 \   'component_expand': {
 \     'linter_warnings': 'LightlineLinterWarnings',
