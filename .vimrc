@@ -33,6 +33,7 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
+Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'majutsushi/tagbar'
