@@ -10,6 +10,14 @@
   "camel_case_classes": {
     "level": "error"
   },
+  "check_scope": {
+    "environments": [
+      "browser",
+      "builtin"
+    ],
+    "level": "error",
+    "module": "coffeescope2"
+  },
   "coffeescript_error": {
     "level": "error"
   },
