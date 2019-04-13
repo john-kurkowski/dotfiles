@@ -71,7 +71,6 @@ path=(
   /bin
   /opt/X11/bin
   /usr/local/sbin
-  /usr/local/bin
   /usr/sbin
   /sbin
   /usr/X11/bin
