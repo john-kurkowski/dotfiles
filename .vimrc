@@ -17,14 +17,11 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
-Plug 'altercation/vim-colors-solarized'
-Plug 'Chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'ElmCast/elm-vim', { 'for': ['elm'] }
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
 Plug 'john-kurkowski/ingo-library'
   Plug 'wincent/loupe'
@@ -36,9 +33,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'majutsushi/tagbar'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'mxw/vim-jsx'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'rickhowe/diffchar.vim'
@@ -47,7 +42,6 @@ Plug 'sjl/gundo.vim'
 Plug 'sodapopcan/vim-ifionly'
 Plug 'sodapopcan/vim-twiggy'
 Plug 'itchyny/lightline.vim'
-Plug 'tommcdo/vim-fubitive'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
@@ -274,12 +268,6 @@ let g:sneak#label = 1
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
 nmap p <Plug>yankstack_substitute_older_paste
 nmap P <Plug>yankstack_substitute_newer_paste
-
-" -------------------------
-" Language specific
-" -------------------------
-
-let g:elm_format_autosave = 1
 
 " -------------------------
 " Spelling
