@@ -33,6 +33,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'michaeljsmith/vim-indent-object'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
