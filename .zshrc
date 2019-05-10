@@ -56,15 +56,19 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # zsh vi mode
 bindkey -v
 
-# allow v to edit the command line
+# [v] edit the command line
 zle -N edit-command-line
 autoload -Uz edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 
+# [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+
+# [Shift-Tab] - move through the completion menu backwards
+bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
 path=(
   ~/.bin
