@@ -36,6 +36,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'osyo-manga/vim-over'
@@ -160,9 +161,9 @@ let g:lightline = {
 \     'lineinfo': '%c%V',
 \   },
 \   'component_expand': {
-\     'linter_warnings': 'LightlineLinterWarnings',
-\     'linter_errors': 'LightlineLinterErrors',
-\     'linter_ok': 'LightlineLinterOK'
+\     'linter_warnings': 'lightline#ale#warnings',
+\     'linter_errors': 'lightline#ale#errors',
+\     'linter_ok': 'lightline#ale#ok',
 \   },
 \   'component_function': {
 \     'gitbranch': 'LightlineFugitive',
@@ -189,24 +190,9 @@ let g:lightline = {
 \     'right': '',
 \   },
 \}
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
-endfunction
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
-endfunction
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓ ' : ''
-endfunction
+let g:lightline#ale#indicator_warnings = '◆ '
+let g:lightline#ale#indicator_errors = '✗ '
+let g:lightline#ale#indicator_ok = '✓'
 function! LightlineReadonly()
   return &readonly ? '' : ''
 endfunction
@@ -217,7 +203,6 @@ function! LightlineFugitive()
   endif
   return ''
 endfunction
-autocmd User ALELint call lightline#update()
 
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
