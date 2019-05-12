@@ -123,15 +123,6 @@ let maplocalleader = ","
 
 " ale
 let g:ale_completion_enabled = 1
-let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\}
-let g:ale_linters = {
-\   'html': [],
-\   'javascript': ['eslint'],
-\   'python': ['pycodestyle', 'pylint'],
-\   'typescript': ['tslint', 'tsserver'],
-\}
 map <silent> <S-F12> <Plug>(ALEFindReferences)
 
 " gundo.vim
