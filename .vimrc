@@ -23,9 +23,9 @@ Plug 'dominickng/fzf-session.vim'
 Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'sass', 'scss'] }
-Plug 'john-kurkowski/ingo-library'
+Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
-  Plug 'john-kurkowski/SearchHighlighting'
+  Plug 'inkarkat/vim-SearchHighlighting'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
