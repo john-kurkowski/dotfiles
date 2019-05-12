@@ -2,17 +2,11 @@
 
 BREW_PREFIX='/usr/local'
 
-# zsh-nvm options
-NODE_VERSION='v6.10.0'
-export NVM_DIR=~/.nvm
-export NVM_NO_USE=true
-
 # Enable Antigen for shell helpers and theme
 
 source $BREW_PREFIX/share/antigen/antigen.zsh
 
 antigen bundles <<EOBUNDLES
-  lukechilds/zsh-nvm
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-syntax-highlighting
   # zsh-syntax-highlighting must come before history-substring-search, according to its README
@@ -72,7 +66,6 @@ bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
 path=(
   ~/.bin
-  ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
   /usr/bin
@@ -110,7 +103,7 @@ source ~/.hostspecific
 
 # Enable various version managers
 
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+. $BREW_PREFIX/opt/asdf/asdf.sh
 if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
