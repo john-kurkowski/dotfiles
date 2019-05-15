@@ -1,3 +1,5 @@
 {
+  "*.coffee": ["coffeelint"],
+  "*.hbs": ["ember-template-lint"],
   "*.js": ["prettier-standard", "git add"],
 }
