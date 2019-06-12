@@ -199,7 +199,7 @@ let g:qfenter_topen_map = ['<C-t>']
 let g:fzf_buffers_jump = 1
 let g:fzf_session_path = '~/.vim/session//'
 
-command! -bang -nargs=* Grep
+command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always ' . <q-args>, 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
