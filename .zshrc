@@ -90,7 +90,6 @@ export PATH=${(j[:])path}
 export EDITOR=vim
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 export LESS=-FRXi
-export PYTHONSTARTUP=~/.pystartup
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
