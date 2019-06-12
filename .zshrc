@@ -74,6 +74,7 @@ path=(
   ~/.bin
   ${NVM_DIR}/versions/node/${NODE_VERSION}/bin
   /usr/local/bin
+  /usr/local/opt/ruby/bin
   /usr/bin
   /bin
   /opt/X11/bin
