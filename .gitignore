@@ -9,6 +9,7 @@
 .buildpath
 .classpath
 .dotfiles
+.env*
 .idea
 .project
 .pydevproject

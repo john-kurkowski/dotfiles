@@ -103,6 +103,7 @@ alias ls='exa'
 source ~/.hostspecific
 # Source environment variables from a dotenv file
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
+eval "$(direnv hook zsh)"
 
 # Enable fuzzy completion of any list of strings, like filepaths
 
