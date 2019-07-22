@@ -100,7 +100,7 @@ alias ls='exa'
 # Local-only environment
 
 # Host-specific scripts and aliases
-source ~/.hostspecific
+[[ -s "$HOME/.hostspecific" ]] && source "$HOME/.hostspecific"
 # Source environment variables from a dotenv file
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
 eval "$(direnv hook zsh)"
