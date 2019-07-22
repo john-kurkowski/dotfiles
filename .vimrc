@@ -55,7 +55,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-utils/vim-husk'
 Plug 'w0rp/ale'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --js-completer --rust-completer' }
 Plug 'wincent/terminus'
 Plug 'yssl/QFEnter'
 
@@ -89,7 +88,7 @@ set linebreak
 set nocompatible
 set nojoinspaces
 set number
-set ofu=syntaxcomplete#Complete
+set omnifunc=ale#completion#OmniFunc
 set relativenumber
 set sessionoptions-=curdir " Increase session compatbility with vim-rooter
 set showbreak=…
@@ -123,6 +122,8 @@ let maplocalleader = ","
 
 " ale
 let g:ale_completion_enabled = 1
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 map <silent> <S-F12> <Plug>(ALEFindReferences)
 
 " gundo.vim
