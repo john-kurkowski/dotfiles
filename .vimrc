@@ -191,10 +191,6 @@ function! LightlineFugitive()
   return ''
 endfunction
 
-" Polyglot
-
-let g:polyglot_disabled = ['styled-components']
-
 " QFEnter
 let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-x>']
