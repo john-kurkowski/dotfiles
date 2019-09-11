@@ -94,6 +94,7 @@ set showbreak=…
 set showtabline=2
 set splitright
 set switchbuf=useopen,usetab
+set tags^=./.git/tags;
 set termguicolors
 set undodir=~/.vim/undodir//
 set undofile
