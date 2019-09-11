@@ -88,7 +88,6 @@ set linebreak
 set nocompatible
 set nojoinspaces
 set number
-set omnifunc=ale#completion#OmniFunc
 set relativenumber
 set sessionoptions-=curdir " Increase session compatbility with vim-rooter
 set showbreak=…
