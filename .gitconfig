@@ -23,6 +23,8 @@
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path =
+[icdiff]
+  pager = less
 [merge]
   conflictstyle = diff3
 [mergetool "sourcetree"]
