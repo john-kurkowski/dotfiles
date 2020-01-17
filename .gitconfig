@@ -6,7 +6,7 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = delta --dark
 [color]
   ui = true
 [alias]
