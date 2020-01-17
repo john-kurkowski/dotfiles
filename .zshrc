@@ -93,6 +93,7 @@ export LESS=-FRXi
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
+alias cat='bat'
 alias exa='exa -g --git'
 alias ll='exa -l'
 alias ls='exa'
