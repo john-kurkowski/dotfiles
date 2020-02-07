@@ -198,7 +198,6 @@ let g:qfenter_hopen_map = ['<C-x>']
 let g:qfenter_topen_map = ['<C-t>']
 
 " fzf.vim
-let g:fzf_buffers_jump = 1
 let g:fzf_session_path = '~/.vim/session//'
 
 command! -bang -nargs=* Rg
