@@ -3,7 +3,7 @@
 BREW_PREFIX='/usr/local'
 
 # zsh-nvm options
-NODE_VERSION='v8.15.1'
+NODE_VERSION='v12.14.1'
 export NVM_DIR=~/.nvm
 export NVM_NO_USE=true
 
