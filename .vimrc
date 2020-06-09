@@ -18,10 +18,8 @@ Plug 'andymass/vim-matchup'
 Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
-Plug 'duggiefresh/vim-easydir'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
@@ -42,7 +40,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'shime/vim-livedown'
 Plug 'sjl/gundo.vim'
 Plug 'sodapopcan/vim-ifionly'
-Plug 'sodapopcan/vim-twiggy'
 Plug 'itchyny/lightline.vim'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
@@ -262,6 +259,13 @@ au FileType gitcommit,markdown setl spell
 " -------------------------
 " Custom Bindings
 " -------------------------
+
+" Ease window switching in all directions. Inspired by vim-tmux-navigator,
+" although I don't use tmux.
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 
 " Find/replace with visual feedback. Courtesy vim-over &
 " https://github.com/toranb/dotfiles/blob/46ae158e51dbdbba72e284081dc9a12b5e54ef8c/vimrc#L130
