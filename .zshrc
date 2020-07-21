@@ -103,9 +103,13 @@ alias ls='exa'
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
 eval "$(direnv hook zsh)"
 
-# Enable fuzzy completion of any list of strings, like filepaths
+# Enable interactive fuzzy completion of any list of strings, like filepaths
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Enable non/interactive directory jumping by frecency
+
+eval "$(zoxide init zsh)"
 
 # Enable various version managers
 

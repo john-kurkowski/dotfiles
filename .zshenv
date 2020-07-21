@@ -23,12 +23,12 @@ export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
-fasd_cache="$HOME/.fasd-init-env"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias >| "$fasd_cache"
+# Support zoxide in Vim command mode, which isn't an interactive shell by
+# default. It's okay if `zoxide` isn't found. Outside of Vim, starting a new
+# shell, it may not be on the PATH yet.
+if [ "$(command -v zoxide)" ]; then
+  eval "$(zoxide init zsh)"
 fi
-source "$fasd_cache"
-unset fasd_cache
 
  # fco - checkout git branch/tag
  fco() {
