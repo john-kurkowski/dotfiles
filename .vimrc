@@ -21,6 +21,7 @@ Plug 'airblade/vim-rooter'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
   Plug 'inkarkat/vim-SearchHighlighting'
@@ -37,7 +38,6 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'osyo-manga/vim-over'
 Plug 'rickhowe/diffchar.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'shime/vim-livedown'
 Plug 'sjl/gundo.vim'
 Plug 'sodapopcan/vim-ifionly'
 Plug 'itchyny/lightline.vim'
@@ -231,6 +231,8 @@ let g:markdown_fenced_languages = [
 \  'python',
 \  'zsh',
 \]
+
+let g:mkdp_auto_close = 1
 
 " vim-rooter
 let g:rooter_silent_chdir = 1
