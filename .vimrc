@@ -235,6 +235,7 @@ let g:markdown_fenced_languages = [
 let g:mkdp_auto_close = 1
 
 " vim-rooter
+let g:rooter_patterns = ['.git', 'Makefile', 'package.json']
 let g:rooter_silent_chdir = 1
 
 " vim-sneak
