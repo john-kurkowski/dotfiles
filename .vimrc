@@ -125,7 +125,13 @@ let g:ale_completion_autoimport = 1
 let g:ale_completion_enabled = 1
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-map <silent> <S-F12> <Plug>(ALEFindReferences)
+map <leader>u :ALEFindReferences<CR>
+nnoremap <M-LeftMouse> <LeftMouse>:ALEGoToDefinition<CR>
+nnoremap <silent> gd :ALEGoToDefinition<CR>
+nnoremap <silent> gds :ALEGoToDefinition -split<CR>
+nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
+nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
+nnoremap <silent> gk :ALEDetail<CR>
 
 " gundo.vim
 if has('python3')
