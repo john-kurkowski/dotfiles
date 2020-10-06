@@ -15,13 +15,7 @@ antigen bundles <<EOBUNDLES
   zsh-users/zsh-history-substring-search
 EOBUNDLES
 
-POWERLEVEL9K_INSTALLATION_PATH=~/.antigen/bundles/romkatv/powerlevel10k/
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs virtualenv)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_STRATEGY='truncate_from_right'
-POWERLEVEL9K_STATUS_OK=false
-antigen theme romkatv/powerlevel10k
+eval "$(starship init zsh)"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 
