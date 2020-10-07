@@ -1,2 +1,8 @@
+[cmd_duration]
+min_time = 30000
+min_time_to_notify = 30000
+show_milliseconds = true
+show_notifications = true
+
 [status]
 disabled = false
