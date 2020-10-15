@@ -4,5 +4,10 @@ min_time_to_notify = 30000
 show_milliseconds = true
 show_notifications = true
 
+[git_status]
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+
 [status]
 disabled = false
