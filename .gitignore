@@ -11,6 +11,7 @@
 .dotfiles
 .env*
 .idea
+.lvimrc
 .project
 .pydevproject
 .python-version
