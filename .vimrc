@@ -21,7 +21,6 @@ Plug 'airblade/vim-rooter'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'embear/vim-localvimrc'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
@@ -290,3 +289,13 @@ endfunction
 function! VisualFindAndReplaceWithSelection() range
     :'<,'>OverCommandLine s/
 endfunction
+
+" -------------------------
+" Enable direnv to add project-specific .vimrc files
+" -------------------------
+
+if exists("$EXTRA_VIM")
+  for path in split($EXTRA_VIM, ':')
+    exec "source ".path
+  endfor
+endif
