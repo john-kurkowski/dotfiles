@@ -5,6 +5,7 @@
 .~*
 .dotfiles
 .env*
+.eslintcache
 .idea
 .lvimrc
 .project
