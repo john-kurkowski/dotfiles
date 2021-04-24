@@ -13,3 +13,4 @@
 .settings
 .vscode
 *.egg-info/
+xcuserdata/
