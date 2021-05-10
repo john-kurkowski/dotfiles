@@ -77,7 +77,7 @@ path=(
 )
 export PATH=${(j[:])path}
 
-export EDITOR=vim
+export EDITOR=nvim
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 export LESS=-FRXi
 
