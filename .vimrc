@@ -35,6 +35,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+endif
 Plug 'osyo-manga/vim-over'
 Plug 'rickhowe/diffchar.vim'
 if !has('nvim')
@@ -50,7 +53,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
+if !has('nvim')
+  Plug 'tpope/vim-sleuth'
+endif
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
@@ -254,6 +259,20 @@ let g:rooter_silent_chdir = 1
 
 " vim-sneak
 let g:sneak#label = 1
+
+" Treesitter
+
+if has('nvim')
+lua <<EOF
+  require'nvim-treesitter.configs'.setup {
+    highlight = { enable = true },
+    incremental_selection = { enable = true },
+    indent = { enable = true },
+    matchup = { enable = true },
+    textobjects = { enable = true },
+  }
+EOF
+endif
 
 " vim-yankstack
 let g:yankstack_yank_keys = ['c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y']
