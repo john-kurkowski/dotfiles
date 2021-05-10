@@ -37,7 +37,9 @@ Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'osyo-manga/vim-over'
 Plug 'rickhowe/diffchar.vim'
-Plug 'sheerun/vim-polyglot'
+if !has('nvim')
+  Plug 'sheerun/vim-polyglot'
+endif
 Plug 'sjl/gundo.vim'
 Plug 'sodapopcan/vim-ifionly'
 Plug 'itchyny/lightline.vim'
@@ -221,6 +223,10 @@ map <silent> <Leader>i :Sessions<CR>
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
 
+" Handlebars
+
+au BufNewFile,BufRead *.hbs setf html.handlebars
+
 " vim-ifionly
 
 nnoremap L :IfIOnly<CR>
@@ -229,8 +235,8 @@ nnoremap L :IfIOnly<CR>
 let g:markdown_fenced_languages = [
 \  'bash=sh',
 \  'css',
-\  'handlebars=mustache',
-\  'hbs=mustache',
+\  'handlebars=html',
+\  'hbs=html',
 \  'html',
 \  'javascript',
 \  'js=javascript',
