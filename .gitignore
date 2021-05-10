@@ -7,7 +7,6 @@
 .env*
 .eslintcache
 .idea
-.lvimrc
 .project
 .python-version
 .settings
