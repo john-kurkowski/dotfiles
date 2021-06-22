@@ -229,10 +229,6 @@ map <silent> <Leader>i :Sessions<CR>
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
 
-" Handlebars
-
-au BufNewFile,BufRead *.hbs setf html.handlebars
-
 " vim-ifionly
 
 nnoremap L :IfIOnly<CR>
@@ -307,7 +303,7 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
-au FileType gitcommit,markdown setl spell
+autocmd FileType gitcommit,markdown setl spell
 
 " -------------------------
 " Custom Bindings
