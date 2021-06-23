@@ -262,6 +262,21 @@ let g:sneak#label = 1
 if has('nvim')
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
+    ensure_installed = {
+      "bash",
+      "css",
+      "glimmer",
+      "html",
+      "javascript",
+      "json",
+      "markdown",
+      "python",
+      "ruby",
+      "scss",
+      "svelte",
+      "tsx",
+      "typescript",
+    },
     highlight = {
       enable = true,
       disable = {
