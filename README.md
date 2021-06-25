@@ -17,7 +17,7 @@ dotfiles checkout
 # If not a personal device
 git config --global user.email john.kurkowski@company.com
 
-# Permanently switch to zsh
+# If zsh is not the default shell
 chsh -s zsh
 ```
 
@@ -25,9 +25,6 @@ chsh -s zsh
 
 ```zsh
 dotfiles pull
-
-# If not a personal device
-git config --global user.email john.kurkowski@company.com
 ```
 
 ### Usage
@@ -37,15 +34,17 @@ tools automatically pick them up.
 
 ### Contribute
 
-To interact with version control, instead of `git`, use `dotfiles-env git`, or
-`dotfiles` for short. For example, `dotfiles add -p`, `dotfiles commit -v`.
+To interact with version control, instead of using `git` directly, use
+`dotfiles-env git`, or `dotfiles` for short. For example, `dotfiles add -p`,
+`dotfiles commit -v`.
 
-Why all the above commands to get this started up? There are [a lot][GitHub
-does dotfiles] of bespoke tools to version control and ship your dotfiles to
-your `$HOME` dir. You probably already use Git. A bare Git repo and an `alias`
-later, [Git can manage your dotfiles' lifecycle for you][The best way to store
-your dotfiles]. No extra tool. The repo layout stays in sync with how the files
-are used.
+Why all the custom commands to get this started up? While there are [a
+lot][GitHub does dotfiles] of bespoke tools to version control and ship your
+dotfiles to your `$HOME` dir, you probably already use Git. The custom commands
+for this repo are a thin wrapper around your existing `git`. With a bare Git
+repo and an `alias`, [Git can manage your dotfiles' lifecycle for you][The best
+way to store your dotfiles]. No extra tool. The repo layout stays in sync with
+how the files are used.
 
 ## What's Inside
 
