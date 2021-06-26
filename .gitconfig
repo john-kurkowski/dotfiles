@@ -20,18 +20,8 @@
 [diff "scpt"]
   textconv = osadecompile
   binary = true
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
-[icdiff]
-  pager = less
 [merge]
   conflictstyle = diff3
-[mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
-[mergetool "p4merge"]
-  path = /usr/local/bin/p4merge
 [mergetool]
   prompt = false
 [grep]
