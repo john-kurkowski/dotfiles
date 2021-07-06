@@ -15,13 +15,13 @@ call plug#begin()
 
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'andymass/vim-matchup'
-Plug 'ap/vim-css-color', { 'for': ['css', 'sass', 'scss'] }
+Plug 'ap/vim-css-color'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
   Plug 'inkarkat/vim-SearchHighlighting'
