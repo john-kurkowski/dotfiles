@@ -14,10 +14,10 @@ endif
 call plug#begin()
 
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'andymass/vim-matchup'
-Plug 'ap/vim-css-color'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
+Plug 'andymass/vim-matchup'
+Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -25,6 +25,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
   Plug 'inkarkat/vim-SearchHighlighting'
+Plug 'itchyny/lightline.vim'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
@@ -46,7 +47,6 @@ if !has('nvim')
 endif
 Plug 'sjl/gundo.vim'
 Plug 'sodapopcan/vim-ifionly'
-Plug 'itchyny/lightline.vim'
 Plug 'tommcdo/vim-fugitive-blame-ext'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
