@@ -35,6 +35,9 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 endif
 Plug 'osyo-manga/vim-over'
@@ -222,9 +225,6 @@ command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 map <silent> <Leader>i :Sessions<CR>
-" Simulate ctrlp.vim with fzf.vim.
-map <silent> <C-P> :Files<CR>
-nnoremap <silent> <Leader>p :Buffers<CR>
 
 " vim-ifionly
 
@@ -253,6 +253,13 @@ let g:rooter_silent_chdir = 1
 
 " vim-sneak
 let g:sneak#label = 1
+
+" telescope
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Treesitter
 
