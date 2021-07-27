@@ -115,11 +115,6 @@ if has("gui_running")
   set macmeta
 endif
 
-if executable("rg")
-  set grepprg=rg\ --vimgrep\ --no-heading\ --with-filename
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
-endif
-
 let mapleader = ","
 let maplocalleader = ","
 
