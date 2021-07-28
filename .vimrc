@@ -274,6 +274,9 @@ lua <<EOF
         follow = true,
         hidden = true,
       },
+      buffers = {
+        sort_mru = true,
+      },
     },
   }
 EOF
