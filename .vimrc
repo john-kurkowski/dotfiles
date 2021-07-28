@@ -253,6 +253,32 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+if has('nvim')
+lua <<EOF
+  require('telescope').setup {
+    defaults = {
+      vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--column',
+        '--follow',
+        '--hidden',
+        '--line-number',
+        '--no-heading',
+        '--smart-case',
+        '--with-filename',
+      },
+    },
+    pickers = {
+      find_files = {
+        follow = true,
+        hidden = true,
+      },
+    },
+  }
+EOF
+endif
+
 " Treesitter
 
 if has('nvim')
