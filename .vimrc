@@ -218,6 +218,10 @@ command! -bang -nargs=* Rg
 
 map <silent> <Leader>i :Sessions<CR>
 
+" vim-highlightedyank
+
+let g:highlightedyank_highlight_duration = 300
+
 " vim-ifionly
 
 nnoremap L :IfIOnly<CR>
