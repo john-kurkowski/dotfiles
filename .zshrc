@@ -109,7 +109,7 @@ eval "$(zoxide init zsh)"
 
 [[ -s "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init --no-rehash --path)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # Enable iTerm shell integration
