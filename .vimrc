@@ -126,6 +126,7 @@ let maplocalleader = ","
 " ale
 let g:ale_completion_autoimport = 1
 let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 map <leader>u :ALEFindReferences<CR>
