@@ -321,8 +321,10 @@ lua <<EOF
       "ruby",
       "scss",
       "svelte",
+      "toml",
       "tsx",
       "typescript",
+      "vue",
     },
     highlight = {
       enable = true,
