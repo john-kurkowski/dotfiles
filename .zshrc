@@ -9,9 +9,9 @@ export VOLTA_HOME="$HOME/.volta"
 source $BREW_PREFIX/share/antigen/antigen.zsh
 
 antigen bundles <<EOBUNDLES
+  zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions
-  zsh-users/zsh-syntax-highlighting
-  # zsh-syntax-highlighting must come before history-substring-search, according to its README
+  # syntax highlighting must come before history-substring-search, according to its README
   zsh-users/zsh-history-substring-search
 EOBUNDLES
 
