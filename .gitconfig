@@ -6,9 +6,11 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
-  pager = delta --dark
+  pager = delta
 [color]
   ui = true
+[delta]
+    navigate = true
 [alias]
   cbr = symbolic-ref --short HEAD
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
