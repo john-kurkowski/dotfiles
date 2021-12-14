@@ -328,10 +328,6 @@ lua <<EOF
     },
     highlight = {
       enable = true,
-      disable = {
-        -- Re-enable Markdown a la https://github.com/nvim-treesitter/nvim-treesitter/pull/1202
-        -- "markdown"
-      },
     },
     incremental_selection = { enable = true },
     indent = { enable = true },
@@ -341,12 +337,6 @@ lua <<EOF
 
   local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
   parser_config.glimmer.used_by = "html.handlebars"
-  parser_config.markdown = {
-    install_info = {
-      url = "https://github.com/ikatyang/tree-sitter-markdown",
-      files = { "src/parser.c", "src/scanner.cc", "-DTREE_SITTER_MARKDOWN_AVOID_CRASH=1" },
-    },
-  }
 EOF
 endif
 
