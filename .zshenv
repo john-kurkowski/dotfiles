@@ -24,6 +24,11 @@ export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
+# TODO: rustup installer inserted this sourcing in this file, .zshenv, not
+#       .zshrc, where the rest of my version manager sources are. Why the
+#       inconsistency?
+. "$HOME/.cargo/env"
+
 # Support zoxide in Vim command mode, which isn't an interactive shell by
 # default. It's okay if `zoxide` isn't found. Outside of Vim, starting a new
 # shell, it may not be on the PATH yet.
