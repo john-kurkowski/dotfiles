@@ -62,6 +62,7 @@ bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
 path=(
   ~/.bin
+  $HOME/.cargo/bin
   $VOLTA_HOME/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
@@ -73,7 +74,6 @@ path=(
   /sbin
   /usr/X11/bin
   /Library/TeX/texbin
-  $HOME/.cargo/bin
 )
 export PATH=${(j[:])path}
 
