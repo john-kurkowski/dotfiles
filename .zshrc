@@ -1,31 +1,19 @@
-# Antigen plugin options
-
-BREW_PREFIX='/usr/local'
-
 export VOLTA_HOME="$HOME/.volta"
 
-# Enable Antigen for shell helpers and theme
+# Load shell helpers, further configured later in this file
 
-source $BREW_PREFIX/share/antigen/antigen.zsh
+if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
 
-antigen bundles <<EOBUNDLES
-  zdharma-continuum/fast-syntax-highlighting
-  zsh-users/zsh-autosuggestions
-  # syntax highlighting must come before history-substring-search, according to its README
-  zsh-users/zsh-history-substring-search
-EOBUNDLES
+# Prompt and theme
 
 eval "$(starship init zsh)"
-
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 
-antigen apply
+# Global, misc. shell settings
 
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
-
-# Global, misc. shell settings
 
 setopt always_to_end
 setopt auto_menu              # show completion menu on successive tab press

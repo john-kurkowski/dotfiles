@@ -1,0 +1,11 @@
+shell = "zsh"
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+# syntax highlighting must come before history-substring-search, according to its README
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
