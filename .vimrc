@@ -335,9 +335,6 @@ lua <<EOF
     matchup = { enable = true },
     textobjects = { enable = true },
   }
-
-  local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-  parser_config.glimmer.used_by = "html.handlebars"
 EOF
 endif
 
