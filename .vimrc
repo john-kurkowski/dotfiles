@@ -14,6 +14,7 @@ endif
 call plug#begin()
 
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'Asheq/close-buffers.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'andymass/vim-matchup'
