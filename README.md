@@ -34,16 +34,15 @@ tools automatically pick them up.
 
 ### Contribute
 
-To interact with version control, instead of using `git` directly, use
-`dotfiles-env git`, or `dotfiles` for short. For example, `dotfiles add -p`,
-`dotfiles commit -v`.
+To interact with version control, instead of using `git` directly, use the
+alias `dotfiles-env git`, or `dotfiles` for short. For example, `dotfiles add
+-p`, `dotfiles commit -v`.
 
-Why all the custom commands to get this started up? While there are [a
-lot][GitHub does dotfiles] of bespoke tools to version control and ship your
-dotfiles to your `$HOME` dir, you probably already use Git. The custom commands
-for this repo are a thin wrapper around your existing `git`. With a bare Git
-repo and an `alias`, [Git can manage your dotfiles' lifecycle for you][The best
-way to store your dotfiles]. No extra tool. The repo layout stays in sync with
+Why the alias? While there are [a lot][GitHub does dotfiles] of bespoke tools
+to version control and ship your dotfiles to your `$HOME` dir, you probably
+already use Git. With a bare Git repo and an alias, [Git can manage your
+dotfiles' lifecycle for you][The best way to store your dotfiles]. Same
+interface as `git`. No extra, bespoke tool. The repo layout stays in sync with
 how the files are used.
 
 ## What's Inside
