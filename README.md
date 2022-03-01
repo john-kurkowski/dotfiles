@@ -45,6 +45,10 @@ dotfiles' lifecycle for you][The best way to store your dotfiles]. Same
 interface as `git`. No extra, bespoke tool. The repo layout stays in sync with
 how the files are used.
 
+### Advanced Usage
+
+See [the docs folder](./.docs/).
+
 ## What's Inside
 
 My development workhorses are the terminal and Vim. They make up the majority

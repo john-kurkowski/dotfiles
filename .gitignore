@@ -10,6 +10,7 @@
 .project
 .python-version
 .settings
+.vimrc
 .vscode
 *.egg-info/
 xcuserdata/
