@@ -17,7 +17,7 @@ plugin](https://github.com/ohmyzsh/ohmyzsh/blob/509a5549008c178e982bc8f728a07a2e
 <tbody>
 <tr>
 <td>
-<code>gco</code>
+<code>gco [-b] &lt;branch&gt;</code>
 </td>
 <td>
 Create and switch branches
@@ -73,4 +73,58 @@ I tend to commit from my editor, Vim.
 [Fugitive](https://github.com/tpope/vim-fugitive) adds a dedicated Vim window
 for selecting files to stage and commit. It is nice to select files visually.
 While committing, it is nice to reference the code side by side. It has quick
-shortcuts for amending.
+shortcuts for amending; I often don't get the commit right the first time.
+
+## Additional Commands
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Install</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>git fixup &lt;object&gt;</code>
+</td>
+<td>
+<code>brew install git-fixup</code>
+</td>
+<td>
+Generate a fixup commit for <code>&lt;object&gt;</code>. Without arguments,
+find commits your currently staged changes are likely fixing up. Once
+committed, the fixups can be squashed with <code>git rebase --autosquash</code>
+or <code>git revise --autosquash</code>.
+</td>
+</tr>
+<tr>
+<td>
+<code>git revise [-i|--autosquash] &lt;target&gt;</code>
+</td>
+<td>
+<code>brew install git-revise</code>
+</td>
+<td>
+Like rebase, but for not changing any code, only changing commit contents and
+order, since <code>&lt;target&gt;</code>. Because the code doesn't change, the
+command is faster than rebase and it doesn't trigger filesystem changes, e.g.
+app rebuilds.
+</td>
+</tr>
+<tr>
+<td>
+<code>git recent</code>
+</td>
+<td>
+<code>brew install git-recent</code>
+</td>
+<td>
+List recent branches. Answers, "Wait, what was I working on yesterday?" "What
+was the branch name again of that PR that finally got reviewed?"
+</td>
+</tr>
+</tbody>
+</table>
