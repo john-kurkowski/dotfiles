@@ -17,9 +17,7 @@ plugin](https://github.com/ohmyzsh/ohmyzsh/blob/509a5549008c178e982bc8f728a07a2e
 <tbody>
 <tr>
 <td>
-
-`gco`
-
+<code>gco</code>
 </td>
 <td>
 Create and switch branches
@@ -28,22 +26,16 @@ Create and switch branches
 </tr>
 <tr>
 <td>
-
-`gsh [<object>]`
-
+<code>gsh [&lt;object&gt;]</code>
 </td>
 <td>
-
-Show what the latest commit did, or what `<object>` did
-
+Show what the latest commit did, or what <code>&lt;object&gt;</code> did
 </td>
 <td></td>
 </tr>
 <tr>
 <td>
-
-`gst`
-
+<code>gst</code>
 </td>
 <td>
 Get a sense where I'm at
@@ -52,9 +44,7 @@ Get a sense where I'm at
 </tr>
 <tr>
 <td>
-
-`gupp`
-
+<code>gupp</code>
 </td>
 <td>
 Get latest
@@ -70,7 +60,7 @@ Get latest
        A clean local repo is best. However, if you have local, unpushed
        commits on that _other_ branch, the command could drop your changes.
 -   If you want to be safer, drop down to `git fetch` and `git merge`, which
-    will only modify your current branch, and without rewriting history.
+    will modify only your current branch, and without rewriting history.
 
 </td>
 </tr>
