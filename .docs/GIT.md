@@ -3,8 +3,8 @@
 ## Aliases
 
 I get the most of the following aliases. They are defined in
-[.zshenv](../.zshenv). I copied a lot of them from [Oh My Zsh's Git
-plugin](https://github.com/ohmyzsh/ohmyzsh/blob/509a5549008c178e982bc8f728a07a2e2dbc58a9/plugins/git/git.plugin.zsh).
+[.zshenv](../.zshenv). I copied a lot of them from
+[Oh My Zsh's Git plugin](https://github.com/ohmyzsh/ohmyzsh/blob/509a5549008c178e982bc8f728a07a2e2dbc58a9/plugins/git/git.plugin.zsh).
 
 <table>
 <thead>
@@ -52,13 +52,12 @@ Get latest
 <td>
 
 -   ⚠️ This is destructive, for a couple reasons.
-    1. It defaults to rebasing. I think [a clean history is best, but the
-       backspace key does carry
-       risk](https://blog.izs.me/2012/12/git-rebase/). To get out of trouble,
-       `git rebase --abort` or `git reflog`.
-    1. It cleans up deleted branches, e.g. a merged upstream pull request.
-       A clean local repo is best. However, if you have local, unpushed
-       commits on that _other_ branch, the command could drop your changes.
+    1. It defaults to rebasing. I think
+       [a clean history is best, but the backspace key does carry risk](https://blog.izs.me/2012/12/git-rebase/).
+       To get out of trouble, `git rebase --abort` or `git reflog`.
+    1. It cleans up deleted branches, e.g. a merged upstream pull request. A
+       clean local repo is best. However, if you have local, unpushed commits on
+       that _other_ branch, the command could drop your changes.
 -   If you want to be safer, drop down to `git fetch` and `git merge`, which
     will modify only your current branch, and without rewriting history.
 
