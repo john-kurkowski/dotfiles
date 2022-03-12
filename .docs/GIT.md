@@ -9,7 +9,8 @@ I get the most of the following aliases. They are defined in
 <table>
 <thead>
 <tr>
-<th>Command</th>
+<th>Alias</th>
+<th>Full Command</th>
 <th>Description</th>
 <th>Notes</th>
 </tr>
@@ -18,6 +19,9 @@ I get the most of the following aliases. They are defined in
 <tr>
 <td>
 <code>gco [-b] &lt;branch&gt;</code>
+</td>
+<td>
+<code>git checkout [--branch] &lt;branch&gt;</code>
 </td>
 <td>
 Create and switch branches
@@ -29,6 +33,9 @@ Create and switch branches
 <code>gsh [&lt;object&gt;]</code>
 </td>
 <td>
+<code>git show [&lt;object&gt;]</code>
+</td>
+<td>
 Show what the latest commit did, or what <code>&lt;object&gt;</code> did
 </td>
 <td></td>
@@ -38,6 +45,9 @@ Show what the latest commit did, or what <code>&lt;object&gt;</code> did
 <code>gst</code>
 </td>
 <td>
+<code>git status</code>
+</td>
+<td>
 Get a sense where I'm at
 </td>
 <td></td>
@@ -45,6 +55,9 @@ Get a sense where I'm at
 <tr>
 <td>
 <code>gupp</code>
+</td>
+<td>
+<small>(complex)</small>
 </td>
 <td>
 Get latest
@@ -93,10 +106,20 @@ shortcuts for amending; I often don't get the commit right the first time.
 <code>brew install git-fixup</code>
 </td>
 <td>
-Generate a fixup commit for <code>&lt;object&gt;</code>. Without arguments,
-find commits your currently staged changes are likely fixing up. Once
-committed, the fixups can be squashed with <code>git rebase --autosquash</code>
-or <code>git revise --autosquash</code>.
+
+Generate a fixup commit for <code>&lt;object&gt;</code>. Without arguments, find
+commits your currently staged changes are likely fixing up. Once committed, the
+fixups can be squashed with <code>git rebase --autosquash</code> or <code>git
+revise --autosquash</code>.
+
+If you know the unpushed commit to fixup's message, say its first word, you can
+quickly target it by that word instead of the commit SHA. If the first word of
+the commit was `Rename`, you can `git fixup :/Rename`.
+
+In Vim, Fugitive's status window lists unpushed commits, you can visually target
+the commit you want, and there is a mapping to
+`git fixup the-commit-under-the-cursor`.
+
 </td>
 </tr>
 <tr>
