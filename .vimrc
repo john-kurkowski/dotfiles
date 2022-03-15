@@ -222,16 +222,6 @@ map <silent> <Leader>i :Sessions<CR>
 map <silent> <C-P> :Files<CR>
 nnoremap <silent> <Leader>p :Buffers<CR>
 
-if has('nvim')
-  " workaround for a segfault: https://github.com/neovim/neovim/issues/11548#issuecomment-583081783
-  " immediately enter insert mode when switching to a terminal
-  augroup MyTerminal
-    autocmd!
-    autocmd TermOpen * setlocal wrap
-    autocmd BufEnter term://* startinsert!
-  augroup END
-endif
-
 " vim-highlightedyank
 
 let g:highlightedyank_highlight_duration = 300
