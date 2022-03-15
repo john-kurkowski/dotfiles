@@ -36,9 +36,6 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-lua/popup.nvim'
-  Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 endif
 Plug 'osyo-manga/vim-over'
@@ -273,42 +270,6 @@ let g:rooter_silent_chdir = 1
 
 " vim-sneak
 let g:sneak#label = 1
-
-" telescope
-
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-if has('nvim')
-lua <<EOF
-  require('telescope').setup {
-    defaults = {
-      vimgrep_arguments = {
-        'rg',
-        '--color=never',
-        '--column',
-        '--follow',
-        '--hidden',
-        '--line-number',
-        '--no-heading',
-        '--smart-case',
-        '--with-filename',
-      },
-    },
-    pickers = {
-      find_files = {
-        follow = true,
-        hidden = true,
-      },
-      buffers = {
-        sort_mru = true,
-      },
-    },
-  }
-EOF
-endif
 
 " Treesitter
 
