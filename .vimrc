@@ -274,6 +274,7 @@ lua <<EOF
       "javascript",
       "json",
       "jsonc",
+      "make",
       "markdown",
       "python",
       "ruby",
