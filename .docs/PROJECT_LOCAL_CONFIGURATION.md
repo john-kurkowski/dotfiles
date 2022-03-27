@@ -45,7 +45,7 @@ it still helps my local development. In this case, I tend to install directly
 into the project's virtualenv. I like the tools in the following command.
 
 ```sh
-pip install black pylint 'python-language-server[all]'
+pip install --upgrade black mypy pylint 'python-language-server[all]'
 ```
 
 This risks getting out of sync with the rest of the project team, for various
