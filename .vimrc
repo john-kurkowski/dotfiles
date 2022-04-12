@@ -306,14 +306,6 @@ nmap P <Plug>yankstack_substitute_newer_paste
 " Spelling
 " -------------------------
 
-highlight clear SpellBad
-highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
-highlight clear SpellCap
-highlight SpellCap term=underline cterm=underline
-highlight clear SpellRare
-highlight SpellRare term=underline cterm=underline
-highlight clear SpellLocal
-highlight SpellLocal term=underline cterm=underline
 autocmd FileType gitcommit,markdown setl spell
 
 " -------------------------
