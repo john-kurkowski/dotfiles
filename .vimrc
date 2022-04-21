@@ -133,6 +133,27 @@ nnoremap <silent> gds :ALEGoToDefinition -split<CR>
 nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
 nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
 nnoremap <silent> gk :ALEDetail<CR>
+let g:ale_fixers = {
+\   'css': ['stylelint'],
+\   'javascript': ['eslint', 'prettier', 'prettier_standard'],
+\   'json': ['fixjson', 'prettier'],
+\   'html': ['prettier'],
+\   'python': ['black'],
+\   'rust': ['rustfmt'],
+\   'svelte': ['eslint', 'prettier', 'standard'],
+\   'typescript': ['eslint', 'prettier'],
+\   'vue': ['eslint', 'prettier'],
+\}
+let g:ale_linters = {
+\   'css': ['stylelint'],
+\   'handlebars': ['ember-template-lint'],
+\   'html': [],
+\   'javascript': ['eslint', 'standard', 'tsserver'],
+\   'markdown': ['remark-lint'],
+\   'python': ['mypy', 'pycodestyle', 'pyflakes', 'pylint', 'pylsp'],
+\   'typescript': ['eslint', 'tsserver'],
+\   'vue': ['eslint', 'vls'],
+\}
 
 " gundo.vim
 if has('python3')
