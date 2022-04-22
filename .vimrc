@@ -20,6 +20,7 @@ Plug 'airblade/vim-rooter'
 Plug 'andymass/vim-matchup'
 Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
+Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -350,13 +351,3 @@ endfunction
 function! VisualFindAndReplaceWithSelection() range
     :'<,'>OverCommandLine s/
 endfunction
-
-" -------------------------
-" Enable direnv to add project-specific .vimrc files
-" -------------------------
-
-if exists("$EXTRA_VIM")
-  for path in split($EXTRA_VIM, ':')
-    exec "source ".path
-  endfor
-endif

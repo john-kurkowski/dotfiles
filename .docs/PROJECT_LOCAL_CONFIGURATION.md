@@ -66,17 +66,21 @@ without enforced code style, autofix can inflict a ton of noise.
 
 I'm already using [direnv](https://direnv.net/) dotfiles for per-project
 environment variables. The following 2 dotfiles can customize Vim when it's
-editing files within that project folder. For example, to disable Prettier for
-all files within that project. This can also apply to an organization of
-projects checked out in the same parent folder by placing the 2 dotfiles in the
-parent folder.
+editing files within that project folder. This can also apply to an organization
+of projects checked out in the same parent folder by placing the 2 dotfiles in
+the parent folder. In the example, it disables Prettier for all files within
+that project, and uses a different set of Python linters than the global set in
+~/.vimrc.
 
 ```sh
 # .envrc
-add_extra_vimrc
+use vim
 ```
 
 ```vim
 " .vimrc
-let g:ale_fix_on_save_ignore = ['prettier']
+let b:ale_fix_on_save_ignore = ['prettier']
+let b:ale_linters = {
+\   'python': ['mypy', 'pylsp']
+\}
 ```
