@@ -155,6 +155,7 @@ let g:ale_linters = {
 \   'typescript': ['eslint', 'tsserver'],
 \   'vue': ['eslint', 'vls'],
 \}
+let g:ale_python_black_options = '--preview'
 
 " gundo.vim
 if has('python3')
