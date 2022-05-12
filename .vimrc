@@ -215,11 +215,8 @@ function! LightlineReadonly()
   return &readonly ? '' : ''
 endfunction
 function! LightlineFugitive()
-  if exists('*fugitive#head')
-    let branch = fugitive#head()
-    return branch !=# '' ? ' '.branch : ''
-  endif
-  return ''
+  let branch = FugitiveHead()
+  return branch !=# '' ? ' '.branch : ''
 endfunction
 
 " QFEnter
