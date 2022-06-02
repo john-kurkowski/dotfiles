@@ -74,7 +74,9 @@ export LESS=-FRXi
 alias cat='bat'
 alias exa='exa --group --git'
 alias ll='exa --long'
-alias llt='exa --git-ignore --ignore-glob node_modules --long --tree'
+# If this is too noisy, consider running it with exa's `--git-ignore` or
+# `--ignore-glob some_noisy_subfolder/` flags.
+alias llt='exa --long --tree'
 alias ls='exa'
 
 # Local-only environment
