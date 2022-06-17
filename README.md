@@ -60,19 +60,19 @@ Keep investing in and sharpening your tools to shorten the feedback loop. The
 quicker it is to try an idea or to cross reference it, the quicker it is to
 improve upon or discard.<sup>[1](#1)</sup>
 
-This is at the risk of making the configs idiosyncratic, so they're high cost to
-the author and they don't benefit others. It's a balance. When building a custom
-prompt, it can be full of inscrutable symbols and directives. When you see this,
-**outsource to plugins**. Then the majority of the custom code becomes listing
-plugins and configuring them. I strive to show this in this repo. Plugins do the
-thing 90% as good as the best dotfile hacker, with little code to maintain.
-Hitch your wagon to the community. Functionality is an asset. Code is a
-liability.
+Hacking dotfile configs yourself carries the risk of making the configs
+idiosyncratic, so they're high cost to the author and they don't benefit others.
+It's a balance. When building a custom prompt, it can be full of inscrutable
+symbols and directives. When you see this, **outsource to plugins**. Then the
+majority of the custom code becomes listing plugins and configuring them. I
+strive to show this in this repo. Plugins do the thing 90% as good as the best
+dotfile hacker, with little code to maintain. Hitch your wagon to the community.
+Functionality is an asset. Code is a liability.
 
 The other files here configure miscellaneous tools, which come up for schleps
 and experiments with little convention.<sup>[2](#2)</sup> They should be the
 exception rather than the rule. Prune your unused dotfiles and plugins
-aggressively.
+regularly.
 
 ## Footnotes
 

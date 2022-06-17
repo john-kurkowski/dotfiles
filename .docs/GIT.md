@@ -66,8 +66,8 @@ Get latest
 
 -   ⚠️ This is destructive, for a couple reasons.
     1. It defaults to rebasing. I think
-       [a clean history is best, but the backspace key does carry risk](https://blog.izs.me/2012/12/git-rebase/).
-       To get out of trouble, `git rebase --abort` or `git reflog`.
+       [a clean history is best. However, the backspace key does carry risk.](https://blog.izs.me/2012/12/git-rebase/)
+       To get out of trouble, `git rebase --abort` or reference `git reflog`.
     1. It cleans up deleted branches, e.g. a merged upstream pull request. A
        clean local repo is best. However, if you have local, unpushed commits on
        that _other_ branch, the command could drop your changes.
@@ -84,8 +84,8 @@ Get latest
 I tend to commit from my editor, Vim.
 [Fugitive](https://github.com/tpope/vim-fugitive) adds a dedicated Vim window
 for selecting files to stage and commit. It is nice to select files visually.
-While committing, it is nice to reference the code side by side. It has quick
-shortcuts for amending; I often don't get the commit right the first time.
+While committing, it is nice to reference the code side by side. Fugitive has
+mappings for amending, as I often don't get the commit right the first time.
 
 ## Additional Commands
 
@@ -116,8 +116,8 @@ If you know the unpushed commit to fixup's message, say its first word, you can
 quickly target it by that word instead of the commit SHA. If the first word of
 the commit was `Rename`, you can `git fixup :/Rename`.
 
-In Vim, Fugitive's status window lists unpushed commits, you can visually target
-the commit you want, and there is a mapping to
+In Vim, Fugitive's status window lists unpushed commits. There you can visually
+target the commit you want, then use Fugitive's mapping to
 `git fixup the-commit-under-the-cursor`.
 
 </td>
