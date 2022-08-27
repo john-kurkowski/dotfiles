@@ -303,6 +303,7 @@ lua <<EOF
       "rust",
       "scss",
       "svelte",
+      "swift",
       "toml",
       "tsx",
       "typescript",
