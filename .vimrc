@@ -107,7 +107,7 @@ set undofile
 set updatetime=100
 
 if has("gui_running")
-  set guifont=Meslo\ LG\ M\ DZ\ Regular\ Nerd\ Font\ Complete\ Mono
+  set guifont=Meslo\ LG\ M\ DZ\ Regular\ Nerd\ Font\ Complete
   set guioptions-=e
   set guioptions-=T
   set macmeta
