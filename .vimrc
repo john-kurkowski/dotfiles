@@ -157,6 +157,7 @@ let g:ale_linters = {
 \   'vue': ['eslint', 'vls'],
 \}
 let g:ale_python_black_options = '--preview'
+set omnifunc=ale#completion#OmniFunc
 
 " gundo.vim
 if has('python3')
