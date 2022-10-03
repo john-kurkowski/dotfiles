@@ -79,6 +79,8 @@ autocmd VimEnter *
 " -------------------------
 
 set background=dark
+set cursorline
+set cursorlineopt=number
 colorscheme nightfox
 
 " -------------------------
