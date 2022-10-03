@@ -23,6 +23,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'dense-analysis/ale'
 Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'
@@ -78,7 +79,7 @@ autocmd VimEnter *
 " -------------------------
 
 set background=dark
-colorscheme iceberg
+colorscheme nightfox
 
 " -------------------------
 " Various Vim options
@@ -166,7 +167,7 @@ endif
 
 " lightline.vim
 let g:lightline = {
-\   'colorscheme': 'iceberg',
+\   'colorscheme': 'nightfox',
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
