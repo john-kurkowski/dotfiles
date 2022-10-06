@@ -168,8 +168,14 @@ if has('python3')
 endif
 
 " lightline.vim
+"
+" Normally this colorscheme should match Vim's colorscheme. However, Nightfox
+" doesn't support my custom (linter) components' colors. Use my previous
+" colorscheme. (I suspect Nightfox may be missing a few lightline color values
+" here
+" https://github.com/EdenEast/nightfox.nvim/blob/59c3dbcec362eff7794f1cb576d56fd8a3f2c8bb/lua/nightfox/util/lightline.lua#L35)
 let g:lightline = {
-\   'colorscheme': 'nightfox',
+\   'colorscheme': 'iceberg',
 \   'active': {
 \     'left': [
 \       [ 'mode', 'paste' ],
