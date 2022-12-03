@@ -1,3 +1,5 @@
+export EDITOR=nvim
+
 export VOLTA_HOME="$HOME/.volta"
 
 # Load shell helpers, further configured later in this file
@@ -32,12 +34,8 @@ setopt menu_complete          # save an extra autocomplete Tab key
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # zsh vi mode
-bindkey -v
 
-# [v] edit the command line
-zle -N edit-command-line
-autoload -Uz edit-command-line
-bindkey -M vicmd 'v' edit-command-line
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
 # [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
 bindkey '^[[A' history-substring-search-up
@@ -65,7 +63,6 @@ path=(
 )
 export PATH=${(j[:])path}
 
-export EDITOR=nvim
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 export LESS=-FRXi
 
