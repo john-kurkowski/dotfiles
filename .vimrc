@@ -63,7 +63,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-utils/vim-husk'
 Plug 'wellle/targets.vim'
-Plug 'wincent/terminus'
 Plug 'yssl/QFEnter'
 
 call plug#end()
