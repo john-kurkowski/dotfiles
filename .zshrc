@@ -37,14 +37,18 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
-# [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+function zvm_after_lazy_keybindings() {
+  # [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
+  zvm_bindkey viins '^[[A' history-substring-search-up
+  zvm_bindkey viins '^[[B' history-substring-search-down
+  zvm_bindkey vicmd '^[[A' history-substring-search-up
+  zvm_bindkey vicmd '^[[B' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
 
-# [Shift-Tab] - move through the completion menu backwards
-bindkey "${terminfo[kcbt]}" reverse-menu-complete
+  # [Shift-Tab] - move through the completion menu backwards
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete
+}
 
 path=(
   ~/.bin
@@ -84,9 +88,10 @@ alias ls='exa'
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
 eval "$(direnv hook zsh)"
 
-# Enable interactive fuzzy completion of any list of strings, like filepaths
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+function zvm_after_init() {
+  # Enable interactive fuzzy completion of any list of strings, like filepaths
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
 
 # Enable non/interactive directory jumping by frecency
 
