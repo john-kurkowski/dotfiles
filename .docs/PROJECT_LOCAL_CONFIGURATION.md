@@ -41,18 +41,18 @@ ln -s ~/.pyenv/versions/virtualenv-name-here /path/to/project/.venv
 My default pyenv approach, above, confounds finding a global install of a tool,
 in addition to local tools. pyenv tends to make only 1 virtualenv's tools
 available at a time. Say a project chooses not to specify/depend on a tool, but
-it still helps my local development. In this case, I tend to install directly
-into the project's virtualenv. I like the tools in the following command.
+it still helps my local development. In this case, installing a tool with
+[pipx](https://github.com/pypa/pipx) makes the tool available on my `PATH`,
+while isolating the tool's environment. The tool is not inflicted upon the
+project nor the developer's global Python install. I like the following tools.
 
 ```sh
-pip install --upgrade black mypy pylint 'python-lsp-server[all]'
+brew install pipx
+pipx install black
+pipx install mypy
+pipx install pylint
+pipx install 'python-lsp-server[all]'
 ```
-
-This risks getting out of sync with the rest of the project team, for various
-dependencies. Be careful when freezing or updating the project's dependencies.
-This direct install approach is somewhat easier in Python than JavaScript,
-because Python dependencies aren't so micro, and thus tend to update in a
-dependent less frequently.
 
 ### Monorepos
 

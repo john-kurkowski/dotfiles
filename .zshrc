@@ -53,6 +53,7 @@ function zvm_after_lazy_keybindings() {
 path=(
   ~/.bin
   $HOME/.cargo/bin
+  $HOME/.local/bin
   $VOLTA_HOME/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
