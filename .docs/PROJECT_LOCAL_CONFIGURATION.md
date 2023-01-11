@@ -50,8 +50,8 @@ project nor the developer's global Python install. I like the following tools.
 brew install pipx
 pipx install black
 pipx install mypy
-pipx install pylint
 pipx install 'python-lsp-server[all]'
+pipx install ruff
 ```
 
 ### Monorepos

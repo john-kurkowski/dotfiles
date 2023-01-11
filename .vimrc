@@ -154,7 +154,7 @@ let g:ale_linters = {
 \   'html': [],
 \   'javascript': ['eslint', 'standard', 'tsserver'],
 \   'markdown': ['remark-lint'],
-\   'python': ['mypy', 'pycodestyle', 'pyflakes', 'pylint', 'pylsp'],
+\   'python': ['mypy', 'pylsp', 'ruff'],
 \   'typescript': ['eslint', 'tsserver'],
 \   'vue': ['eslint', 'vls'],
 \}
