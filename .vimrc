@@ -81,7 +81,11 @@ autocmd VimEnter *
 set background=dark
 set cursorline
 set cursorlineopt=number
-colorscheme nightfox
+if has('nvim')
+  colorscheme nightfox
+else
+  colorscheme iceberg
+endif
 
 " -------------------------
 " Various Vim options
