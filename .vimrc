@@ -108,7 +108,6 @@ set showbreak=…
 set showtabline=2
 set splitright
 set switchbuf=uselast
-set termguicolors
 set undodir=~/.vim/undodir//
 set undofile
 set updatetime=100
