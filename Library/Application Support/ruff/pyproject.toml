@@ -1,5 +1,14 @@
 [tool.ruff]
-select = ["A", "B", "D", "E", "F", "N", "SIM", "W"]
+select = [
+  "A",
+  "B",
+  "D",
+  "E",
+  "F",
+  "N",
+  "SIM",
+  "W",
+]
 # E501 - line too long; if Black does its job, I'm not worried about the rare long line
 ignore = ["E501"]
 
