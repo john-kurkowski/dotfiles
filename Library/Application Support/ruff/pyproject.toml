@@ -2,11 +2,13 @@
 select = [
   "A",
   "B",
+  "C",
   "D",
   "E",
   "F",
+  "I",
   "N",
-  "SIM",
+  "UP",
   "W",
 ]
 # E501 - line too long; if Black does its job, I'm not worried about the rare long line
