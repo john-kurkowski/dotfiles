@@ -14,4 +14,4 @@ github = "zsh-users/zsh-history-substring-search"
 github = 'jeffreytse/zsh-vi-mode'
 
 [plugins.compinit]
-inline = 'autoload -Uz compinit && compinit'
+inline = 'autoload -Uz bashcompinit compinit && compinit && bashcompinit'
