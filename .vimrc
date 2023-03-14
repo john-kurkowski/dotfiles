@@ -152,6 +152,7 @@ let g:ale_fixers = {
 \   'html': ['prettier'],
 \   'python': ['black'],
 \   'rust': ['rustfmt'],
+\   'sh': ['shfmt'],
 \   'svelte': ['eslint', 'prettier', 'standard'],
 \   'typescript': ['eslint', 'prettier'],
 \   'vue': ['eslint', 'prettier'],
