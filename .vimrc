@@ -119,6 +119,10 @@ if has("gui_running")
   set macmeta
 endif
 
+" Speed up startup with a Vim-dedicated virtualenv. Follow setup instructions
+" in :help python-virtualenv.
+let g:python3_host_prog="~/.pyenv/versions/py3nvim/bin/python"
+
 let mapleader = ","
 let maplocalleader = ","
 
