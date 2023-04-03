@@ -314,7 +314,7 @@ lua <<EOF
       "html",
       "javascript",
       "json",
-      "jsonc",
+      "json5",
       "just",
       "make",
       "markdown",
