@@ -25,6 +25,7 @@ Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'github/copilot.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'IndianBoy42/tree-sitter-just'
 Plug 'inkarkat/vim-ingo-library'
