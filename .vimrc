@@ -23,7 +23,6 @@ Plug 'cocopon/iceberg.vim'
 Plug 'dense-analysis/ale'
 Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
-Plug 'EdenEast/nightfox.nvim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'github/copilot.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -82,11 +81,7 @@ autocmd VimEnter *
 set background=dark
 set cursorline
 set cursorlineopt=number
-if has('nvim')
-  colorscheme nightfox
-else
-  colorscheme iceberg
-endif
+colorscheme iceberg
 
 " -------------------------
 " Various Vim options
@@ -177,12 +172,6 @@ if has('python3')
 endif
 
 " lightline.vim
-"
-" Normally this colorscheme should match Vim's colorscheme. However, Nightfox
-" doesn't support my custom (linter) components' colors. Use my previous
-" colorscheme. (I suspect Nightfox may be missing a few lightline color values
-" here
-" https://github.com/EdenEast/nightfox.nvim/blob/59c3dbcec362eff7794f1cb576d56fd8a3f2c8bb/lua/nightfox/util/lightline.lua#L35)
 let g:lightline = {
 \   'colorscheme': 'iceberg',
 \   'active': {
