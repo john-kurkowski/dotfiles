@@ -26,7 +26,6 @@ Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'github/copilot.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'IndianBoy42/tree-sitter-just'
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
   Plug 'inkarkat/vim-SearchHighlighting'
@@ -294,8 +293,6 @@ let g:sneak#label = 1
 
 if has('nvim')
 lua <<EOF
-  require("tree-sitter-just").setup({})
-
   require'nvim-treesitter.configs'.setup {
     ensure_installed = {
       "bash",
@@ -326,6 +323,16 @@ lua <<EOF
     indent = { enable = true },
     matchup = { enable = true },
     textobjects = { enable = true },
+  }
+
+  require("nvim-treesitter.parsers").get_parser_configs().just = {
+    install_info = {
+      url = "https://github.com/IndianBoy42/tree-sitter-just",
+      files = { "src/parser.c", "src/scanner.cc" },
+      branch = "main",
+      use_makefile = true,
+    },
+    maintainers = { "@IndianBoy42" },
   }
 EOF
 endif
