@@ -283,6 +283,7 @@ let g:rooter_patterns = [
 \  'Gemfile',
 \  'Makefile',
 \  'package.json',
+\  'pyvenv.cfg',
 \]
 let g:rooter_silent_chdir = 1
 
