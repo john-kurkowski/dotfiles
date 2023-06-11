@@ -3,6 +3,7 @@
 *.pyc
 *~
 .~*
+.direnv
 .dotfiles
 .env*
 .eslintcache
