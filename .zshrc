@@ -2,15 +2,6 @@ export EDITOR=nvim
 
 export VOLTA_HOME="$HOME/.volta"
 
-# Load shell helpers, further configured later in this file
-
-if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
-
-# Prompt and theme
-
-eval "$(starship init zsh)"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
-
 # Global, misc. shell settings
 
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
@@ -33,7 +24,11 @@ setopt menu_complete          # save an extra autocomplete Tab key
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# zsh vi mode
+# zsh-autosuggestions
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+
+# zsh-vi-mode
 
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
@@ -54,6 +49,7 @@ path=(
   ~/.bin
   $HOME/.cargo/bin
   $HOME/.local/bin
+  $HOME/brew/bin
   $VOLTA_HOME/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
@@ -70,6 +66,14 @@ export PATH=${(j[:])path}
 
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 export LESS=-FRXi
+
+# Load shell helpers
+
+if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
+
+# Prompt and theme
+
+eval "$(starship init zsh)"
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
