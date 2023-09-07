@@ -31,9 +31,10 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 
 # zsh-vi-mode
 
-ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-
 function zvm_after_lazy_keybindings() {
+  # Always start in insert mode
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+
   # [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
   zvm_bindkey viins '^[[A' history-substring-search-up
   zvm_bindkey viins '^[[B' history-substring-search-down
@@ -45,6 +46,8 @@ function zvm_after_lazy_keybindings() {
   # [Shift-Tab] - move through the completion menu backwards
   bindkey "${terminfo[kcbt]}" reverse-menu-complete
 }
+
+# $PATH
 
 path=(
   ~/.bin
