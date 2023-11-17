@@ -163,7 +163,6 @@ let g:ale_linters = {
 \   'typescript': ['eslint', 'tsserver'],
 \   'vue': ['eslint', 'vls'],
 \}
-let g:ale_python_black_options = '--preview'
 set omnifunc=ale#completion#OmniFunc
 
 " gundo.vim
