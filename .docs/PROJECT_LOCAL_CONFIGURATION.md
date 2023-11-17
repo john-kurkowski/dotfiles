@@ -51,7 +51,6 @@ project nor the developer's global Python install. I like the following tools.
 
 ```sh
 brew install pipx
-pipx install black
 pipx install mypy
 pipx install python-lsp-server
 pipx install ruff
