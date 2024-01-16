@@ -25,10 +25,6 @@ setopt menu_complete          # save an extra autocomplete Tab key
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# zsh-autosuggestions
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
-
 # $PATH
 
 path=(
