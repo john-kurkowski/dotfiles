@@ -29,24 +29,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 
-# zsh-vi-mode
-
-function zvm_after_lazy_keybindings() {
-  # Always start in insert mode
-  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-
-  # [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
-  zvm_bindkey viins '^[[A' history-substring-search-up
-  zvm_bindkey viins '^[[B' history-substring-search-down
-  zvm_bindkey vicmd '^[[A' history-substring-search-up
-  zvm_bindkey vicmd '^[[B' history-substring-search-down
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
-
-  # [Shift-Tab] - move through the completion menu backwards
-  bindkey "${terminfo[kcbt]}" reverse-menu-complete
-}
-
 # $PATH
 
 path=(
@@ -98,6 +80,22 @@ alias ls='exa'
 eval "$(direnv hook zsh)"
 
 function zvm_after_init() {
+  # zsh-vi-mode
+
+  # Always start in insert mode
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+
+  # [Up]/[Down] ([k]/[j] in Vi) _search_ history, not only stepping through it linearly
+  zvm_bindkey viins '^[[A' history-substring-search-up
+  zvm_bindkey viins '^[[B' history-substring-search-down
+  zvm_bindkey vicmd '^[[A' history-substring-search-up
+  zvm_bindkey vicmd '^[[B' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+
+  # [Shift-Tab] - move through the completion menu backwards
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete
+
   # Enable interactive fuzzy completion of any list of strings, like filepaths
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
