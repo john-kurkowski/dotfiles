@@ -1,3 +1,6 @@
+format = """$all"""
+right_format= """$cmd_duration"""
+
 [cmd_duration]
 min_time = 30000
 min_time_to_notify = 30000
@@ -11,6 +14,12 @@ disabled = true
 ahead = "⇡${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
+
+[line_break]
+disabled = true
+
+[package]
+disabled = true
 
 [status]
 disabled = false
