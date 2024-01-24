@@ -53,7 +53,7 @@ export LESS=-FRXi
 
 if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
 
-# Prompt and theme
+# Prompt
 
 eval "$(starship init zsh)"
 
