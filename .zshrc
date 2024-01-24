@@ -55,7 +55,9 @@ if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
 
 # Prompt
 
-eval "$(starship init zsh)"
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  eval "$(starship init zsh)"
+fi
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
@@ -109,5 +111,7 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 
 # Enable iTerm shell integration
 
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
+  test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+fi
 export VIRTUAL_ENV_DISABLE_PROMPT=1
