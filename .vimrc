@@ -142,14 +142,15 @@ nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
 nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
 nnoremap <silent> gk :ALEDetail<CR>
 let g:ale_fixers = {
-\   'css': ['stylelint'],
-\   'javascript': ['eslint', 'prettier', 'prettier_standard'],
+\   'css': ['stylelint', 'prettier'],
+\   'javascript': ['eslint', 'prettier'],
 \   'json': ['fixjson', 'prettier'],
 \   'html': ['prettier'],
+\   'markdown': ['remark-lint', 'prettier'],
 \   'python': ['ruff', 'ruff_format'],
 \   'rust': ['rustfmt'],
 \   'sh': ['shfmt'],
-\   'svelte': ['eslint', 'prettier', 'standard'],
+\   'svelte': ['eslint', 'prettier'],
 \   'typescript': ['eslint', 'prettier'],
 \   'vue': ['eslint', 'prettier'],
 \}
@@ -157,7 +158,7 @@ let g:ale_linters = {
 \   'css': ['stylelint'],
 \   'handlebars': ['ember-template-lint'],
 \   'html': [],
-\   'javascript': ['eslint', 'standard', 'tsserver'],
+\   'javascript': ['eslint', 'tsserver'],
 \   'markdown': ['remark-lint'],
 \   'python': ['mypy', 'pylsp', 'ruff'],
 \   'typescript': ['eslint', 'tsserver'],
