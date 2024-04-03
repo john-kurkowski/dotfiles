@@ -54,6 +54,7 @@ brew install pipx
 pipx install mypy
 pipx install python-lsp-server
 pipx install ruff
+pipx install uv
 ```
 
 Note however that tools installed via `pipx` will not have access to the
