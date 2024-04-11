@@ -1,5 +1,5 @@
 format = """$all"""
-right_format= """$cmd_duration"""
+right_format= """$cmd_duration $time"""
 
 [cmd_duration]
 min_time = 30000
@@ -23,3 +23,9 @@ disabled = true
 
 [status]
 disabled = false
+
+[time]
+format = "[$time]($style)"
+disabled = false
+style = "dimmed"
+time_format = "%F %T"
