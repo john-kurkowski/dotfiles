@@ -55,9 +55,7 @@ if which sheldon > /dev/null; then eval "$(sheldon source)"; fi
 
 # Prompt
 
-if [[ $TERM_PROGRAM != "WarpTerminal" ]]; then
-  eval "$(starship init zsh)"
-fi
+eval "$(starship init zsh)"
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
