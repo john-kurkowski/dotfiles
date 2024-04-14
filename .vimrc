@@ -24,7 +24,7 @@ Plug 'dense-analysis/ale'
 Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'github/copilot.vim'
+Plug 'Exafunction/codeium.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'
   Plug 'wincent/loupe'
