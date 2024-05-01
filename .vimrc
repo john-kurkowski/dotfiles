@@ -141,7 +141,9 @@ nnoremap <silent> gds :ALEGoToDefinition -split<CR>
 nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
 nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
 nnoremap <silent> gk :ALEDetail<CR>
+let g:ale_linter_aliases = {'astro': ['css', 'javascript', 'typescript']}
 let g:ale_fixers = {
+\   'astro': ['eslint', 'stylelint', 'prettier'],
 \   'css': ['stylelint', 'prettier'],
 \   'javascript': ['eslint', 'prettier'],
 \   'json': ['fixjson', 'prettier'],
@@ -154,7 +156,9 @@ let g:ale_fixers = {
 \   'typescript': ['eslint', 'prettier'],
 \   'vue': ['eslint', 'prettier'],
 \}
+" TODO: add tsserver to astro. tsserver seems to parse a whole Astro file as TypeScript.
 let g:ale_linters = {
+\   'astro': ['eslint', 'stylelint'],
 \   'css': ['stylelint'],
 \   'handlebars': ['ember-template-lint'],
 \   'html': [],
@@ -297,6 +301,7 @@ if has('nvim')
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
     ensure_installed = {
+      "astro",
       "bash",
       "css",
       "glimmer",
