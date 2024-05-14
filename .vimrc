@@ -172,6 +172,10 @@ let g:ale_linters = {
 \}
 set omnifunc=ale#completion#OmniFunc
 
+" codeium
+let g:codeium_no_map_tab = 1
+imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+
 " gundo.vim
 if has('python3')
   let g:gundo_prefer_python3 = 1
