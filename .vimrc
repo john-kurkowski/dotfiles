@@ -35,6 +35,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim', { 'on': ['Limelight'] }
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-sneak'
+Plug 'kana/vim-textobj-user'
 Plug 'machakann/vim-highlightedyank'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'maximbaz/lightline-ale'
@@ -43,6 +44,7 @@ if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 endif
 Plug 'osyo-manga/vim-over'
+Plug 'preservim/vim-textobj-quote'
 Plug 'rickhowe/diffchar.vim'
 if !has('nvim')
   Plug 'sheerun/vim-polyglot'
