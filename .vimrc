@@ -174,7 +174,7 @@ set omnifunc=ale#completion#OmniFunc
 
 " codeium
 let g:codeium_no_map_tab = 1
-imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+imap <script><silent><nowait><expr> <M-Tab> codeium#Accept()
 
 " gundo.vim
 if has('python3')
