@@ -162,7 +162,7 @@ let g:ale_fixers = {
 let g:ale_linters = {
 \   'astro': ['eslint', 'stylelint'],
 \   'css': ['stylelint'],
-\   'handlebars': ['ember-template-lint'],
+\   'handlebars': ['ember-template-lint', 'glint'],
 \   'html': [],
 \   'javascript': ['eslint', 'tsserver'],
 \   'markdown': ['remark-lint'],
