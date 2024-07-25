@@ -60,12 +60,12 @@ eval "$(starship init zsh)"
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
 alias cat='bat'
-alias exa='exa --group --git'
-alias ll='exa --long'
-# If this is too noisy, consider running it with exa's `--git-ignore` or
+alias eza='eza --group --git'
+alias ll='eza --long'
+# If this is too noisy, consider running it with eza's `--git-ignore` or
 # `--ignore-glob some_noisy_subfolder/` flags.
-alias llt='exa --long --tree'
-alias ls='exa'
+alias llt='eza --long --tree'
+alias ls='eza'
 
 # Local-only environment
 
