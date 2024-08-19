@@ -103,6 +103,7 @@ eval "$(zoxide init zsh)"
 # Enable various version managers
 
 [[ -s "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
+[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
