@@ -1,6 +1,6 @@
 alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
-alias dotfiles-rg='dotfiles ls-files "$HOME" | parallel --tty --xargs rg'
+alias dotfiles-rg=$'dotfiles ls-files "$HOME" | parallel ls -F | rg --invert-match \'@$\' | parallel --tty --xargs rg'
 alias fd='fd --follow --hidden --exclude ".git"'
 alias ga='git add'
 alias gc='git commit -v'
