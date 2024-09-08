@@ -93,7 +93,7 @@ function zvm_after_init() {
   bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
   # Enable interactive fuzzy completion of any list of strings, like filepaths
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  if which fzf > /dev/null; then source <(fzf --zsh); fi
 }
 
 # Enable non/interactive directory jumping by frecency
