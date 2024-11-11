@@ -41,25 +41,24 @@ ln -s ~/.pyenv/versions/virtualenv-name-here /path/to/project/.venv
 
 #### Global tools
 
-My default pyenv approach, above, confounds finding a global install of a tool,
-in addition to local tools. pyenv tends to make only 1 virtualenv's tools
-available at a time. Say a project chooses not to specify/depend on a tool, but
-it still helps my local development. In this case, installing a tool with
-[pipx](https://github.com/pypa/pipx) makes the tool available on my `PATH`,
+My default pyenv approach, above, confounds finding a _global_ tool, in addition
+to local tools. pyenv tends to make only 1 virtualenv's tools available at a
+time. Say a project chooses not to specify/depend on a tool, but it still helps
+my local development. In this case, installing a tool with
+[uv](https://github.com/astral-sh/uv) makes the tool available on my `PATH`,
 while isolating the tool's environment. The tool is not inflicted upon the
 project nor the developer's global Python install. I like the following tools.
 
 ```sh
-brew install pipx
-pipx install mypy
-pipx install python-lsp-server
-pipx install ruff
-pipx install uv
+brew install uv
+uv tool install mypy
+uv tool install python-lsp-server
+uv tool install ruff
 ```
 
-Note however that tools installed via `pipx` will not have access to the
-project's 3rd party dependencies, for example `python-lsp-server` analyzing 3rd
-party types, because the tool's environment is separate from the project's
+Note however that tools installed via `uv tool install` will not have access to
+the project's 3rd party dependencies, for example `python-lsp-server` analyzing
+3rd party types, because the tool's environment is separate from the project's
 environment. It would only have access to first party types and standard library
 types. As a last resort, I directly install into the project's virtualenv. For
 example:
