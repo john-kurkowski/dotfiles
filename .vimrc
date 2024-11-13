@@ -119,7 +119,7 @@ endif
 
 " Speed up startup with a Vim-dedicated virtualenv.
 "
-" I created it with the following. For more info, see :help python-virtualenv.
+" Create it with the following. For more info, see :help python-virtualenv.
 "
 " ```sh
 " python -m venv ~/.cache/py3nvim
