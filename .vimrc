@@ -293,6 +293,9 @@ let g:markdown_fenced_languages = [
 
 let g:mkdp_auto_close = 1
 
+" mise.nvim
+lua require('mise').setup()
+
 " vim-rooter
 let g:rooter_patterns = [
 \  '.git',
