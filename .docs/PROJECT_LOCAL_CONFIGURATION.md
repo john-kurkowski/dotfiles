@@ -90,7 +90,7 @@ Individual projects can conflict with my general dotfiles settings. For example,
 my Vim autofix settings are liberal. When interacting with legacy projects
 without enforced code style, autofix can inflict a ton of noise.
 
-> ![CAUTION]
+> [!CAUTION]
 >
 > Replace direnv with mise.
 
