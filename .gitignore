@@ -3,11 +3,11 @@
 *.pyc
 *~
 .~*
-.direnv
 .dotfiles
 .env*
 .eslintcache
 .idea
+.mise.local.toml
 .project
 .python-version
 .settings

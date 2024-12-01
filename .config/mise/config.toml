@@ -1,0 +1,4 @@
+[tools]
+node = "23"
+python = "3.12"
+uv = "latest"
