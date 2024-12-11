@@ -294,7 +294,9 @@ let g:markdown_fenced_languages = [
 let g:mkdp_auto_close = 1
 
 " mise.nvim
-lua require('mise').setup()
+if has('nvim')
+  lua require('mise').setup()
+endif
 
 " vim-rooter
 let g:rooter_patterns = [
