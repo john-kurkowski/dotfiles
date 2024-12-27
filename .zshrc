@@ -28,6 +28,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 path=(
   ~/.bin
   $HOME/.cargo/bin
+  $HOME/.local/bin
   $HOME/brew/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
