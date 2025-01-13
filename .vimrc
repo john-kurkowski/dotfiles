@@ -21,9 +21,9 @@ Plug 'andymass/vim-matchup'
 Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
 Plug 'dense-analysis/ale'
-Plug 'direnv/direnv.vim'
 Plug 'dominickng/fzf-session.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'ejrichards/mise.nvim'
 Plug 'Exafunction/codeium.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'
@@ -117,9 +117,15 @@ if has("gui_running")
   set macmeta
 endif
 
-" Speed up startup with a Vim-dedicated virtualenv. Follow setup instructions
-" in :help python-virtualenv.
-let g:python3_host_prog="~/.pyenv/versions/py3nvim/bin/python"
+" Speed up startup with a Vim-dedicated virtualenv.
+"
+" Create it with the following. For more info, see :help python-virtualenv.
+"
+" ```sh
+" python -m venv ~/.cache/py3nvim
+" ~/.cache/py3nvim/bin/python -m pip install pynvim
+" ```
+let g:python3_host_prog="~/.cache/py3nvim/bin/python"
 
 let mapleader = ","
 let maplocalleader = ","
@@ -290,6 +296,11 @@ let g:markdown_fenced_languages = [
 \]
 
 let g:mkdp_auto_close = 1
+
+" mise.nvim
+if has('nvim')
+  lua require('mise').setup()
+endif
 
 " vim-rooter
 let g:rooter_patterns = [

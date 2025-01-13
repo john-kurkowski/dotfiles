@@ -1,7 +1,5 @@
 export EDITOR=nvim
 
-export VOLTA_HOME="$HOME/.volta"
-
 # Global, misc. shell settings
 
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
@@ -32,7 +30,6 @@ path=(
   $HOME/.cargo/bin
   $HOME/.local/bin
   $HOME/brew/bin
-  $VOLTA_HOME/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
   /usr/bin
@@ -73,7 +70,6 @@ alias ls='eza'
 [[ -s "$HOME/.hostspecific" ]] && source "$HOME/.hostspecific"
 # Source environment variables from a dotenv file
 [[ -s "$HOME/.env" ]] && export $(cat "$HOME/.env" | xargs)
-eval "$(direnv hook zsh)"
 
 function zvm_after_init() {
   # zsh-vi-mode
@@ -102,11 +98,7 @@ eval "$(zoxide init zsh)"
 
 # Enable various version managers
 
-[[ -s "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
-[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+if which mise > /dev/null; then eval "$(mise activate zsh)"; fi
 
 # Enable iTerm shell integration
 
