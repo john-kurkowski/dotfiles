@@ -148,6 +148,7 @@ let g:ale_fixers = {
 \   'astro': ['eslint', 'stylelint', 'prettier'],
 \   'css': ['stylelint', 'prettier'],
 \   'javascript': ['eslint', 'prettier'],
+\   'javascriptreact': ['eslint', 'prettier'],
 \   'json': ['fixjson', 'prettier'],
 \   'html': ['prettier'],
 \   'markdown': ['remark-lint', 'prettier'],
@@ -156,6 +157,7 @@ let g:ale_fixers = {
 \   'sh': ['shfmt'],
 \   'svelte': ['eslint', 'prettier'],
 \   'typescript': ['eslint', 'prettier'],
+\   'typescriptreact': ['eslint', 'prettier'],
 \   'vue': ['eslint', 'prettier'],
 \}
 " TODO: add tsserver to astro. tsserver seems to parse a whole Astro file as TypeScript.
@@ -165,9 +167,11 @@ let g:ale_linters = {
 \   'handlebars': ['ember-template-lint', 'glint'],
 \   'html': [],
 \   'javascript': ['eslint', 'tsserver'],
+\   'javascriptreact': ['eslint', 'tsserver'],
 \   'markdown': ['remark-lint'],
 \   'python': ['mypy', 'pylsp', 'ruff'],
 \   'typescript': ['eslint', 'tsserver'],
+\   'typescriptreact': ['eslint', 'tsserver'],
 \   'vue': ['eslint', 'vls'],
 \}
 set omnifunc=ale#completion#OmniFunc
