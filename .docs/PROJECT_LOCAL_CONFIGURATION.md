@@ -88,11 +88,12 @@ dependency of the project.
 
 Individual projects can conflict with my general dotfiles settings. For example,
 my Vim autofix settings are liberal. When interacting with legacy projects
-without enforced code style, autofix can inflict a ton of noise.
+without enforced code style, autofix can inflict a ton of noise. My editor ought
+to be configured per-project, instead of every project bending to me.
 
 > [!CAUTION]
 >
-> Replace direnv with mise.
+> **TODO:** Replace direnv with mise. The following is outdated.
 
 I'm already using [direnv](https://direnv.net/) dotfiles for per-project
 environment variables. With 2 project folder dotfiles, .envrc and .vimrc.local,
