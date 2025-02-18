@@ -22,7 +22,6 @@ Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
 Plug 'dense-analysis/ale'
 Plug 'dominickng/fzf-session.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'ejrichards/mise.nvim'
 Plug 'Exafunction/codeium.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
