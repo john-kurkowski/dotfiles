@@ -19,49 +19,55 @@ the tool. Note the global tool will not necessarily have access to the project's
 ❎ **Python project-local tooling should be picked up automatically,** with
 caveats.
 
-Python project dependencies are _not_ conventionally stored within the project.
-Since I'm using [pyenv](https://github.com/pyenv/pyenv), while inside the
-project folder, I can set the virtualenv the project should use with
-`pyenv local <virtualenv-name-here>`. This activates the local Python install
-whenever you're inside the project folder. When editing project files,
-[vim-rooter](https://github.com/airblade/vim-rooter) should automatically `cd`
-into the folder, and therefore activate pyenv's local Python install, for Vim.
-Then ALE will use the local tool versions.
+Python project dependencies require an extra step, because Python does not
+require you to use an isolated environment, and Python projects do not have a
+unified install command.
 
-If this doesn't work, ALE does have an option to "find up" patterns of
-virtualenv directories, in case they are stored near the project. See
-`help g:ale_virtualenv_dirnames`. This "find up" is like what ALE does for
-node_modules/. So, if the pyenv environment doesn't get picked up in Vim, a
-workaround to feed ALE the correct tool versions is to create a symlink to the
-virtualenv matching one of ALE's virtualenv directory patterns.
+I'm using [mise](https://github.com/jdx/mise) to manage Python versions and
+virtualenvs, so while inside the project folder, I can set the virtualenv the
+project should use with a `.mise.local.toml` like the following.
 
-```sh
-ln -s ~/.pyenv/versions/virtualenv-name-here /path/to/project/.venv
+```toml
+[tools]
+python = "3.13"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
 ```
+
+Then `mise trust` the file. Then follow the project's install instructions.
+
+The `.mise.local.toml` above activates the local Python install whenever you're
+inside the project folder. When editing project files,
+[vim-rooter](https://github.com/airblade/vim-rooter) should automatically `cd`
+into the folder, and therefore activate the local Python install and tool
+versions, for Vim and ALE.
 
 #### Global tools
 
-My default pyenv approach, above, confounds finding a _global_ tool, in addition
-to local tools. pyenv tends to make only 1 virtualenv's tools available at a
-time. Say a project chooses not to specify/depend on a tool, but it still helps
-my local development. In this case, installing a tool with
-[uv](https://github.com/astral-sh/uv) makes the tool available on my `PATH`,
-while isolating the tool's environment. The tool is not inflicted upon the
-project nor the developer's global Python install. I like the following tools.
+Active virtualenvs confound finding a _global_ tool, in addition to local tools;
+only 1 virtualenv's installed tools tend to be available at a time.
+
+Say a project chooses not to specify/depend on a tool, but it still helps my
+local development. In this case, installing a tool with
+[`uv tool install`](https://github.com/astral-sh/uv) makes the tool available on
+my `PATH`, while isolating the tool's environment. The tool is not inflicted
+upon the project nor the developer's global Python install. I like the following
+tools.
 
 ```sh
-brew install uv
+brew install uv  # if not already installed by ~/.config/mise/config.toml
+
 uv tool install mypy
 uv tool install python-lsp-server
 uv tool install ruff
 ```
 
-Note however that tools installed via `uv tool install` will not have access to
-the project's 3rd party dependencies, for example `python-lsp-server` analyzing
-3rd party types, because the tool's environment is separate from the project's
-environment. It would only have access to first party types and standard library
-types. As a last resort, I directly install into the project's virtualenv. For
-example:
+Note however that global, isolated tools installed via `uv tool install` will
+not have access to the project's 3rd party dependencies. For example,
+`python-lsp-server` won't analyze 3rd party types; it only has access to first
+party types and standard library types. As a last resort, I directly install
+into the project's virtualenv. For example:
 
 ```sh
 pip install python-lsp-server
@@ -82,7 +88,12 @@ dependency of the project.
 
 Individual projects can conflict with my general dotfiles settings. For example,
 my Vim autofix settings are liberal. When interacting with legacy projects
-without enforced code style, autofix can inflict a ton of noise.
+without enforced code style, autofix can inflict a ton of noise. My editor ought
+to be configured per-project, instead of every project bending to me.
+
+> [!CAUTION]
+>
+> **TODO:** Replace direnv with mise. The following is outdated.
 
 I'm already using [direnv](https://direnv.net/) dotfiles for per-project
 environment variables. With 2 project folder dotfiles, .envrc and .vimrc.local,
