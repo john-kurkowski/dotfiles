@@ -150,34 +150,34 @@ nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
 nnoremap <silent> gk :ALEDetail<CR>
 let g:ale_linter_aliases = {'astro': ['css', 'javascript', 'typescript']}
 let g:ale_fixers = {
-\   'astro': ['eslint', 'stylelint', 'prettier'],
-\   'css': ['stylelint', 'prettier'],
-\   'javascript': ['eslint', 'prettier'],
-\   'javascriptreact': ['eslint', 'prettier'],
-\   'json': ['fixjson', 'prettier'],
+\   'astro': ['biome', 'eslint', 'stylelint', 'prettier'],
+\   'css': ['stylelint', 'biome', 'prettier'],
+\   'javascript': ['biome', 'eslint', 'prettier'],
+\   'javascriptreact': ['biome', 'eslint', 'prettier'],
+\   'json': ['fixjson', 'biome', 'prettier'],
 \   'html': ['prettier'],
 \   'markdown': ['remark-lint', 'prettier'],
 \   'python': ['ruff', 'ruff_format'],
 \   'rust': ['rustfmt'],
 \   'sh': ['shfmt'],
-\   'svelte': ['eslint', 'prettier'],
-\   'typescript': ['eslint', 'prettier'],
-\   'typescriptreact': ['eslint', 'prettier'],
-\   'vue': ['eslint', 'prettier'],
+\   'svelte': ['biome', 'eslint', 'prettier'],
+\   'typescript': ['biome', 'eslint', 'prettier'],
+\   'typescriptreact': ['biome', 'eslint', 'prettier'],
+\   'vue': ['biome', 'eslint', 'prettier'],
 \}
 " TODO: add tsserver to astro. tsserver seems to parse a whole Astro file as TypeScript.
 let g:ale_linters = {
-\   'astro': ['eslint', 'stylelint'],
-\   'css': ['stylelint'],
+\   'astro': ['biome', 'eslint', 'stylelint'],
+\   'css': ['stylelint', 'biome'],
 \   'handlebars': ['ember-template-lint', 'glint'],
 \   'html': [],
-\   'javascript': ['eslint', 'tsserver'],
-\   'javascriptreact': ['eslint', 'tsserver'],
+\   'javascript': ['biome', 'eslint', 'tsserver'],
+\   'javascriptreact': ['biome', 'eslint', 'tsserver'],
 \   'markdown': ['remark-lint'],
 \   'python': ['mypy', 'pylsp', 'ruff'],
-\   'typescript': ['eslint', 'tsserver'],
-\   'typescriptreact': ['eslint', 'tsserver'],
-\   'vue': ['eslint', 'vls'],
+\   'typescript': ['biome', 'eslint', 'tsserver'],
+\   'typescriptreact': ['biome', 'eslint', 'tsserver'],
+\   'vue': ['biome', 'eslint', 'vls'],
 \}
 set omnifunc=ale#completion#OmniFunc
 
