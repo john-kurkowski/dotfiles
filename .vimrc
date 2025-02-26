@@ -23,6 +23,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'dense-analysis/ale'
 Plug 'dominickng/fzf-session.vim'
 Plug 'ejrichards/mise.nvim'
+Plug 'embear/vim-localvimrc'
 Plug 'Exafunction/codeium.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'inkarkat/vim-ingo-library'

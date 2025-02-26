@@ -89,29 +89,16 @@ dependency of the project.
 Individual projects can conflict with my general dotfiles settings. For example,
 my Vim autofix settings are liberal. When interacting with legacy projects
 without enforced code style, autofix can inflict a ton of noise. My editor ought
-to be configured per-project, instead of every project bending to me.
+to be configured per-project, instead of every project bending to me. Enter
+[vim-localvimrc](https://github.com/embear/vim-localvimrc) and per-project
+`.lvimrc` files.
 
-> [!CAUTION]
->
-> **TODO:** Replace direnv with mise. The following is outdated.
-
-I'm already using [direnv](https://direnv.net/) dotfiles for per-project
-environment variables. With 2 project folder dotfiles, .envrc and .vimrc.local,
-I can customize Vim's linters and autofixers when it's editing that project.
-This can also apply to an organization of projects checked out in the same
-parent folder by placing the 2 dotfiles in the parent folder.
-
-In the following example, the project-local dotfiles disable Prettier for all
+In the following example, the project-local `.lvimrc` disables Prettier for all
 files within that project, and uses a different set of Python linters than the
 global set in [~/.vimrc](../.vimrc).
 
-```sh
-# .envrc
-use vim
-```
-
 ```vim
-" .vimrc.local
+" .lvimrc
 let b:ale_fix_on_save_ignore = ['prettier']
 let b:ale_linters = {
 \   'python': ['mypy', 'pylsp']
