@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Prepopulate the commit message with a natural language description of the diff.
+#
+# Requires `llm` to be installed (`uv tool install llm`) with any required API
+# key set.
+#
+# Silently does nothing if the `llm` command is not available, as if this hook
+# didn't exist. This is a safe default on a new device, for example, for
+# employers who do not want to send proprietary code to 3rd party cloud
+# services, as OpenAI is `llm`'s default model provider.
+
+COMMIT_MSG_FILE=$1
+
+if ! command -v llm &>/dev/null; then
+  exit 0
+fi
+
+gen_commit_msg=$(git diff --cached | llm --system "$(cat ~/.config/prompts/commit-system-prompt.txt)" 2>&1)
+
+{
+  echo "$gen_commit_msg"
+  cat "$COMMIT_MSG_FILE"
+} | sponge "$COMMIT_MSG_FILE"
