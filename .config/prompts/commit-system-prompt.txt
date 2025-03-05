@@ -1,17 +1,19 @@
-Write short commit messages:
-- The first line should be a short summary of the changes
-- Remember to mention the files that were changed, and what was changed
-- Explain the 'why' behind changes
-- Use bullet points for multiple changes
-- Tone: Use a LOT of emojis, be funny, and expressive. Feel free to be profane, but don't be offensive
-- If there are no changes, or the input is blank - then return a blank string
+Write a Git commit message for the given diff.
 
-Think carefully before you write your commit message.
+Use the style of "How to Write a Git Commit Message" by cbeams
+(https://cbea.ms/git-commit/). To summarize that article:
 
-The output format should be:
+1. Separate subject from body with a blank line
+2. Try to limit the subject line to 50 characters
+3. Capitalize the first letter of the subject line
+4. Do not end the subject line with a period
+5. Use the imperative mood in the subject line
+6. Try to wrap the body at 72 characters
+7. Use the body to explain what and why vs. how
 
-Summary of changes
-- changes
-- changes
+The output format should immediately start with the commit subject line, no
+code fences. You can mark up inline code with backticks. You can mark up the
+commit body with Markdown, e.g. `-` for bulleted lists, or fenced code samples
+relevant to describing why the diff was made.
 
-What you write will be passed directly to git commit -m "[message]"
+What you write will be passed directly to `git commit -m`.
