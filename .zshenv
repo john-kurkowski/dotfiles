@@ -1,6 +1,14 @@
 alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
 alias dotfiles='dotfiles-env git'
-alias dotfiles-rg=$'dotfiles ls-files "$HOME" | parallel ls -F | rg --invert-match \'@$\' | parallel --tty --xargs rg'
+
+# Grep dotfiles, using Ripgrep.
+#
+# Excludes symlinks (Git mode 120000), which could clutter search with files
+# outside of dotfiles. Passes the filename list, which could be long, to as few
+# instances of Ripgrep as possible (xargs mode), preserving colorized output
+# (TTY mode).
+alias dotfiles-rg=$'dotfiles ls-files --stage "$HOME" | rg --invert-match \'^120000\' | cut -f 2 | parallel --tty --xargs rg'
+
 alias fd='fd --follow --hidden --exclude ".git"'
 alias ga='git add'
 alias gc='git commit -v'
