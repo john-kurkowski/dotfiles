@@ -39,7 +39,6 @@ path=(
   /usr/sbin
   /sbin
   /usr/X11/bin
-  /Library/TeX/texbin
 )
 export PATH=${(j[:])path}
 
