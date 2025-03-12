@@ -28,7 +28,6 @@ alias gupp=$'git fetch --all --prune --tags && git rebase @{u} && git branch -vv
 alias llnl='ll node_modules | rg " -> "'
 alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title 'Process Completed' -message 'Get back to work.'"
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
-alias uvpiplistoutdated=$'bash -c "uv pip list --format=freeze | sed \'s/==.*//\' | uv pip compile - --no-deps --no-header | delta --diff-args=\'-U0\' --hunk-header-style=\'omit\' --side-by-side <(uv pip list --format=freeze) - || :"'
 
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
