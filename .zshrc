@@ -55,7 +55,7 @@ eval "$(starship init zsh)"
 
 # Interactive shell-only aliases (the rest go in the every-shell-type .zshenv).
 
-alias cat='bat'
+alias cat='bat --paging=never'
 alias eza='eza --group --git'
 alias ll='eza --long'
 # If this is too noisy, consider running it with eza's `--git-ignore` or
