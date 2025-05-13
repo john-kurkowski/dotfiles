@@ -175,7 +175,7 @@ let g:ale_linters = {
 \   'javascript': ['biome', 'eslint', 'tsserver'],
 \   'javascriptreact': ['biome', 'eslint', 'tsserver'],
 \   'markdown': ['remark-lint'],
-\   'python': ['mypy', 'pylsp', 'ruff'],
+\   'python': ['mypy', 'pylsp', 'pyright', 'ruff'],
 \   'typescript': ['biome', 'eslint', 'tsserver'],
 \   'typescriptreact': ['biome', 'eslint', 'tsserver'],
 \   'vue': ['biome', 'eslint', 'vls'],
