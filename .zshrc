@@ -30,6 +30,7 @@ path=(
   $HOME/.cargo/bin
   $HOME/.local/bin
   $HOME/brew/bin
+  /opt/homebrew/bin
   /usr/local/bin
   /usr/local/opt/ruby/bin
   /usr/bin
