@@ -144,8 +144,8 @@ app rebuilds.
 <code>brew install git-recent</code>
 </td>
 <td>
-List recent branches. Answers, "Wait, what was I working on yesterday?" "What
-was the branch name again of that PR that finally got reviewed?"
+List and check out recent branches. Answers, "Wait, what was the branch name
+I was working on yesterday?"
 </td>
 </tr>
 </tbody>
