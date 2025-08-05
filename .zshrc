@@ -25,21 +25,19 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # $PATH
 
+if [ -d /opt/homebrew/bin ]; then
+  # Apple Silicon
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -d /usr/local/bin ]; then
+  # Intel
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 path=(
   ~/.bin
   $HOME/.cargo/bin
   $HOME/.local/bin
   $HOME/brew/bin
-  /opt/homebrew/bin
-  /usr/local/bin
-  /usr/local/opt/ruby/bin
-  /usr/bin
-  /bin
-  /opt/X11/bin
-  /usr/local/sbin
-  /usr/sbin
-  /sbin
-  /usr/X11/bin
+  $path
 )
 export PATH=${(j[:])path}
 
