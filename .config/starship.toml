@@ -14,7 +14,7 @@ show_notifications = true
 disabled = true
 
 [git_branch]
-format = 'on [$symbol$branch(:$remote_branch)]($style) '
+format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [git_status]
 ahead = "⇡${count}"
@@ -25,7 +25,7 @@ behind = "⇣${count}"
 disabled = true
 
 [nodejs]
-format = 'via [$symbol($version )]($style)'
+format = '[$symbol($version )]($style)'
 
 [package]
 disabled = true
