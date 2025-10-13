@@ -1,6 +1,9 @@
 format = """$all"""
 right_format= """$cmd_duration $time"""
 
+[aws]
+disabled = true
+
 [cmd_duration]
 min_time = 30000
 min_time_to_notify = 30000
