@@ -13,6 +13,9 @@ show_notifications = true
 [gcloud]
 disabled = true
 
+[git_branch]
+format = 'on [$symbol$branch(:$remote_branch)]($style) '
+
 [git_status]
 ahead = "⇡${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
@@ -20,6 +23,9 @@ behind = "⇣${count}"
 
 [line_break]
 disabled = true
+
+[nodejs]
+format = 'via [$symbol($version )]($style)'
 
 [package]
 disabled = true
