@@ -1,0 +1,7 @@
+[user]
+name = "John Kurkowski"
+email = "john.kurkowski@gmail.com"
+
+[ui]
+default-command = "log"
+diff-editor = ":builtin"
