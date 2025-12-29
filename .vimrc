@@ -39,6 +39,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
+  Plug 'mfussenegger/nvim-lint'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/plenary.nvim'
   " Pin to legacy `master` branch.
@@ -275,6 +276,7 @@ if has('nvim')
 lua require('ai')
 lua require('completion')
 lua require('format')
+lua require('linting')
 lua require('lsp')
 lua require('mise').setup()
 lua require('syntax')
