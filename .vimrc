@@ -47,6 +47,7 @@ if has('nvim')
   Plug 'olimorris/codecompanion.nvim'
   " Pin to latest tagged release, to automatically install optional Rust fuzzy finder.
   Plug 'saghen/blink.cmp', { 'tag': '*' }
+  Plug 'stevearc/conform.nvim'
 endif
 Plug 'osyo-manga/vim-over'
 Plug 'preservim/vim-textobj-quote'
@@ -273,6 +274,7 @@ let g:sneak#label = 1
 if has('nvim')
 lua require('ai')
 lua require('completion')
+lua require('format')
 lua require('lsp')
 lua require('mise').setup()
 lua require('syntax')
