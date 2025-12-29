@@ -168,9 +168,9 @@ let g:lightline = {
 \     'lineinfo': '%c%V',
 \   },
 \   'component_expand': {
-\     'linter_warnings': 'lightline#ale#warnings',
-\     'linter_errors': 'lightline#ale#errors',
-\     'linter_ok': 'lightline#ale#ok',
+\     'linter_warnings': 'LightlineLinterWarnings',
+\     'linter_errors': 'LightlineLinterErrors',
+\     'linter_ok': 'LightlineLinterOK',
 \   },
 \   'component_function': {
 \     'gitbranch': 'LightlineFugitive',
@@ -197,10 +197,36 @@ let g:lightline = {
 \     'right': '',
 \   },
 \}
-" TODO: these lines and the above ALE config are unused. Switch from lightline-ale to Neovim diagnostic output.
-let g:lightline#ale#indicator_warnings = '◆ '
-let g:lightline#ale#indicator_errors = '✗ '
-let g:lightline#ale#indicator_ok = '✓'
+
+" Lightline auto-refresh when diagnostics change
+autocmd User LspDiagnosticsChanged call lightline#update()
+autocmd DiagnosticChanged * call lightline#update()
+
+" Lightline diagnostic functions for nvim-lspconfig and nvim-lint
+function! LightlineLinterWarnings() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:counts = luaeval('(vim.diagnostic.count(0)[vim.diagnostic.severity.WARN] or 0)')
+  return l:counts == 0 ? '' : '◆ ' . l:counts
+endfunction
+
+function! LightlineLinterErrors() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:counts = luaeval('(vim.diagnostic.count(0)[vim.diagnostic.severity.ERROR] or 0)')
+  return l:counts == 0 ? '' : '✗ ' . l:counts
+endfunction
+
+function! LightlineLinterOK() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:total = luaeval('#vim.diagnostic.get(0)')
+  return l:total == 0 ? '✓' : ''
+endfunction
+
 function! LightlineReadonly()
   return &readonly ? '' : ''
 endfunction
