@@ -41,7 +41,11 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-lua/plenary.nvim'
+  " Pin to legacy `master` branch.
+  " TODO: upgrade to breaking `main` branch.
+  Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
+  Plug 'olimorris/codecompanion.nvim'
 endif
 Plug 'osyo-manga/vim-over'
 Plug 'preservim/vim-textobj-quote'
@@ -297,11 +301,6 @@ let g:markdown_fenced_languages = [
 
 let g:mkdp_auto_close = 1
 
-" mise.nvim
-if has('nvim')
-  lua require('mise').setup()
-endif
-
 " vim-rooter
 let g:rooter_patterns = [
 \  '.git',
@@ -316,53 +315,10 @@ let g:rooter_silent_chdir = 1
 " vim-sneak
 let g:sneak#label = 1
 
-" Treesitter
-
 if has('nvim')
-lua <<EOF
-  require'nvim-treesitter.configs'.setup {
-    ensure_installed = {
-      "astro",
-      "bash",
-      "css",
-      "glimmer",
-      "html",
-      "javascript",
-      "json",
-      "json5",
-      "just",
-      "make",
-      "markdown",
-      "python",
-      "ruby",
-      "rust",
-      "scss",
-      "svelte",
-      "swift",
-      "toml",
-      "tsx",
-      "typescript",
-      "vue",
-    },
-    highlight = {
-      enable = true,
-    },
-    incremental_selection = { enable = true },
-    indent = { enable = true },
-    matchup = { enable = true },
-    textobjects = { enable = true },
-  }
-
-  require("nvim-treesitter.parsers").get_parser_configs().just = {
-    install_info = {
-      url = "https://github.com/IndianBoy42/tree-sitter-just",
-      files = { "src/parser.c", "src/scanner.cc" },
-      branch = "main",
-      use_makefile = true,
-    },
-    maintainers = { "@IndianBoy42" },
-  }
-EOF
+lua require('ai')
+lua require('mise').setup()
+lua require('syntax')
 endif
 
 " vim-yankstack
