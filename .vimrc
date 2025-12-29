@@ -20,7 +20,6 @@ Plug 'airblade/vim-rooter'
 Plug 'andymass/vim-matchup'
 Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
-Plug 'dense-analysis/ale'
 Plug 'dominickng/fzf-session.vim'
 Plug 'ejrichards/mise.nvim'
 Plug 'embear/vim-localvimrc'
@@ -38,9 +37,9 @@ Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-user'
 Plug 'machakann/vim-highlightedyank'
 Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
+  Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/plenary.nvim'
   " Pin to legacy `master` branch.
   " TODO: upgrade to breaking `main` branch.
@@ -139,53 +138,6 @@ let maplocalleader = ","
 " -------------------------
 "
 
-" ale
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_floating_preview = 1
-let g:ale_floating_window_border = [' ', ' ', ' ', ' ', ' ', ' ']
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-map <leader>u :ALEFindReferences<CR>
-nnoremap <M-LeftMouse> <LeftMouse>:ALEGoToDefinition<CR>
-nnoremap <silent> gd :ALEGoToDefinition<CR>
-nnoremap <silent> gds :ALEGoToDefinition -split<CR>
-nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
-nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
-nnoremap <silent> gk :ALEDetail<CR>
-let g:ale_linter_aliases = {'astro': ['css', 'javascript', 'typescript']}
-let g:ale_fixers = {
-\   'astro': ['biome', 'eslint', 'stylelint', 'prettier'],
-\   'css': ['stylelint', 'biome', 'prettier'],
-\   'javascript': ['biome', 'eslint', 'prettier'],
-\   'javascriptreact': ['biome', 'eslint', 'prettier'],
-\   'json': ['fixjson', 'biome', 'prettier'],
-\   'html': ['prettier'],
-\   'markdown': ['remark-lint', 'prettier'],
-\   'python': ['ruff', 'ruff_format'],
-\   'rust': ['rustfmt'],
-\   'sh': ['shfmt'],
-\   'svelte': ['biome', 'eslint', 'prettier'],
-\   'typescript': ['biome', 'eslint', 'prettier'],
-\   'typescriptreact': ['biome', 'eslint', 'prettier'],
-\   'vue': ['biome', 'eslint', 'prettier'],
-\}
-" TODO: add tsserver to astro. tsserver seems to parse a whole Astro file as TypeScript.
-let g:ale_linters = {
-\   'astro': ['biome', 'eslint', 'stylelint'],
-\   'css': ['stylelint', 'biome'],
-\   'handlebars': ['ember-template-lint', 'glint'],
-\   'html': [],
-\   'javascript': ['biome', 'eslint', 'tsserver'],
-\   'javascriptreact': ['biome', 'eslint', 'tsserver'],
-\   'markdown': ['remark-lint'],
-\   'python': ['mypy', 'pylsp', 'pyright', 'ruff'],
-\   'typescript': ['biome', 'eslint', 'tsserver'],
-\   'typescriptreact': ['biome', 'eslint', 'tsserver'],
-\   'vue': ['biome', 'eslint', 'vls'],
-\}
-set omnifunc=ale#completion#OmniFunc
-
 " codeium
 let g:codeium_no_map_tab = 1
 imap <script><silent><nowait><expr> <M-Tab> codeium#Accept()
@@ -241,6 +193,7 @@ let g:lightline = {
 \     'right': '',
 \   },
 \}
+" TODO: these lines and the above ALE config are unused. Switch from lightline-ale to Neovim diagnostic output.
 let g:lightline#ale#indicator_warnings = '◆ '
 let g:lightline#ale#indicator_errors = '✗ '
 let g:lightline#ale#indicator_ok = '✓'
@@ -317,6 +270,7 @@ let g:sneak#label = 1
 
 if has('nvim')
 lua require('ai')
+lua require('lsp')
 lua require('mise').setup()
 lua require('syntax')
 endif
