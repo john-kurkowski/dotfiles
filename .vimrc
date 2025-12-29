@@ -45,6 +45,8 @@ if has('nvim')
   " TODO: upgrade to breaking `main` branch.
   Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
   Plug 'olimorris/codecompanion.nvim'
+  " Pin to latest tagged release, to automatically install optional Rust fuzzy finder.
+  Plug 'saghen/blink.cmp', { 'tag': '*' }
 endif
 Plug 'osyo-manga/vim-over'
 Plug 'preservim/vim-textobj-quote'
@@ -270,6 +272,7 @@ let g:sneak#label = 1
 
 if has('nvim')
 lua require('ai')
+lua require('completion')
 lua require('lsp')
 lua require('mise').setup()
 lua require('syntax')
