@@ -285,6 +285,7 @@ let g:markdown_fenced_languages = [
 let g:mkdp_auto_close = 1
 
 " vim-rooter
+let g:rooter_cd_cmd = 'lcd'
 let g:rooter_patterns = [
 \  '.git',
 \  'Cargo.toml',
