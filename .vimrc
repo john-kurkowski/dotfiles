@@ -20,7 +20,6 @@ Plug 'airblade/vim-rooter'
 Plug 'andymass/vim-matchup'
 Plug 'ap/vim-css-color'
 Plug 'cocopon/iceberg.vim'
-Plug 'dense-analysis/ale'
 Plug 'dominickng/fzf-session.vim'
 Plug 'ejrichards/mise.nvim'
 Plug 'embear/vim-localvimrc'
@@ -38,14 +37,18 @@ Plug 'justinmk/vim-sneak'
 Plug 'kana/vim-textobj-user'
 Plug 'machakann/vim-highlightedyank'
 Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'maximbaz/lightline-ale'
 Plug 'michaeljsmith/vim-indent-object'
 if has('nvim')
+  Plug 'mfussenegger/nvim-lint'
+  Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/plenary.nvim'
   " Pin to legacy `master` branch.
   " TODO: upgrade to breaking `main` branch.
   Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'master', 'do': ':TSUpdate'}
   Plug 'olimorris/codecompanion.nvim'
+  " Pin to latest tagged release, to automatically install optional Rust fuzzy finder.
+  Plug 'saghen/blink.cmp', { 'tag': '*' }
+  Plug 'stevearc/conform.nvim'
 endif
 Plug 'osyo-manga/vim-over'
 Plug 'preservim/vim-textobj-quote'
@@ -139,53 +142,6 @@ let maplocalleader = ","
 " -------------------------
 "
 
-" ale
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_floating_preview = 1
-let g:ale_floating_window_border = [' ', ' ', ' ', ' ', ' ', ' ']
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-map <leader>u :ALEFindReferences<CR>
-nnoremap <M-LeftMouse> <LeftMouse>:ALEGoToDefinition<CR>
-nnoremap <silent> gd :ALEGoToDefinition<CR>
-nnoremap <silent> gds :ALEGoToDefinition -split<CR>
-nnoremap <silent> gdt :ALEGoToDefinition -tab<CR>
-nnoremap <silent> gdv :ALEGoToDefinition -vsplit<CR>
-nnoremap <silent> gk :ALEDetail<CR>
-let g:ale_linter_aliases = {'astro': ['css', 'javascript', 'typescript']}
-let g:ale_fixers = {
-\   'astro': ['biome', 'eslint', 'stylelint', 'prettier'],
-\   'css': ['stylelint', 'biome', 'prettier'],
-\   'javascript': ['biome', 'eslint', 'prettier'],
-\   'javascriptreact': ['biome', 'eslint', 'prettier'],
-\   'json': ['fixjson', 'biome', 'prettier'],
-\   'html': ['prettier'],
-\   'markdown': ['remark-lint', 'prettier'],
-\   'python': ['ruff', 'ruff_format'],
-\   'rust': ['rustfmt'],
-\   'sh': ['shfmt'],
-\   'svelte': ['biome', 'eslint', 'prettier'],
-\   'typescript': ['biome', 'eslint', 'prettier'],
-\   'typescriptreact': ['biome', 'eslint', 'prettier'],
-\   'vue': ['biome', 'eslint', 'prettier'],
-\}
-" TODO: add tsserver to astro. tsserver seems to parse a whole Astro file as TypeScript.
-let g:ale_linters = {
-\   'astro': ['biome', 'eslint', 'stylelint'],
-\   'css': ['stylelint', 'biome'],
-\   'handlebars': ['ember-template-lint', 'glint'],
-\   'html': [],
-\   'javascript': ['biome', 'eslint', 'tsserver'],
-\   'javascriptreact': ['biome', 'eslint', 'tsserver'],
-\   'markdown': ['remark-lint'],
-\   'python': ['mypy', 'pylsp', 'pyright', 'ruff'],
-\   'typescript': ['biome', 'eslint', 'tsserver'],
-\   'typescriptreact': ['biome', 'eslint', 'tsserver'],
-\   'vue': ['biome', 'eslint', 'vls'],
-\}
-set omnifunc=ale#completion#OmniFunc
-
 " codeium
 let g:codeium_no_map_tab = 1
 imap <script><silent><nowait><expr> <M-Tab> codeium#Accept()
@@ -212,9 +168,9 @@ let g:lightline = {
 \     'lineinfo': '%c%V',
 \   },
 \   'component_expand': {
-\     'linter_warnings': 'lightline#ale#warnings',
-\     'linter_errors': 'lightline#ale#errors',
-\     'linter_ok': 'lightline#ale#ok',
+\     'linter_warnings': 'LightlineLinterWarnings',
+\     'linter_errors': 'LightlineLinterErrors',
+\     'linter_ok': 'LightlineLinterOK',
 \   },
 \   'component_function': {
 \     'gitbranch': 'LightlineFugitive',
@@ -241,9 +197,36 @@ let g:lightline = {
 \     'right': '',
 \   },
 \}
-let g:lightline#ale#indicator_warnings = '◆ '
-let g:lightline#ale#indicator_errors = '✗ '
-let g:lightline#ale#indicator_ok = '✓'
+
+" Lightline auto-refresh when diagnostics change
+autocmd User LspDiagnosticsChanged call lightline#update()
+autocmd DiagnosticChanged * call lightline#update()
+
+" Lightline diagnostic functions for nvim-lspconfig and nvim-lint
+function! LightlineLinterWarnings() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:counts = luaeval('(vim.diagnostic.count(0)[vim.diagnostic.severity.WARN] or 0)')
+  return l:counts == 0 ? '' : '◆ ' . l:counts
+endfunction
+
+function! LightlineLinterErrors() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:counts = luaeval('(vim.diagnostic.count(0)[vim.diagnostic.severity.ERROR] or 0)')
+  return l:counts == 0 ? '' : '✗ ' . l:counts
+endfunction
+
+function! LightlineLinterOK() abort
+  if !has('nvim')
+    return ''
+  endif
+  let l:total = luaeval('#vim.diagnostic.get(0)')
+  return l:total == 0 ? '✓' : ''
+endfunction
+
 function! LightlineReadonly()
   return &readonly ? '' : ''
 endfunction
@@ -302,6 +285,7 @@ let g:markdown_fenced_languages = [
 let g:mkdp_auto_close = 1
 
 " vim-rooter
+let g:rooter_cd_cmd = 'lcd'
 let g:rooter_patterns = [
 \  '.git',
 \  'Cargo.toml',
@@ -317,6 +301,10 @@ let g:sneak#label = 1
 
 if has('nvim')
 lua require('ai')
+lua require('completion')
+lua require('format')
+lua require('linting')
+lua require('lsp')
 lua require('mise').setup()
 lua require('syntax')
 endif
