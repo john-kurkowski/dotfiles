@@ -1,13 +1,4 @@
 " -------------------------
-" Color
-" -------------------------
-
-set background=dark
-set cursorline
-set cursorlineopt=number
-colorscheme iceberg
-
-" -------------------------
 " Various Vim options
 " -------------------------
 
