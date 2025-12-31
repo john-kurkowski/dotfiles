@@ -1,11 +1,4 @@
 " -------------------------
-" Plugins
-" -------------------------
-
-" Plugins are managed by lazy.nvim.
-" See ~/.config/nvim/init.lua and ~/.config/nvim/lua/plugins/
-
-" -------------------------
 " Color
 " -------------------------
 

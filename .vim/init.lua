@@ -25,4 +25,4 @@ require("lazy").setup({
 })
 
 -- Load remaining VimScript config
-vim.cmd('source ~/.vimrc')
+vim.cmd('source ~/.vim/vimrc')
