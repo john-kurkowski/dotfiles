@@ -13,6 +13,7 @@ return {
   {
     "olimorris/codecompanion.nvim",
     dependencies = {
+      "j-hui/fidget.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
@@ -37,11 +38,8 @@ return {
         },
       },
     },
-  },
-
-  -- Dependency utility functions
-  {
-    "nvim-lua/plenary.nvim",
-    lazy = true,
+    init = function()
+      require("plugins.ai.loading"):init()
+    end,
   },
 }
