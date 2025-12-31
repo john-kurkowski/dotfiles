@@ -1,2 +1,0 @@
-require("blink.cmp").setup({
-})
