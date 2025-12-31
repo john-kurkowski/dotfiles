@@ -13,13 +13,6 @@ return {
   },
 
   { "kana/vim-textobj-user" },
-  {
-    "machakann/vim-highlightedyank",
-    event = "TextYankPost",
-    init = function()
-      vim.g.highlightedyank_highlight_duration = 300
-    end,
-  },
 
   {
     "maxbrunsfeld/vim-yankstack",

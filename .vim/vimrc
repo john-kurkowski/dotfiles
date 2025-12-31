@@ -47,6 +47,12 @@ let g:python3_host_prog="~/.cache/py3nvim/bin/python"
 autocmd FileType gitcommit,markdown setl spell
 
 " -------------------------
+" Appearance
+" -------------------------
+
+autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='Visual', timeout=300}
+
+" -------------------------
 " Custom Bindings
 " -------------------------
 
