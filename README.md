@@ -52,8 +52,8 @@ See [the docs folder](./.docs/).
 ## What's Inside
 
 My development workhorses are the terminal and Vim. They make up the majority of
-the custom code in this repo. Their entry points are `.zshrc` and `.vim/init.lua`,
-respectively.
+the custom code in this repo. Their entry points are [`.zshrc`](./.zshrc) and
+[`.vim/init.lua`](./.vim/init.lua), respectively.
 
 These tools are what I'm productive with. Use whatever IDE makes you productive.
 Keep investing in and sharpening your tools to shorten the feedback loop. The
