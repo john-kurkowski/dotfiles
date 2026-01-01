@@ -1,5 +1,6 @@
 return {
-  -- FZF fuzzy finder
+  -- Fuzzy find
+
   {
     "junegunn/fzf",
     build = function()
@@ -33,27 +34,22 @@ return {
     end,
   },
 
+  -- Search sessions with FZF
   {
     "dominickng/fzf-session.vim",
     dependencies = { "junegunn/fzf.vim" },
   },
 
   -- Search highlighting improvements
-  {
-    "inkarkat/vim-ingo-library",
-    lazy = true,
-  },
-
-  {
-    "wincent/loupe",
-    dependencies = { "inkarkat/vim-ingo-library" },
-  },
 
   {
     "inkarkat/vim-SearchHighlighting",
     dependencies = {
       "inkarkat/vim-ingo-library",
-      "wincent/loupe",
     },
+  },
+
+  {
+    "wincent/loupe",
   },
 }
