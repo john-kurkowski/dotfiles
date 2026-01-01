@@ -25,7 +25,6 @@ return {
 
   { "michaeljsmith/vim-indent-object" },
   { "preservim/vim-textobj-quote" },
-  { "tpope/vim-commentary" },
   { "tpope/vim-repeat" },
   { "tpope/vim-surround" },
   { "tpope/vim-unimpaired" },
