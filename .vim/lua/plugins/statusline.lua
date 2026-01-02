@@ -5,48 +5,48 @@ return {
     priority = 999,
     init = function()
       vim.g.lightline = {
-        colorscheme = 'iceberg',
+        colorscheme = "iceberg",
         active = {
           left = {
-            { 'mode', 'paste' },
-            { 'gitbranch', 'readonly', 'absolutepath', 'modified' },
+            { "mode", "paste" },
+            { "gitbranch", "readonly", "absolutepath", "modified" },
           },
           right = {
-            { 'lineinfo' },
-            { 'linter_warnings', 'linter_errors', 'linter_ok' },
+            { "lineinfo" },
+            { "linter_warnings", "linter_errors", "linter_ok" },
           },
         },
         component = {
-          lineinfo = '%c%V',
+          lineinfo = "%c%V",
         },
         component_expand = {
-          linter_warnings = 'LightlineLinterWarnings',
-          linter_errors = 'LightlineLinterErrors',
-          linter_ok = 'LightlineLinterOK',
+          linter_warnings = "LightlineLinterWarnings",
+          linter_errors = "LightlineLinterErrors",
+          linter_ok = "LightlineLinterOK",
         },
         component_function = {
-          gitbranch = 'LightlineFugitive',
-          readonly = 'LightlineReadonly',
+          gitbranch = "LightlineFugitive",
+          readonly = "LightlineReadonly",
         },
         component_type = {
-          linter_warnings = 'warning',
-          linter_errors = 'error',
+          linter_warnings = "warning",
+          linter_errors = "error",
         },
         inactive = {
           left = {
-            { 'absolutepath', 'modified' },
+            { "absolutepath", "modified" },
           },
           right = {
-            { 'lineinfo' },
+            { "lineinfo" },
           },
         },
         separator = {
-          left = '',
-          right = '',
+          left = "",
+          right = "",
         },
         subseparator = {
-          left = '',
-          right = '',
+          left = "",
+          right = "",
         },
       }
 

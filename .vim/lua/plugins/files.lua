@@ -3,14 +3,14 @@ return {
   {
     "airblade/vim-rooter",
     init = function()
-      vim.g.rooter_cd_cmd = 'lcd'
+      vim.g.rooter_cd_cmd = "lcd"
       vim.g.rooter_patterns = {
-        '.git',
-        'Cargo.toml',
-        'Gemfile',
-        'Makefile',
-        'package.json',
-        'pyvenv.cfg',
+        ".git",
+        "Cargo.toml",
+        "Gemfile",
+        "Makefile",
+        "package.json",
+        "pyvenv.cfg",
       }
       vim.g.rooter_silent_chdir = 1
     end,

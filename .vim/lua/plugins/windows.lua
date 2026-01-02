@@ -6,7 +6,7 @@ return {
   {
     "sodapopcan/vim-ifionly",
     init = function()
-      vim.keymap.set('n', 'L', ':IfIOnly<CR>', { noremap = true })
+      vim.keymap.set("n", "L", ":IfIOnly<CR>", { noremap = true })
     end,
   },
 
@@ -14,9 +14,9 @@ return {
   {
     "yssl/QFEnter",
     init = function()
-      vim.g.qfenter_vopen_map = {'<C-v>'}
-      vim.g.qfenter_hopen_map = {'<C-x>'}
-      vim.g.qfenter_topen_map = {'<C-t>'}
+      vim.g.qfenter_vopen_map = { "<C-v>" }
+      vim.g.qfenter_hopen_map = { "<C-x>" }
+      vim.g.qfenter_topen_map = { "<C-t>" }
     end,
   },
 }

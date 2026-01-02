@@ -12,7 +12,7 @@ return {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
     init = function()
-      vim.g.fzf_session_path = '~/.vim/session//'
+      vim.g.fzf_session_path = "~/.vim/session//"
 
       -- Custom Rg command with preview
       vim.cmd([[
@@ -28,9 +28,9 @@ return {
       ]])
 
       -- Key mappings
-      vim.keymap.set('n', '<Leader>i', ':Sessions<CR>', { silent = true })
-      vim.keymap.set('n', '<C-P>', ':Files<CR>', { silent = true })
-      vim.keymap.set('n', '<Leader>p', ':Buffers<CR>', { silent = true, noremap = true })
+      vim.keymap.set("n", "<Leader>i", ":Sessions<CR>", { silent = true })
+      vim.keymap.set("n", "<C-P>", ":Files<CR>", { silent = true })
+      vim.keymap.set("n", "<Leader>p", ":Buffers<CR>", { silent = true, noremap = true })
     end,
   },
 

@@ -8,6 +8,7 @@ return {
         css = { "stylelint", "biomejs" },
         javascript = { "biomejs", "eslint" },
         javascriptreact = { "biomejs", "eslint" },
+        lua = { "luacheck" },
         python = { "mypy", "ruff" },
         typescript = { "biomejs", "eslint" },
         typescriptreact = { "biomejs", "eslint" },

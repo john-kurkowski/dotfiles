@@ -5,7 +5,9 @@ return {
     event = "InsertEnter",
     init = function()
       vim.g.codeium_no_map_tab = 1
-      vim.keymap.set('i', '<M-Tab>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+      vim.keymap.set("i", "<M-Tab>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true, silent = true })
     end,
   },
 

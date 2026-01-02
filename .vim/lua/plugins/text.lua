@@ -8,7 +8,7 @@ return {
   {
     "justinmk/vim-sneak",
     init = function()
-      vim.g['sneak#label'] = 1
+      vim.g["sneak#label"] = 1
     end,
   },
 
@@ -17,9 +17,9 @@ return {
   {
     "maxbrunsfeld/vim-yankstack",
     init = function()
-      vim.g.yankstack_yank_keys = {'c', 'C', 'd', 'D', 'x', 'X', 'y', 'Y'}
-      vim.keymap.set('n', 'p', '<Plug>yankstack_substitute_older_paste')
-      vim.keymap.set('n', 'P', '<Plug>yankstack_substitute_newer_paste')
+      vim.g.yankstack_yank_keys = { "c", "C", "d", "D", "x", "X", "y", "Y" }
+      vim.keymap.set("n", "p", "<Plug>yankstack_substitute_older_paste")
+      vim.keymap.set("n", "P", "<Plug>yankstack_substitute_newer_paste")
     end,
   },
 
