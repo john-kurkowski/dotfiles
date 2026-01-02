@@ -25,7 +25,11 @@ return {
   -- File navigation
   {
     "stevearc/oil.nvim",
-    opts = {},
+    opts = {
+      view_options = {
+        show_hidden = true,
+      },
+    },
     init = function()
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end,
