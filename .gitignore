@@ -3,6 +3,7 @@
 *.pyc
 *~
 .~*
+.claude
 .dotfiles
 .env*
 .eslintcache
