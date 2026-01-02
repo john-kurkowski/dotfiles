@@ -1,20 +1,11 @@
-function table.except(super, sub)
-  local result = {}
-  local seenInResult = {}
-  local lookupSub = {}
-
+local function array_except(super, sub)
+  local lookup = {}
   for _, value in ipairs(sub) do
-    lookupSub[value] = true
+    lookup[value] = true
   end
-
-  for _, value in ipairs(super) do
-    if not lookupSub[value] and not seenInResult[value] then
-      table.insert(result, value)
-      seenInResult[value] = true
-    end
-  end
-
-  return result
+  return vim.tbl_filter(function(value)
+    return not lookup[value]
+  end, super)
 end
 
 return {
@@ -52,7 +43,7 @@ return {
         "yaml",
       }
 
-      treesitter.install(table.except(should_install, treesitter.get_installed()))
+      treesitter.install(array_except(should_install, treesitter.get_installed()))
 
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
