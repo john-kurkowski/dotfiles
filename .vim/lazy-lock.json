@@ -17,7 +17,7 @@
   "limelight.vim": { "branch": "master", "commit": "0c8cc7f503a775c505dc9c67f1f5041ab4d5f1fd" },
   "loupe": { "branch": "main", "commit": "9189e7fa2d9dd54f4f0211c5edfdd6260252fe4b" },
   "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
-  "mise.nvim": { "branch": "master", "commit": "15a40b5dc04299ae30be60e89f19a25138a239e0" },
+  "mise.nvim": { "branch": "configure-scope", "commit": "47078b0d9fd3369708625ab0016539564c077fcf" },
   "nvim-lint": { "branch": "master", "commit": "1f19dacd945a7b1a57f29f32b2d7168384df3d36" },
   "nvim-lspconfig": { "branch": "master", "commit": "41ceb6bba3a40128b7841f5b7f5a9dae7201e823" },
   "nvim-treesitter": { "branch": "main", "commit": "c6dd314086f7b471bf6c9110092a94ce1c06d220" },

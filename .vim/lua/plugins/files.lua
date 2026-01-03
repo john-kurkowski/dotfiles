@@ -16,7 +16,14 @@ return {
   },
 
   -- Set env upon `cd`
-  { "ejrichards/mise.nvim", opts = {} },
+  {
+    "swapnilsm/mise.nvim",
+    branch = "configure-scope",
+    commit = "47078b0",
+    opts = {
+      cd_scope = { "global", "window" },
+    },
+  },
 
   -- Project-local Vim overrides
   { "embear/vim-localvimrc" },
