@@ -3,7 +3,6 @@ return {
   {
     "airblade/vim-rooter",
     init = function()
-      vim.g.rooter_cd_cmd = "lcd"
       vim.g.rooter_patterns = {
         ".git",
         "Cargo.toml",
