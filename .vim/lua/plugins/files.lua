@@ -16,7 +16,7 @@ return {
   },
 
   -- Set env upon `cd`
-  { "ejrichards/mise.nvim" },
+  { "ejrichards/mise.nvim", opts = {} },
 
   -- Project-local Vim overrides
   { "embear/vim-localvimrc" },
