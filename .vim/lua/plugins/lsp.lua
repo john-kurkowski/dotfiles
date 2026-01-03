@@ -8,6 +8,7 @@ return {
       vim.lsp.enable("astro")
       vim.lsp.enable("biome")
       vim.lsp.enable("eslint")
+      vim.lsp.enable("lua_ls")
       vim.lsp.enable("pylsp")
       vim.lsp.enable("pyright")
       vim.lsp.enable("ruff")
