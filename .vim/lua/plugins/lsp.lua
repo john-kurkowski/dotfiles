@@ -13,6 +13,7 @@ return {
       vim.lsp.enable("pyright")
       vim.lsp.enable("ruff")
       vim.lsp.enable("ts_ls")
+      vim.lsp.enable("ty")
       vim.lsp.enable("vue_ls")
     end,
   },
