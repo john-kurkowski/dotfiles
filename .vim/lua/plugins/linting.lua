@@ -42,24 +42,65 @@ return {
       --
       -- This avoids session startup spam and abort.
       ---@return nil
-      local function try_lint_existing()
-        local bufnr = vim.api.nvim_get_current_buf()
+      ---@param bufnr? integer
+      local function try_lint_existing(bufnr)
+        bufnr = bufnr or vim.api.nvim_get_current_buf()
         local ft = vim.bo[bufnr].filetype -- string
         for _, name in ipairs(lint.linters_by_ft[ft] or {}) do
           local cmd = get_linter_cmd(name, bufnr)
           if cmd and vim.fn.executable(cmd) == 1 then
-            lint.try_lint(name)
+            -- Prefer nvim-lint bufnr-aware API if available; otherwise, run in buffer context.
+            local ok = pcall(lint.try_lint, name, { bufnr = bufnr })
+            if not ok then
+              vim.api.nvim_buf_call(bufnr, function()
+                lint.try_lint(name)
+              end)
+            end
           end
         end
       end
 
-      vim.api.nvim_create_autocmd({
-        "BufEnter",
-        "BufWritePost",
-        "TextChanged",
-        "TextChangedI",
-      }, {
-        callback = try_lint_existing,
+      -- Debounced linting: immediate on enter/save; debounced while typing per-buffer
+      local lint_timers = {}
+
+      local function debounced_lint(bufnr, ms)
+        ms = ms or 300
+        local id = lint_timers[bufnr]
+        if id then
+          vim.fn.timer_stop(id)
+        end
+        lint_timers[bufnr] = vim.fn.timer_start(ms, function()
+          vim.schedule(function()
+            try_lint_existing(bufnr)
+          end)
+        end)
+      end
+
+      local grp = vim.api.nvim_create_augroup("LintingAutocmds", { clear = true })
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+        group = grp,
+        callback = function(args)
+          try_lint_existing(args.buf)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+        group = grp,
+        callback = function(args)
+          debounced_lint(args.buf, 300)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ "BufWipeout", "BufDelete" }, {
+        group = grp,
+        callback = function(args)
+          local id = lint_timers[args.buf]
+          if id then
+            vim.fn.timer_stop(id)
+            lint_timers[args.buf] = nil
+          end
+        end,
       })
     end,
   },
