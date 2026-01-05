@@ -16,6 +16,44 @@ return {
         vue = { "biomejs", "eslint" },
       }
 
+      -- Wrap selected linters to run via `mise x` and use project root as cwd
+      local function project_root_from_buf(bufnr)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local dir = vim.fs.dirname(fname)
+        local root = vim.fs.find(
+          { ".mise.toml", ".mise.yaml", "pyproject.toml", "package.json", "Cargo.toml", ".git" },
+          { upward = true, path = dir }
+        )[1]
+        return root and vim.fs.dirname(root) or dir
+      end
+
+      local function wrap_linter_with_mise(name, tool)
+        local l = lint.linters[name]
+        if not l then
+          return
+        end
+        local orig_args = l.args
+        l.cmd = "mise"
+        l.args = function(ctx)
+          local rest = type(orig_args) == "function" and orig_args(ctx) or (orig_args or {})
+          local args = { "x", "--", tool or name }
+          for _, a in ipairs(rest) do
+            table.insert(args, a)
+          end
+          return args
+        end
+        l.cwd = function(ctx)
+          return project_root_from_buf(ctx.bufnr)
+        end
+      end
+
+      wrap_linter_with_mise("biomejs", "biome")
+      wrap_linter_with_mise("eslint", "eslint")
+      wrap_linter_with_mise("stylelint", "stylelint")
+      wrap_linter_with_mise("luacheck", "luacheck")
+      wrap_linter_with_mise("mypy", "mypy")
+      wrap_linter_with_mise("ruff", "ruff")
+
       -- Compute linter command.
       --
       -- Some linters compute their command per-buffer (e.g. picking a

@@ -21,6 +21,36 @@ return {
         vue = { "biome", "prettier" },
       },
 
+      -- Use project root as cwd for each formatter (mise shims resolve version)
+      formatters = (function()
+        local function project_root_from_buf(bufnr)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local dir = vim.fs.dirname(fname)
+          local root = vim.fs.find(
+            { ".mise.toml", ".mise.yaml", "pyproject.toml", "package.json", "Cargo.toml", ".git" },
+            { upward = true, path = dir }
+          )[1]
+          return root and vim.fs.dirname(root) or dir
+        end
+
+        local function root_cwd()
+          return function(ctx)
+            return project_root_from_buf(ctx.buf)
+          end
+        end
+
+        return {
+          biome = { cwd = root_cwd() },
+          prettier = { cwd = root_cwd() },
+          stylelint = { cwd = root_cwd() },
+          fixjson = { cwd = root_cwd() },
+          stylua = { cwd = root_cwd() },
+          ruff_format = { cwd = root_cwd() },
+          rustfmt = { cwd = root_cwd() },
+          shfmt = { cwd = root_cwd() },
+        }
+      end)(),
+
       -- Format on save, for most filetypes
       format_on_save = function(bufnr)
         local filetype = vim.bo[bufnr].filetype
