@@ -16,5 +16,17 @@ return {
       vim.lsp.enable("ty")
       vim.lsp.enable("vue_ls")
     end,
+
+    init = function()
+      -- Retrigger LSP attach after session restore.
+      --
+      -- Neovim's native LSP config attaches on FileType events, but these
+      -- don't fire when restoring a session.
+      vim.api.nvim_create_autocmd("SessionLoadPost", {
+        callback = function()
+          vim.cmd("doautocmd FileType")
+        end,
+      })
+    end,
   },
 }
