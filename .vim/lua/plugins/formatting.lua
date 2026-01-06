@@ -22,14 +22,13 @@ return {
       },
 
       -- Format on save, for most filetypes
-      format_on_save = function(bufnr)
+      format_after_save = function(bufnr)
         local filetype = vim.bo[bufnr].filetype
         if filetype == "json" or filetype == "markdown" then
           return nil
         end
 
         return {
-          timeout_ms = 500,
           lsp_format = "fallback",
         }
       end,
