@@ -32,6 +32,17 @@ return {
   {
     "stevearc/oil.nvim",
     opts = {
+      keymaps = {
+        ["<C-h>"] = false,
+        ["<C-j>"] = false,
+        ["<C-k>"] = false,
+        ["<C-l>"] = false,
+        ["<C-p>"] = false,
+        ["<C-s>"] = false,
+        ["<C-t>"] = { "actions.select", opts = { tab = true } },
+        ["<C-v>"] = { "actions.select", opts = { horizontal = true } },
+        ["<C-x>"] = { "actions.select", opts = { vertical = true } },
+      },
       view_options = {
         show_hidden = true,
       },
