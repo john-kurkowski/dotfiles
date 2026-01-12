@@ -3,7 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      vim.diagnostic.config({ virtual_lines = { current_line = true } })
+      vim.diagnostic.config({ virtual_text = true })
 
       vim.lsp.enable("astro")
       vim.lsp.enable("biome")
