@@ -12,8 +12,8 @@ return {
       vim.lsp.enable("pylsp")
       vim.lsp.enable("pyright")
       vim.lsp.enable("ruff")
-      vim.lsp.enable("ts_ls")
       vim.lsp.enable("ty")
+      vim.lsp.enable("vtsls")
       vim.lsp.enable("vue_ls")
     end,
 

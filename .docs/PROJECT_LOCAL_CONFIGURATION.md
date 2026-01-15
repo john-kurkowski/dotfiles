@@ -19,10 +19,21 @@ limit features like 3rd party type checking.
 
 JavaScript projects install tooling locally to `node_modules/`.
 
-- **Vim**: Plugins automatically "find up" to tools in the nearest
-  `node_modules/`. No configuration needed.
-- **Terminal**: Add `node_modules/.bin` to `$PATH` automatically by creating a
-  mise `.mise.local.toml` file:
+#### Vim
+
+Most plugins typically "find up" to tools in the nearest `node_modules/`, no
+configuration needed. However, some Vim plugins require globally installed LSP
+servers, which then forward to project-local tool versions. Install these once:
+
+```sh
+npm install -g @vtsls/language-server        # TypeScript LSP (respects tsconfig)
+npm install -g vscode-langservers-extracted  # ESLint LSP
+```
+
+#### Terminal
+
+Add `node_modules/.bin` to `$PATH` automatically by creating a mise
+`.mise.local.toml` file:
 
 ```toml
 # /path/to/cloned/project/.mise.local.toml

@@ -5,15 +5,15 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        astro = { "biomejs", "eslint", "stylelint" },
+        astro = { "biomejs", "stylelint" },
         css = { "stylelint", "biomejs" },
-        javascript = { "biomejs", "eslint" },
-        javascriptreact = { "biomejs", "eslint" },
+        javascript = { "biomejs" },
+        javascriptreact = { "biomejs" },
         lua = { "luacheck" },
         python = { "mypy", "ruff" },
-        typescript = { "biomejs", "eslint" },
-        typescriptreact = { "biomejs", "eslint" },
-        vue = { "biomejs", "eslint" },
+        typescript = { "biomejs" },
+        typescriptreact = { "biomejs" },
+        vue = { "biomejs" },
       }
 
       -- Compute linter command.
