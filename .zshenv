@@ -27,6 +27,22 @@ alias gst='git status'
 alias gup='git pull'
 alias gupp=$'git fetch --all --prune --tags && git rebase @{u} && git branch -vv | awk \'/: gone]/{print $1}\' | xargs git branch --delete --force'
 
+# Override jj with no args to show dynamic log limit based on terminal height
+#
+# Note this only supports the exact command `jj`, no additional e.g. flags.
+# Those will forward to jj's actual default-command.
+jj() {
+  if [ $# -eq 0 ]; then
+    # Each commit typically takes ~2.5 lines (including occasional elided revisions)
+    zmodload zsh/mathfunc
+    local available_lines=$(($(tput lines) - 6))
+    local limit=$((int(ceil(available_lines / 2.5))))
+    command jj log --limit "$limit"
+  else
+    command jj "$@"
+  fi
+}
+
 alias jjb='jj bookmark'
 alias jjbc='jj bookmark create'
 alias jjbl='jj bookmark list'
@@ -67,4 +83,3 @@ export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 if [ "$(command -v zoxide)" ]; then
   eval "$(zoxide init zsh)"
 fi
-
