@@ -42,7 +42,13 @@ path=(
 export PATH=${(j[:])path}
 
 export HOMEBREW_NO_INSTALL_CLEANUP=true
-export LESS=-FRXi
+
+export LESS="\
+--IGNORE-CASE \
+--RAW-CONTROL-CHARS \
+--no-init \
+--quit-if-one-screen \
+"
 
 # Load shell helpers
 
