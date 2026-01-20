@@ -4,6 +4,7 @@ email = "john.kurkowski@gmail.com"
 
 [ui]
 bookmark-list-sort-keys = ["committer-date-", "name"]
+default-command = "log"
 diff-editor = ":builtin"
 diff-formatter = "delta"
 
