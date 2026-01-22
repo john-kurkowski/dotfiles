@@ -16,7 +16,6 @@
   "lightline.vim": { "branch": "master", "commit": "e358557e1a9f9fc860416c8eb2e34c0404078155" },
   "limelight.vim": { "branch": "master", "commit": "0c8cc7f503a775c505dc9c67f1f5041ab4d5f1fd" },
   "loupe": { "branch": "main", "commit": "9189e7fa2d9dd54f4f0211c5edfdd6260252fe4b" },
-  "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "mise.nvim": { "branch": "configure-scope", "commit": "47078b0d9fd3369708625ab0016539564c077fcf" },
   "nvim-lint": { "branch": "master", "commit": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37" },
   "nvim-lspconfig": { "branch": "master", "commit": "419b082102fa813739588dd82e19a8b6b2442855" },
@@ -48,5 +47,6 @@
   "vim-textobj-quote": { "branch": "master", "commit": "e99ad285c950576a394a64ff334106b32b23418a" },
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
   "vim-unimpaired": { "branch": "master", "commit": "db65482581a28e4ccf355be297f1864a4e66985c" },
-  "vim-yankstack": { "branch": "master", "commit": "157a659c1b101c899935d961774fb5c8f0775370" }
+  "vim-yankstack": { "branch": "master", "commit": "157a659c1b101c899935d961774fb5c8f0775370" },
+  "vivify.vim": { "branch": "main", "commit": "99a1539a440633ee7a164e094a736c04acc2335d" }
 }

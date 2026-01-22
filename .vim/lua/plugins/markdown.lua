@@ -1,12 +1,7 @@
 return {
   {
-    "iamcco/markdown-preview.nvim",
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = "markdown",
+    "jannis-baum/vivify.vim",
     init = function()
-      vim.g.mkdp_auto_close = 1
       -- Configure markdown fenced languages for syntax highlighting
       vim.g.markdown_fenced_languages = {
         "bash=sh",
