@@ -46,7 +46,7 @@ alias jjnt='jj new "trunk()"'
 alias jjp='jj git push'
 alias jjrb='jj rebase'
 alias jjrbm='jj rebase -d "trunk()"'
-jjsh() { jj show "${1:-@-}" "${@:2}" }
+alias jjsh='jj show'
 alias jjsp='jj split'
 alias jjsq='jj squash'
 alias jjst='jj status'
@@ -67,4 +67,3 @@ export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 if [ "$(command -v zoxide)" ]; then
   eval "$(zoxide init zsh)"
 fi
-
