@@ -27,16 +27,16 @@ return {
     config = {
       interactions = {
         background = {
-          adapter = "anthropic",
+          adapter = "codex",
         },
         chat = {
-          adapter = "anthropic",
+          adapter = "codex",
         },
         cmd = {
-          adapter = "anthropic",
+          adapter = "codex",
         },
         inline = {
-          adapter = "anthropic",
+          adapter = "codex",
         },
       },
     },
