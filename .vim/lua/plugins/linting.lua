@@ -10,7 +10,7 @@ return {
         javascript = { "biomejs" },
         javascriptreact = { "biomejs" },
         lua = { "luacheck" },
-        python = { "mypy", "ruff" },
+        python = { "mypy" },
         typescript = { "biomejs" },
         typescriptreact = { "biomejs" },
         vue = { "biomejs" },
