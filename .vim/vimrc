@@ -62,14 +62,3 @@ nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
-
-" Find/replace with visual feedback. Courtesy vim-over &
-" https://github.com/toranb/dotfiles/blob/46ae158e51dbdbba72e284081dc9a12b5e54ef8c/vimrc#L130
-nnoremap <Leader>fr :call VisualFindAndReplace()<CR>
-xnoremap <Leader>fr :call VisualFindAndReplaceWithSelection()<CR>
-function! VisualFindAndReplace()
-    :OverCommandLine%s/
-endfunction
-function! VisualFindAndReplaceWithSelection() range
-    :'<,'>OverCommandLine s/
-endfunction
