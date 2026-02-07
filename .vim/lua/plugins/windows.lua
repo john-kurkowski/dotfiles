@@ -1,7 +1,4 @@
 return {
-  -- Buffer management
-  { "Asheq/close-buffers.vim" },
-
   -- Window management
   {
     "sodapopcan/vim-ifionly",
