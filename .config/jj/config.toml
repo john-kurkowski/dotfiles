@@ -1,6 +1,5 @@
 [user]
 name = "John Kurkowski"
-email = "john.kurkowski@gmail.com"
 
 [ui]
 bookmark-list-sort-keys = ["committer-date-", "name"]

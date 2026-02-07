@@ -4,6 +4,10 @@ This is my dotfiles repo. There are many like it, but this one is mine.
 
 It is laid out exactly how it goes in the `$HOME` dir.
 
+## Prerequisites
+
+- [mise]
+
 ## Install
 
 ```zsh
@@ -13,11 +17,26 @@ dotfiles config --local core.worktree $HOME
 dotfiles config --local status.showUntrackedFiles no
 dotfiles config --local user.email john.kurkowski@gmail.com
 dotfiles checkout
+```
 
-# If not a personal device
-git config --global user.email john.kurkowski@company.com
+### Machine-Local Commit Identity
 
-# If zsh is not the default shell
+Set in `.mise.local.toml`:
+
+```toml
+# $HOME/.mise.local.toml
+[env]
+GIT_AUTHOR_EMAIL = "you@company.com"
+GIT_COMMITTER_EMAIL = "you@company.com"
+JJ_EMAIL = "you@company.com"
+```
+
+Read more about per-machine settings in
+[.docs/MACHINE_LOCAL_CONFIGURATION.md](./.docs/MACHINE_LOCAL_CONFIGURATION.md).
+
+### If zsh is not the default shell
+
+```zsh
 chsh -s zsh
 ```
 
@@ -91,6 +110,7 @@ dotfiles.
 [eslint]: https://eslint.org/
 [github does dotfiles]: https://dotfiles.github.io/
 [inventing on principle]: https://vimeo.com/36579366
+[mise]: https://github.com/jdx/mise
 [pylint]: https://www.pylint.org/
 [the best way to store your dotfiles]:
     https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/

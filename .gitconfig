@@ -1,6 +1,5 @@
 [user]
   name = John Kurkowski
-  email = john.kurkowski@gmail.com
   logallrefupdates = true
 [core]
   attributesfile = ~/.gitattributes
