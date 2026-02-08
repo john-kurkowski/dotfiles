@@ -5,7 +5,12 @@ return {
 
     opts = {
       bufdelete = { enabled = true },
-      dim = { enabled = true },
+
+      dim = {
+        -- e.g. `:lua Snacks.dim.enable()`
+
+        enabled = true,
+      },
 
       gitbrowse = {
         -- e.g. `:lua Snacks.gitbrowse({ what = "permalink" })`
@@ -14,7 +19,6 @@ return {
       },
 
       terminal = { enabled = true },
-      zen = { enabled = true },
     },
 
     init = function()
