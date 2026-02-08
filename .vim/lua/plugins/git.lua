@@ -9,6 +9,9 @@ return {
         virt_text_pos = "right_align",
       },
 
+      -- enable `gh` integration: during blame, hyperlink PR
+      gh = true,
+
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
 
@@ -58,12 +61,6 @@ return {
   -- Git wrapper
   {
     "tpope/vim-fugitive",
-  },
-
-  -- GitHub extension for fugitive
-  {
-    "tpope/vim-rhubarb",
-    dependencies = { "tpope/vim-fugitive" },
   },
 
   -- Extended fugitive blame

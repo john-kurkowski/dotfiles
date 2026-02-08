@@ -4,10 +4,17 @@ return {
     "folke/snacks.nvim",
 
     opts = {
-      terminal = { enabled = true },
       bufdelete = { enabled = true },
-      zen = { enabled = true },
       dim = { enabled = true },
+
+      gitbrowse = {
+        -- e.g. `:lua Snacks.gitbrowse({ what = "permalink" })`
+
+        enabled = true,
+      },
+
+      terminal = { enabled = true },
+      zen = { enabled = true },
     },
 
     init = function()
