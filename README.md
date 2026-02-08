@@ -40,18 +40,18 @@ Read more about per-machine settings in
 chsh -s zsh
 ```
 
-### Update
+## Update
 
 ```zsh
 dotfiles pull
 ```
 
-### Usage
+## Usage
 
 The dotfiles are now in your home folder, in the conventional location. Your
 tools automatically pick them up.
 
-### Contribute
+## Contribute
 
 To interact with version control, instead of using `git` directly, use the alias
 `dotfiles-env git`, or `dotfiles` for short. For example, `dotfiles add -p`,
