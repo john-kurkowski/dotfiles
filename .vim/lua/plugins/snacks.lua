@@ -1,3 +1,5 @@
+local snacks_terminal_cwd = vim.uv.cwd()
+
 return {
   -- Sundry Vim capabilities, like floating terminal, focus mode, and buffer deletion
   {
@@ -41,7 +43,15 @@ return {
       {
         "<C-`>",
         function()
-          Snacks.terminal.toggle("jj status; exec $SHELL -l", { win = { position = "float", border = "rounded" } })
+          Snacks.terminal.toggle("jj status; exec $SHELL -l", {
+            -- Snacks terminal IDs include `count` and `cwd`; pin both so this
+            -- keymap always toggles one float. Use startup cwd so `:cd` /
+            -- `:lcd` later do not create a second terminal ID.
+            count = 1,
+            cwd = snacks_terminal_cwd,
+
+            win = { position = "float", border = "rounded" },
+          })
         end,
         mode = { "n", "t" },
         desc = "Terminal",
