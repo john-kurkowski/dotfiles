@@ -47,17 +47,30 @@
         >       (you could just `export` environment variables), I've tested
         >       mise for a long time and it's become a fire-and-forget part of
         >       my workflow
+- Do not squash your work, unless told otherwise.
+    - (This lets the reviewer see what you did at each turn.)
+- Repo-specific format
+    - Your prompt may include a ticket/issue number. Include the reference in
+      any commit(s) you make in the style of other recent commits in the repo.
 
 # Worktrees
 
-You may be asked to work in your own worktree, to not interfere with concurrent
-changes in the current directory.
+You may be asked to work in your own worktree, to isolate your work and not
+interfere with concurrent changes in the current directory.
 
 - In `jj`, the worktree concept is called workspaces, initialized and explored
   via `jj workspace`.
 - Add your worktree to a system temp folder, such as via `$TMPDIR` (to avoid
   dirtying the user's folders).
+- Base your work on the previous commit, e.g. `jj new @-`, unless told
+  otherwise.
+    - If you base your work on the working copy, i.e. `jj new @`, be careful, as
+      `@` might still be in progress, and the worktrees could get out of sync.
 - Use the same worktree for the duration of the chat, unless told otherwise.
+- If dependencies are missing in the worktree, run the repo's README setup
+  commands from scratch (e.g. `npm install`).
+    - Never symlink or otherwise share your worktree's setup with the prompter's
+      worktree.
 - In your own worktree, it is safe to commit your work for the prompter to
   review.
 - In your summary of your changes, give the command to see your change, print
