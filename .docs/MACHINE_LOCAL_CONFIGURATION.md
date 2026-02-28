@@ -23,6 +23,9 @@ GIT_COMMITTER_EMAIL = "you@company.com"
 JJ_EMAIL = "you@company.com"
 ```
 
+These environment variables are for non-dotfiles repos. `dotfiles-env` pins
+dotfiles commits to my personal email.
+
 ## Theme
 
 ### Neovim Terminal
