@@ -53,7 +53,7 @@
     - Your prompt may include a ticket/issue number. Include the reference in
       any commit(s) you make in the style of other recent commits in the repo.
 
-# Worktrees
+### Worktrees
 
 You may be asked to work in your own worktree, to isolate your work and not
 interfere with concurrent changes in the current directory.
@@ -73,8 +73,9 @@ interfere with concurrent changes in the current directory.
       worktree.
 - In your own worktree, it is safe to commit your work for the prompter to
   review.
-- In your summary of your changes, give the command to see your change, print
-  e.g. `jj diff -r main@origin..yourchangeidhere`.
+- In your turn summary, print _the command_ to see your changes, with the commit
+  subject in a comment, e.g.
+  `jj diff -r main@origin..yourchangeidhere  # Update foo bar in baz`.
     - (Since your commit isn't in the prompter's working directory, it won't be
       as simple for the prompter to review your work, compared to `jj diff`
       without arguments.)
@@ -82,3 +83,20 @@ interfere with concurrent changes in the current directory.
       changes, say so.
         - For example, if your change requires running commands from the
           directory, or the user must review VCS-ignored files.
+
+### Pull Requests
+
+- Default to additive commits.
+    - For follow-up work on an existing PR branch/bookmark, create a new child
+      commit and push fast-forward only.
+    - Do not rewrite published history. Never `jj squash`, `jj rebase`,
+      `jj absorb`, `jj describe` on an already-pushed change, and never
+      force-push, unless explicitly asked in the current turn.
+    - If history rewrite seems beneficial, ask first. Present the exact command
+      you would run, then wait for approval.
+- After a PR is already opened, avoid pushing on every commit, unless told
+  otherwise.
+    - Wait to be prompted to push.
+    - In your turn summary, mention unpushed changes, if any.
+    - (This conserves CI minutes, retriggering AI code review, and sending
+      emails to human subscribers.)
