@@ -1,4 +1,4 @@
-alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME"'
+alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME" GIT_AUTHOR_EMAIL="john.kurkowski@gmail.com" GIT_COMMITTER_EMAIL="john.kurkowski@gmail.com" DOTFILES_GIT_IDENTITY_LOCK=1'
 alias dotfiles='dotfiles-env git'
 
 # Grep dotfiles, using Ripgrep.

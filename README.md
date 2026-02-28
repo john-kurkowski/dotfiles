@@ -12,10 +12,10 @@ It is laid out exactly how it goes in the `$HOME` dir.
 
 ```zsh
 git clone --bare https://github.com/john-kurkowski/dotfiles.git $HOME/.dotfiles
-alias dotfiles='GIT_DIR=$HOME/.dotfiles/ GIT_WORK_TREE=$HOME git'
+alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME" GIT_AUTHOR_EMAIL="john.kurkowski@gmail.com" GIT_COMMITTER_EMAIL="john.kurkowski@gmail.com" DOTFILES_GIT_IDENTITY_LOCK=1'
+alias dotfiles='dotfiles-env git'
 dotfiles config --local core.worktree $HOME
 dotfiles config --local status.showUntrackedFiles no
-dotfiles config --local user.email john.kurkowski@gmail.com
 dotfiles checkout
 ```
 
