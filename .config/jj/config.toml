@@ -5,8 +5,12 @@ name = "John Kurkowski"
 bookmark-list-sort-keys = ["committer-date-", "name"]
 default-command = "log"
 diff-editor = ":builtin"
-diff-formatter = "delta"
+diff-formatter = ":git"
 
-[merge-tools.delta]
-diff-args=["--side-by-side", "$left", "$right", "--width=$width"]
-diff-expected-exit-codes = [0, 1]
+[[--scope]]
+--when.commands = ["diff", "log", "show"]
+[--scope.ui]
+pager = "delta --side-by-side"
+
+[aliases]
+lp = ["log", "--patch", "--no-graph", "--ignore-all-space"]
