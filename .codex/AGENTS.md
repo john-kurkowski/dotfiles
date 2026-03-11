@@ -48,6 +48,10 @@
         >       mise for a long time and it's become a fire-and-forget part of
         >       my workflow
 - Do not squash your work, unless told otherwise.
+    - I.e. never rewrite version control history. Never `jj squash`,
+      `jj absorb`, `jj rebase`, `jj describe`, `git commit --amend`,
+      `git rebase`, `git reset --hard`, `git cherry-pick --no-commit` followed
+      by history edits, or force-push prep.
     - (This lets the reviewer see what you did at each turn.)
 - Repo-specific format
     - Your prompt may include a ticket/issue number. Include the reference in
@@ -89,9 +93,12 @@ interfere with concurrent changes in the current directory.
 - Default to additive commits.
     - For follow-up work on an existing PR branch/bookmark, create a new child
       commit and push fast-forward only.
-    - Do not rewrite published history. Never `jj squash`, `jj rebase`,
-      `jj absorb`, `jj describe` on an already-pushed change, and never
-      force-push, unless explicitly asked in the current turn.
+    - Do not rewrite version control history, especially not on an
+      already-pushed change. Never `jj squash`, `jj absorb`, `jj rebase`,
+      `jj describe`, `git commit --amend`, `git rebase`, `git reset --hard`,
+      `git cherry-pick --no-commit` followed by history edits, or force-push
+      prep, unless explicitly asked in the current turn.
+    - Do not force-push, unless told otherwise.
     - If history rewrite seems beneficial, ask first. Present the exact command
       you would run, then wait for approval.
 - After a PR is already opened, avoid pushing on every commit, unless told
@@ -100,3 +107,16 @@ interfere with concurrent changes in the current directory.
     - In your turn summary, mention unpushed changes, if any.
     - (This conserves CI minutes, retriggering AI code review, and sending
       emails to human subscribers.)
+- After a PR is already opened, do not perform any remote write action without
+  my explicit approval in the current turn.
+    - Remote write actions include:
+        - GitHub writes (`update_pull_request`, `add_*comment*`, review
+          submission, merge, etc.)
+        - VCS pushes (`git push`, `jj git push`)
+        - Commenting on the PR
+    - Before any remote write, show me:
+        1. The exact action
+        2. The exact text/payload/command
+        3. A short reason
+    - Wait for my explicit approve before executing.
+    - Default behavior: local edits/tests are allowed; remote writes are not.
