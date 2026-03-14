@@ -78,13 +78,22 @@ interfere with concurrent changes in the current directory.
 - In your own worktree, it is safe to commit your work for the prompter to
   review.
 - In your turn summary, print _the command_ to see your changes, with the commit
-  subject in a comment, e.g.
-  `jj diff -r main@origin..yourchangeidhere  # Update foo bar in baz`.
+  subject in a comment. For example:
+    - ```sh
+      jj diff -r main@origin..yourchangeidhere  # Update foo bar in baz`.
+
+      # Or, if there are multiple commits to review in this turn:
+
+      jj diff -r changeid1  # Update foo
+      jj diff -r changeid2  # Fix bar
+      jj diff -r changeid3  # Clean up baz
+      ```
+
     - (Since your commit isn't in the prompter's working directory, it won't be
       as simple for the prompter to review your work, compared to `jj diff`
       without arguments.)
-    - If the user _has_ to `cd` to your worktree's temp folder to review your
-      changes, say so.
+    - It should be very rare that the user _has_ to `cd` to your worktree's temp
+      folder to review your changes.
         - For example, if your change requires running commands from the
           directory, or the user must review VCS-ignored files.
 
