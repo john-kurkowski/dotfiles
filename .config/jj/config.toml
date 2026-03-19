@@ -14,3 +14,4 @@ pager = "delta --side-by-side"
 
 [aliases]
 lp = ["log", "--patch", "--no-graph", "--ignore-all-space"]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
