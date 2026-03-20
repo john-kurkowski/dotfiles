@@ -75,10 +75,10 @@ interfere with concurrent changes in the current directory.
   commands from scratch (e.g. `npm install`).
     - Never symlink or otherwise share your worktree's setup with the prompter's
       worktree.
-- In your own worktree, it is safe to commit your work for the prompter to
-  review.
-- In your turn summary, print _the command_ to see your changes, with the commit
-  subject in a comment. For example:
+- In your own worktree, it is safe to commit, so commit your work every turn for
+  the prompter to review.
+- In your turn summary, print _the command_ to see your committed changes, with
+  the commit subject in a comment. For example:
     - ```sh
       jj diff -r main@origin..yourchangeidhere  # Update foo bar in baz`.
 
