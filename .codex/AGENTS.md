@@ -20,41 +20,15 @@
 
 - When changing files in the same working directory as the prompter, do not
   commit your work, unless told otherwise.
-- When writing a commit message, use the following style (adapted from
-  https://cbea.ms/git-commit/):
+- When writing a commit message, use the following style:
     - Separate subject from body with a blank line.
     - Capitalize the first letter of the subject line.
     - Do not end the subject line with a period.
     - Use the imperative mood in the subject line.
     - Use the body to explain what and why. Minimize the how (that's more what
       the diff is for).
-        - List _what_ changed with imperative bullets and sub-bullets (similar
-          to the subject line).
-        - If a change seems out of the ordinary of the rest of the commit, add a
-          sub-bullet explaining _why_ it was done.
-        - If test case or test snapshot changes only cover the application
-          changes in the same commit, no need to enumerate them.
-        - Bigger picture narrative about the _why_ of the change can be in a
-          non-bulleted paragraph at the beginning and/or end of the body.
-        - If any part of the diff is self-descriptive, no need for narrative
-          and/or enumeration as bullets in the body. If the whole diff is
-          self-descriptive, no need for a body at all.
-    - Example, with narrative about _why_:
-        > Prefer `brew shellenv` to manual paths
-        >
-        > Fixes Homebrew shell completion paths missing on Apple Silicon. Future
-        > proofs with Homebrew and Apple standard paths. Continues to prioritize
-        > host-specific and tool-specific binaries.
-    - Example, with bullets about _what_ and sub-bullets about _why_:
-        > Externalize machine-local config to env vars
-        >
-        > - Require setting committer email via env var
-        > - Allow setting Neovim terminal theme via env var
-        > - Document mise as a prerequisite of setting up this repo
-        >     - While mise is not technically necessary to use these dotfiles
-        >       (you could just `export` environment variables), I've tested
-        >       mise for a long time and it's become a fire-and-forget part of
-        >       my workflow
+    - For detailed examples and preferred patterns, see
+      `style/commit-messages.md`.
 - Do not squash your work, unless told otherwise.
     - I.e. never rewrite version control history. Never `jj squash`,
       `jj absorb`, `jj rebase`, `jj describe`, `git commit --amend`,
