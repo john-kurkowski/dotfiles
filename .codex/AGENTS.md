@@ -1,3 +1,11 @@
+## Testing instructions
+
+- While implementing an application code feature or fix, add or update tests to
+  cover your changes.
+- Tests should verify observable behavior, not re-run the implementation under
+  test to compute expected values.
+    - Prefer fixed expected literals or independently constructed expectations.
+
 ## Version Control
 
 - Use Jujutsu `jj` instead of `git` when `jj` is enabled for the current repo,
