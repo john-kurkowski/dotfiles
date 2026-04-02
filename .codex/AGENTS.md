@@ -77,17 +77,22 @@ interfere with concurrent changes in the current directory.
       worktree.
 - In your own worktree, it is safe to commit, so commit your work every turn for
   the prompter to review.
-- In your turn summary, print _the command_ to see your committed changes, with
-  the commit subject in a comment. For example:
-    - ```sh
-      jj diff -r main@origin..yourchangeidhere  # Update foo bar in baz`.
+- In your turn summary, print the command to see your committed changes.
+    - Prefer exact changeids or changeid ranges, instead of relative ranges,
+      e.g. `trksomvv` or `main..trksomvv`, _not_ `@-` or `main..@-`.
+    - The first 8 characters of a changeid are fine, for display brevity.
+    - Comment with the commit subject.
+    - For example:
 
-      # Or, if there are multiple commits to review in this turn:
+        ```sh
+        jj diff -r main@origin..changeid3  # Update foo bar in baz`
 
-      jj diff -r changeid1  # Update foo
-      jj diff -r changeid2  # Fix bar
-      jj diff -r changeid3  # Clean up baz
-      ```
+        # Or, if there are multiple commits to review in this turn:
+
+        jj diff -r changeid1  # Update foo
+        jj diff -r changeid2  # Fix bar
+        jj diff -r changeid3  # Clean up baz
+        ```
 
     - (Since your commit isn't in the prompter's working directory, it won't be
       as simple for the prompter to review your work, compared to `jj diff`
