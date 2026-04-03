@@ -1,0 +1,113 @@
+#!/bin/zsh
+
+# Open code files in a running Neovim instance from macOS.
+#
+# macOS default file handlers can only target app bundles, not an existing
+# terminal editor process. This wrapper bridges that gap by forwarding open
+# requests to a stable Neovim server via `nvr`, and by launching Ghostty with
+# Neovim when no server is available yet.
+#
+# Setup for a new machine:
+#   1. Install `nvr` and `duti`, for example with Homebrew.
+#   2. Install a small app bundle such as `~/Applications/Open in Neovim.app`
+#      whose Finder `open` handler runs this script for each dropped file.
+#   3. Give that app bundle a stable `CFBundleIdentifier`, register it with
+#      Launch Services, and map desired file extensions to it with `duti`.
+#
+# After that:
+#   * Finder and other macOS file-open flows go through the app bundle, which
+#     calls this script without a terminal attached.
+#   * Interactive shell usage can call this script directly.
+#   * Both paths converge on one shared Neovim "main editor" server.
+#
+# Running this script with no arguments acts as a "main editor" launcher: it
+# starts the shared Neovim if needed and otherwise leaves the existing one
+# alone.
+
+set -euo pipefail
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin:$PATH"
+
+default_server="$HOME/.cache/nvim/server.pipe"
+server="${OPEN_IN_NVIM_SERVER:-$default_server}"
+nvr_bin="$(command -v nvr)"
+debug="${OPEN_IN_NVIM_DEBUG:-0}"
+
+debug_log() {
+  if [[ "$debug" != "0" ]]; then
+    print -u2 "open-in-nvim: $*"
+  fi
+}
+
+in_interactive_terminal() {
+  [[ -t 0 && -t 1 && -t 2 ]]
+}
+
+if [[ -z "$nvr_bin" ]]; then
+  print -u2 "open-in-nvim: nvr not found in PATH"
+  exit 127
+fi
+
+debug_log "server=$server argc=$#"
+
+if "$nvr_bin" --servername "$server" --nostart --remote-expr '1' >/dev/null 2>&1; then
+  debug_log "server probe: found running Neovim"
+  if (( $# == 0 )); then
+    debug_log "no args and server exists: exiting"
+    exit 0
+  fi
+else
+  debug_log "server probe: no running Neovim"
+  if (( $# == 0 )); then
+    if in_interactive_terminal; then
+      debug_log "no args and no server: starting main editor in current terminal"
+      exec nvim --listen "$server"
+    fi
+
+    debug_log "no args and no server: launching Ghostty main editor"
+    exec open -na Ghostty --args -e /bin/zsh -lic \
+      'exec nvim --listen "$1"' \
+      open-in-nvim "$server"
+  fi
+fi
+
+if (( $# == 0 )); then
+  print -u2 "usage: open-in-nvim [<file[:line[:col]] | file [line] [col]>]"
+  exit 64
+fi
+
+target="$1"
+line="${2:-}"
+col="${3:-}"
+
+if [[ -z "$line" && "$target" =~ '^(.+):([0-9]+)(:([0-9]+))?$' ]]; then
+  parsed_file="${match[1]}"
+  parsed_line="${match[2]}"
+  parsed_col="${match[4]:-1}"
+
+  if [[ -e "$parsed_file" ]]; then
+    target="$parsed_file"
+    line="$parsed_line"
+    col="$parsed_col"
+  fi
+fi
+
+line="${line:-1}"
+col="${col:-1}"
+file="${target:A}"
+debug_log "resolved file=$file line=$line col=$col"
+
+if "$nvr_bin" --servername "$server" --nostart --remote-expr '1' >/dev/null 2>&1; then
+  debug_log "opening in existing server in a new tab"
+  exec "$nvr_bin" --servername "$server" --remote-tab "+call cursor(${line}, ${col})" "$file"
+fi
+
+if in_interactive_terminal; then
+  debug_log "no server: starting main editor in current terminal on requested file"
+  exec nvim --listen "$server" "+call cursor(${line}, ${col})" -- "$file"
+fi
+
+debug_log "launching Ghostty with new main editor"
+exec open -na Ghostty --args -e /bin/zsh -lic \
+  'exec nvim --listen "$1" "+call cursor($2, $3)" -- "$4"' \
+  open-in-nvim "$server" "$line" "$col" "$file"
