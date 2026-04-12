@@ -1,8 +1,5 @@
 # Commit Message Style
 
-This style is adapted in part from https://cbea.ms/git-commit/, with
-repo-specific preferences described below.
-
 ## Body structure
 
 - Default to the shortest message that gives the reviewer needed context.
@@ -82,3 +79,9 @@ Source:
 >
 > This project also uses `typing.override`, so 3.12 was technically already
 > required.
+
+## Acknowledgments
+
+This style is adapted in part from cbeams's excellent
+[How to Write a Git Commit Message](https://cbea.ms/git-commit/). It adds some
+personal preferences and acknowledges repo-specific preferences.
