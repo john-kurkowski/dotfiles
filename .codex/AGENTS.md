@@ -25,8 +25,12 @@
     - Capitalize the first letter of the subject line.
     - Do not end the subject line with a period.
     - Use the imperative mood in the subject line.
-    - Use the body to explain what and why. Minimize the how (that's more what
-      the diff is for).
+    - Default to the shortest message that gives a reviewer the needed context.
+    - Prefer no body if the diff is self-explanatory.
+    - If a body is needed, keep it brief and explain what and why, not how.
+    - Do not copy PR-description material, squash/WIP history, or test-only
+      coverage notes into commit bodies unless the commit is primarily about
+      tests.
     - For detailed examples and preferred patterns, see
       `style/commit-messages.md`.
 - Do not squash your work, unless told otherwise.
