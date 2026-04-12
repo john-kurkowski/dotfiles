@@ -32,7 +32,7 @@
       coverage notes into commit bodies unless the commit is primarily about
       tests.
     - For detailed examples and preferred patterns, see
-      `style/commit-messages.md`.
+      [style/commit-messages.md](style/commit-messages.md).
 - Do not squash your work, unless told otherwise.
     - I.e. never rewrite version control history. Never `jj squash`,
       `jj absorb`, `jj rebase`, `jj describe`, `git commit --amend`,
