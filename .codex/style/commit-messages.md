@@ -3,8 +3,15 @@
 ## Body structure
 
 - Default to the shortest message that gives the reviewer needed context.
+- Choose the shortest form that still explains the change.
 - Use the body to explain what changed and why. Minimize the how.
-- Prefer no body if the whole diff is self-descriptive.
+- Prefer no body if the subject and diff already tell the story.
+- Add a body when the reviewer would otherwise miss important motivation,
+  unusual scope, or a non-obvious tradeoff.
+- Add a body when the subject alone cannot explain why the change was
+  necessary.
+- Add bullets when the commit contains a few distinct, reviewer-relevant
+  changes that are worth naming together.
 - If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
   usually enough.
 - List _what_ changed with imperative bullets and sub-bullets, similar to the
@@ -26,6 +33,9 @@
   enumeration for that part of the commit.
 
 ## Examples
+
+Choose the shortest form that still explains the change. Use a body when the
+subject alone would hide important context.
 
 ### Narrative _why_, when the rationale matters
 

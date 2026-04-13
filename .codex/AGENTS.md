@@ -26,7 +26,9 @@
     - Do not end the subject line with a period.
     - Use the imperative mood in the subject line.
     - Default to the shortest message that gives a reviewer the needed context.
-    - Prefer no body if the diff is self-explanatory.
+    - Prefer no body if the subject and diff are self-explanatory.
+    - Add a brief body when needed to explain why, unusual scope, or non-obvious
+      tradeoffs.
     - If a body is needed, keep it brief and explain what and why, not how.
     - Do not copy PR-description material, squash/WIP history, or test-only
       coverage notes into commit bodies unless the commit is primarily about
