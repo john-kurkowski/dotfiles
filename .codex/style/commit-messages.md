@@ -8,10 +8,9 @@
 - Prefer no body if the subject and diff already tell the story.
 - Add a body when the reviewer would otherwise miss important motivation,
   unusual scope, or a non-obvious tradeoff.
-- Add a body when the subject alone cannot explain why the change was
-  necessary.
-- Add bullets when the commit contains a few distinct, reviewer-relevant
-  changes that are worth naming together.
+- Add a body when the subject alone cannot explain why the change was necessary.
+- Add bullets when the commit contains a few distinct, reviewer-relevant changes
+  that are worth naming together.
 - If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
   usually enough.
 - List _what_ changed with imperative bullets and sub-bullets, similar to the
@@ -89,6 +88,12 @@ Source:
 >
 > This project also uses `typing.override`, so 3.12 was technically already
 > required.
+
+## Pull Requests
+
+This style is also a good default starting point for pull request titles and
+descriptions, before expanding for org or repo guidance, templates, and reviewer
+context.
 
 ## Acknowledgments
 

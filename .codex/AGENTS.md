@@ -92,6 +92,10 @@ interfere with concurrent changes in the current directory.
 
 ### Pull Requests
 
+- Treat commit subjects as the starting point for pull request titles, and
+  commit messages as the starting point for pull request descriptions. Then
+  expand only for org/repository guidelines/templates, linked issues, testing
+  notes, rollout details, or reviewer-specific context.
 - Default to additive commits.
     - For follow-up work on an existing PR branch/bookmark, create a new child
       commit and push fast-forward only.
