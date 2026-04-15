@@ -21,7 +21,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes neovim luarocks zsh
 
-      - uses: taiki-e/install-action@stylua
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: stylua
 
       - name: Install Luacheck
         run: sudo luarocks install luacheck
