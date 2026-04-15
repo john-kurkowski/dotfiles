@@ -51,6 +51,7 @@ dotfiles pull
 ```zsh
 dotfiles-test               # Run tests in a disposable normal clone
 dotfiles-test --here        # Run tests in the current checkout, with confirmation
+dotfiles-test --here --fix  # Apply available fixes in the current checkout, with confirmation
 dotfiles-test --here --yes  # Run tests in the current checkout, without confirmation
 ```
 

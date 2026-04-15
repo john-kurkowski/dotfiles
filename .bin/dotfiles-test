@@ -24,17 +24,19 @@ script_dir=${0:A:h}
 repo_root=${script_dir:h}
 run_here=0
 assume_yes=0
+apply_fixes=0
 keep_clone=${DOTFILES_CI_KEEP_CLONE:-0}
 
 usage() {
   cat <<'EOF'
 Usage:
-  dotfiles-test [--here] [--yes]
+  dotfiles-test [--here] [--fix] [--yes]
 
 Without arguments, run the checks in a disposable normal clone.
 
 Options:
   --here        Run in the current checkout instead of a temp clone.
+  --fix         Apply fixes where supported before running the remaining checks.
   -y, --yes     Skip the confirmation prompt for --here.
   -h, --help    Show this help.
 EOF
@@ -44,6 +46,9 @@ while (( $# > 0 )); do
   case "$1" in
     --here)
       run_here=1
+      ;;
+    --fix)
+      apply_fixes=1
       ;;
     -y|--yes)
       assume_yes=1
@@ -120,10 +125,18 @@ run_checks_here() {
       --no-save \
       prettier@3 >/dev/null
 
-    "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
+    if (( apply_fixes == 1 )); then
+      "$tmp_root/npm-tools/node_modules/.bin/prettier" --write -- "${tracked_md[@]}"
+    else
+      "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
+    fi
   fi
 
-  stylua --check .vim/init.lua .vim/lua
+  if (( apply_fixes == 1 )); then
+    stylua .vim/init.lua .vim/lua
+  else
+    stylua --check .vim/init.lua .vim/lua
+  fi
   luacheck --config .vim/.luacheckrc .vim/init.lua .vim/lua
   zsh -n .zshenv .zshrc
 
@@ -195,7 +208,12 @@ run_checks_in_temp_clone() {
     (cd "$tmp_root/repo" && rm -f -- "${deleted_files[@]}")
   fi
 
-  (cd "$tmp_root/repo" && ./.bin/dotfiles-test --here --yes)
+  local nested_args=(--here --yes)
+  if (( apply_fixes == 1 )); then
+    nested_args+=(--fix)
+  fi
+
+  (cd "$tmp_root/repo" && ./.bin/dotfiles-test "${nested_args[@]}")
   cleanup_clone
 }
 
