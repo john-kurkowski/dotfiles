@@ -6,6 +6,22 @@
   test to compute expected values.
     - Prefer fixed expected literals or independently constructed expectations.
 
+## Comments
+
+- For any comments you write, including JSDoc or Python docstrings, keep them
+  evergreen: write for future maintainers, not for the current review thread.
+- Avoid comments referencing ticket numbers, PRs, “this change”, “now”,
+  “previously”, “during this migration”, or other in-the-moment rationale.
+    - Avoid comments that narrate what the agent just did.
+    - If historical context matters, put it in commit messages or PR
+      descriptions, not source comments.
+    - Mention tickets only for outstanding TODOs, or if there is no other way to
+      explain the code block in an evergreen way.
+- Describe the enduring contract, invariants, responsibilities, and tradeoffs of
+  the code.
+    - Prefer “why this code exists” and “what guarantees it provides” over
+      rollout history.
+
 ## Version Control
 
 - Use Jujutsu `jj` instead of `git` when `jj` is enabled for the current repo,
