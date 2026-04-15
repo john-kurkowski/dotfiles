@@ -126,3 +126,6 @@ interfere with concurrent changes in the current directory.
         3. A short reason
     - Wait for my explicit approve before executing.
     - Default behavior: local edits/tests are allowed; remote writes are not.
+- Before overwriting remote content (PR descriptions, issue comments, etc.),
+  always fetch the current version first. Never reconstruct from memory or a
+  stale local copy. The user may have edited it concurrently.
