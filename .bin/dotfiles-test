@@ -1,0 +1,236 @@
+#!/bin/zsh
+
+# Test this dotfiles repo without requiring project-local package manifests or a
+# non-bare checkout in the real home directory.
+#
+# Default mode runs in a disposable normal clone so package-manager state,
+# Neovim plugin bootstrap, and other temporary files stay out of the author's
+# actual `$HOME`. `--here` runs the same checks in the current checkout, which
+# is useful for CI and for explicit local debugging.
+#
+# Coverage:
+# - Markdown formatting with Prettier
+# - Markdown lint with remark (advisory warnings today)
+# - Lua formatting and lint for the tracked Neovim config
+# - Zsh syntax for the shell entrypoints
+# - A headless Neovim startup smoke test with isolated XDG state
+#
+# The script installs Node-backed Markdown tools into a temporary directory on
+# each run instead of relying on a tracked `package.json` or `node_modules`.
+
+set -euo pipefail
+
+script_dir=${0:A:h}
+repo_root=${script_dir:h}
+run_here=0
+assume_yes=0
+keep_clone=${DOTFILES_CI_KEEP_CLONE:-0}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  dotfiles-test [--here] [--yes]
+
+Without arguments, run the checks in a disposable normal clone.
+
+Options:
+  --here        Run in the current checkout instead of a temp clone.
+  -y, --yes     Skip the confirmation prompt for --here.
+  -h, --help    Show this help.
+EOF
+}
+
+while (( $# > 0 )); do
+  case "$1" in
+    --here)
+      run_here=1
+      ;;
+    -y|--yes)
+      assume_yes=1
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      print -u2 "dotfiles-test: unknown argument: $1"
+      usage >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
+
+if [[ -d "$repo_root/.dotfiles" ]]; then
+  git_cmd=(git --git-dir="$repo_root/.dotfiles" --work-tree="$repo_root")
+  clone_source=$repo_root/.dotfiles
+elif git -C "$repo_root" rev-parse --show-toplevel >/dev/null 2>&1; then
+  git_cmd=(git -C "$repo_root")
+  clone_source=$repo_root
+else
+  print -u2 "dotfiles-test: could not find the dotfiles repository from $repo_root"
+  exit 1
+fi
+
+cd "$repo_root"
+
+require_cmd() {
+  local cmd=$1
+  local help=${2:-}
+
+  if command -v "$cmd" >/dev/null 2>&1; then
+    return 0
+  fi
+
+  print -u2 "dotfiles-test: missing required command: $cmd"
+  if [[ -n "$help" ]]; then
+    print -u2 "dotfiles-test: $help"
+  fi
+  exit 127
+}
+
+run_checks_here() {
+  local work_root=$1
+
+  cd "$work_root"
+
+  require_cmd git
+  require_cmd node "Install Node 22 via mise, for example: mise use -g node@22"
+  require_cmd npm "Install Node 22 via mise, for example: mise use -g node@22"
+  require_cmd nvim "Install Neovim, for example: brew install neovim"
+  require_cmd stylua "Install Stylua, for example: brew install stylua"
+  require_cmd luacheck "Install Luacheck, for example: brew install luacheck"
+  require_cmd zsh "Install zsh, for example: brew install zsh"
+
+  local tmp_root
+  tmp_root=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-test.XXXXXX")
+
+  local tracked_md=()
+  local markdown_path
+  for markdown_path in "${(@0)$("${git_cmd[@]}" ls-files -z -- '*.md')}"; do
+    if [[ -n "$markdown_path" && ! -L "$work_root/$markdown_path" ]]; then
+      tracked_md+=("$markdown_path")
+    fi
+  done
+
+  if (( ${#tracked_md[@]} > 0 )); then
+    npm install \
+      --prefix "$tmp_root/npm-tools" \
+      --no-package-lock \
+      --no-save \
+      prettier@3 \
+      remark-cli@12 \
+      remark-preset-lint-consistent \
+      remark-preset-lint-markdown-style-guide \
+      remark-preset-lint-recommended >/dev/null
+
+    "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
+    (
+      mkdir -p "$tmp_root/remark-worktree"
+      cp "$work_root/.remarkrc" "$tmp_root/remark-worktree/.remarkrc"
+      ln -s "$tmp_root/npm-tools/node_modules" "$tmp_root/remark-worktree/node_modules"
+
+      for markdown_path in "${tracked_md[@]}"; do
+        mkdir -p "$tmp_root/remark-worktree/${markdown_path:h}"
+        cp "$work_root/$markdown_path" "$tmp_root/remark-worktree/$markdown_path"
+      done
+
+      cd "$tmp_root/remark-worktree"
+      "$tmp_root/npm-tools/node_modules/.bin/remark" --quiet -- "${tracked_md[@]}"
+    )
+  fi
+
+  stylua --check .vim/init.lua .vim/lua
+  luacheck --config .vim/.luacheckrc .vim/init.lua .vim/lua
+  zsh -n .zshenv .zshrc
+
+  mkdir -p \
+    "$tmp_root/xdg-cache" \
+    "$tmp_root/xdg-data" \
+    "$tmp_root/xdg-state"
+
+  local nvim_log="$tmp_root/nvim.log"
+  if ! env \
+    HOME="$work_root" \
+    XDG_CACHE_HOME="$tmp_root/xdg-cache" \
+    XDG_DATA_HOME="$tmp_root/xdg-data" \
+    XDG_STATE_HOME="$tmp_root/xdg-state" \
+    nvim --headless "+Lazy! restore" "+qa" >"$nvim_log" 2>&1; then
+    cat "$nvim_log"
+    rm -rf "$tmp_root"
+    exit 1
+  fi
+
+  rm -rf "$tmp_root"
+}
+
+run_checks_in_temp_clone() {
+  require_cmd git
+  require_cmd rsync "Install rsync, for example: brew install rsync"
+
+  local tmp_root
+  tmp_root=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-test-clone.XXXXXX")
+
+  cleanup_clone() {
+    if [[ "$keep_clone" == "1" ]]; then
+      print "dotfiles-test: kept temp clone at $tmp_root/repo"
+      return 0
+    fi
+
+    rm -rf "$tmp_root"
+  }
+
+  git clone "$clone_source" "$tmp_root/repo" >/dev/null
+
+  local overlay_files=("${(@0)$("${git_cmd[@]}" ls-files -z)}")
+  local extra_dir
+  for extra_dir in .bin .github; do
+    if [[ ! -d "$repo_root/$extra_dir" ]]; then
+      continue
+    fi
+
+    local extra_files=("${(@0)$("${git_cmd[@]}" ls-files -z --others --exclude-standard -- "$extra_dir")}")
+    overlay_files+=("${extra_files[@]}")
+  done
+
+  if (( ${#overlay_files[@]} > 0 )); then
+    rsync -a --files-from=<(printf '%s\0' "${overlay_files[@]}") --from0 "$repo_root"/ "$tmp_root/repo"/
+  fi
+
+  local deleted_files=("${(@0)$("${git_cmd[@]}" ls-files -z --deleted)}")
+  if (( ${#deleted_files[@]} > 0 )); then
+    (cd "$tmp_root/repo" && rm -f -- "${deleted_files[@]}")
+  fi
+
+  (cd "$tmp_root/repo" && ./.bin/dotfiles-test --here --yes)
+  cleanup_clone
+}
+
+confirm_here_run() {
+  if (( assume_yes == 1 )); then
+    return 0
+  fi
+
+  local prompt="dotfiles-test: run checks in the current checkout and allow temporary files under this checkout? [y/N] "
+  local reply
+
+  if [[ -t 0 ]]; then
+    read -r "?$prompt" reply
+  else
+    print -u2 "$prompt"
+    read -r reply || return 1
+  fi
+
+  [[ "$reply" == [Yy] || "$reply" == [Yy][Ee][Ss] ]]
+}
+
+if (( run_here == 1 )); then
+  if ! confirm_here_run; then
+    print -u2 "dotfiles-test: aborted"
+    exit 1
+  fi
+
+  run_checks_here "$repo_root"
+else
+  run_checks_in_temp_clone
+fi

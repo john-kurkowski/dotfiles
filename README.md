@@ -46,6 +46,14 @@ chsh -s zsh
 dotfiles pull
 ```
 
+## Test
+
+```zsh
+dotfiles-test               # Run tests in a disposable normal clone
+dotfiles-test --here        # Run tests in the current checkout, with confirmation
+dotfiles-test --here --yes  # Run tests in the current checkout, without confirmation
+```
+
 ## Usage
 
 The dotfiles are now in your home folder, in the conventional location. Your

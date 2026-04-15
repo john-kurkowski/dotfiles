@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes neovim luarocks zsh
+
+      - uses: taiki-e/install-action@stylua
+
+      - name: Install Luacheck
+        run: sudo luarocks install luacheck
+
+      - name: Run dotfiles tests
+        env:
+          HOME: ${{ github.workspace }}
+          XDG_CACHE_HOME: ${{ runner.temp }}/xdg-cache
+          XDG_DATA_HOME: ${{ runner.temp }}/xdg-data
+          XDG_STATE_HOME: ${{ runner.temp }}/xdg-state
+        run: ./.bin/dotfiles-test --here --yes

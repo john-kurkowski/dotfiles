@@ -64,15 +64,15 @@ Get latest
 </td>
 <td>
 
--   ⚠️ This is destructive, for a couple reasons.
+- ⚠️ This is destructive, for a couple reasons.
     1. It defaults to rebasing. I think
        [a clean history is best. However, the backspace key does carry risk.](https://blog.izs.me/2012/12/git-rebase/)
        To get out of trouble, `git rebase --abort` or reference `git reflog`.
     1. It cleans up deleted branches, e.g. a merged upstream pull request. A
        clean local repo is best. However, if you have local, unpushed commits on
        that _other_ branch, the command could drop your changes.
--   If you want to be safer, drop down to `git fetch` and `git merge`, which
-    will modify only your current branch, and without rewriting history.
+- If you want to be safer, drop down to `git fetch` and `git merge`, which will
+  modify only your current branch, and without rewriting history.
 
 </td>
 </tr>
