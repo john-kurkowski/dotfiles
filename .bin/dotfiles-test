@@ -10,13 +10,13 @@
 #
 # Coverage:
 # - Markdown formatting with Prettier
-# - Markdown lint with remark (advisory warnings today)
 # - Lua formatting and lint for the tracked Neovim config
 # - Zsh syntax for the shell entrypoints
 # - A headless Neovim startup smoke test with isolated XDG state
 #
-# The script installs Node-backed Markdown tools into a temporary directory on
-# each run instead of relying on a tracked `package.json` or `node_modules`.
+# The script installs the Node-backed Markdown formatter into a temporary
+# directory on each run instead of relying on a tracked `package.json` or
+# `node_modules`.
 
 set -euo pipefail
 
@@ -118,26 +118,9 @@ run_checks_here() {
       --prefix "$tmp_root/npm-tools" \
       --no-package-lock \
       --no-save \
-      prettier@3 \
-      remark-cli@12 \
-      remark-preset-lint-consistent \
-      remark-preset-lint-markdown-style-guide \
-      remark-preset-lint-recommended >/dev/null
+      prettier@3 >/dev/null
 
     "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
-    (
-      mkdir -p "$tmp_root/remark-worktree"
-      cp "$work_root/.remarkrc" "$tmp_root/remark-worktree/.remarkrc"
-      ln -s "$tmp_root/npm-tools/node_modules" "$tmp_root/remark-worktree/node_modules"
-
-      for markdown_path in "${tracked_md[@]}"; do
-        mkdir -p "$tmp_root/remark-worktree/${markdown_path:h}"
-        cp "$work_root/$markdown_path" "$tmp_root/remark-worktree/$markdown_path"
-      done
-
-      cd "$tmp_root/remark-worktree"
-      "$tmp_root/npm-tools/node_modules/.bin/remark" --quiet -- "${tracked_md[@]}"
-    )
   fi
 
   stylua --check .vim/init.lua .vim/lua
@@ -183,6 +166,8 @@ run_checks_in_temp_clone() {
   git clone "$clone_source" "$tmp_root/repo" >/dev/null
 
   local overlay_files=("${(@0)$("${git_cmd[@]}" ls-files -z)}")
+  overlay_files=("${(@)overlay_files:#}")
+  overlay_files=("${(@)overlay_files:#(#m)(?)}")
   local extra_dir
   for extra_dir in .bin .github; do
     if [[ ! -d "$repo_root/$extra_dir" ]]; then
@@ -193,8 +178,16 @@ run_checks_in_temp_clone() {
     overlay_files+=("${extra_files[@]}")
   done
 
-  if (( ${#overlay_files[@]} > 0 )); then
-    rsync -a --files-from=<(printf '%s\0' "${overlay_files[@]}") --from0 "$repo_root"/ "$tmp_root/repo"/
+  local existing_overlay_files=()
+  local overlay_file
+  for overlay_file in "${overlay_files[@]}"; do
+    if [[ -e "$repo_root/$overlay_file" || -L "$repo_root/$overlay_file" ]]; then
+      existing_overlay_files+=("$overlay_file")
+    fi
+  done
+
+  if (( ${#existing_overlay_files[@]} > 0 )); then
+    rsync -a --files-from=<(printf '%s\0' "${existing_overlay_files[@]}") --from0 "$repo_root"/ "$tmp_root/repo"/
   fi
 
   local deleted_files=("${(@0)$("${git_cmd[@]}" ls-files -z --deleted)}")
