@@ -1,3 +1,4 @@
 globals = {
+  "Snacks",
   "vim",
 }
