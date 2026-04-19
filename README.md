@@ -19,21 +19,6 @@ dotfiles config --local status.showUntrackedFiles no
 dotfiles checkout
 ```
 
-### Machine-Local Commit Identity
-
-Set in `.mise.local.toml`:
-
-```toml
-# $HOME/.mise.local.toml
-[env]
-GIT_AUTHOR_EMAIL = "you@company.com"
-GIT_COMMITTER_EMAIL = "you@company.com"
-JJ_EMAIL = "you@company.com"
-```
-
-Read more about per-machine settings in
-[.docs/MACHINE_LOCAL_CONFIGURATION.md](./.docs/MACHINE_LOCAL_CONFIGURATION.md).
-
 ### If zsh is not the default shell
 
 ```zsh
@@ -44,15 +29,6 @@ chsh -s zsh
 
 ```zsh
 dotfiles pull
-```
-
-## Test
-
-```zsh
-dotfiles-test               # Run tests in a disposable normal clone
-dotfiles-test --here        # Run tests in the current checkout, with confirmation
-dotfiles-test --here --fix  # Apply available fixes in the current checkout, with confirmation
-dotfiles-test --here --yes  # Run tests in the current checkout, without confirmation
 ```
 
 ## Usage
@@ -72,6 +48,31 @@ use Git. With a bare Git repo and an alias, [Git can manage your dotfiles'
 lifecycle for you][the best way to store your dotfiles]. Same interface as
 `git`. No extra, bespoke tool. The repo layout stays in sync with how the files
 are used.
+
+### Machine-Local Commit Identity
+
+Set in `.mise.local.toml`:
+
+```toml
+# $HOME/.mise.local.toml
+[env]
+GIT_AUTHOR_EMAIL = "you@company.com"
+GIT_COMMITTER_EMAIL = "you@company.com"
+JJ_EMAIL = "you@company.com"
+```
+
+Read more about per-machine settings in
+[.docs/MACHINE_LOCAL_CONFIGURATION.md](./.docs/MACHINE_LOCAL_CONFIGURATION.md).
+
+### Test
+
+The test command is globally added to `$PATH`: `$HOME/.bin/dotfiles-test`.
+
+```zsh
+dotfiles-test               # Run tests in a disposable normal clone
+dotfiles-test --here        # Run tests in the current checkout, with confirmation
+dotfiles-test --here --fix  # Apply available fixes in the current checkout, with confirmation
+```
 
 ### Advanced Usage
 
