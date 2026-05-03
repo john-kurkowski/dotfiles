@@ -98,5 +98,5 @@ context.
 ## Acknowledgments
 
 This style is adapted in part from cbeams's excellent
-[How to Write a Git Commit Message](https://cbea.ms/git-commit/). It adds some
-personal preferences and acknowledges repo-specific preferences.
+[How to Write a Git Commit Message](https://cbea.ms/git-commit/). This style
+adds some personal preferences and acknowledges repo-specific preferences.

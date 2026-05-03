@@ -22,101 +22,34 @@
 
 - For any comments you write, including JSDoc or Python docstrings, keep them
   evergreen: write for future maintainers, not for the current review thread.
-- Avoid comments referencing ticket numbers, PRs, “this change”, “now”,
-  “previously”, “during this migration”, or other in-the-moment rationale.
-    - Avoid comments that narrate what the agent just did.
-    - If historical context matters, put it in commit messages or PR
-      descriptions, not source comments.
-    - Mention tickets only for outstanding TODOs, or if there is no other way to
-      explain the code block in an evergreen way.
+- Avoid comments that narrate the agent's work, review history, tickets, PRs,
+  migrations, or other in-the-moment rationale.
+- Put historical context in commit messages or PR descriptions, not source
+  comments.
+- Mention tickets only for durable TODOs, or when no clearer explanation exists.
 - Describe the enduring contract, invariants, responsibilities, and tradeoffs of
   the code.
-    - Prefer “why this code exists” and “what guarantees it provides” over
-      rollout history.
 
 ## Version Control
 
-- Use Jujutsu `jj` instead of `git` when `jj` is enabled for the current repo,
-  which is one of the following conditions:
-    - The prompt mentions `jj`, `jj` changeids, or `jj` relative commit
-      references, such as current working copy `@`, parent `@-`, or grandparent
-      `@--`.
-    - A `.jj/` folder is present at the root of the repo.
-- Most of what you know about Git applies to Jujutsu.
+- For VCS operations in a repo with a `.jj/` directory at the root, silently use
+  `jj` commands instead of equivalent `git` commands.
 
 ### Commits
 
 - When changing files in the same working directory as the prompter, do not
   commit your work, unless told otherwise.
-- When writing a commit message, use the following style:
-    - Separate subject from body with a blank line.
-    - Capitalize the first letter of the subject line.
-    - Do not end the subject line with a period.
-    - Use the imperative mood in the subject line.
-    - Default to the shortest message that gives a reviewer the needed context.
-    - Prefer no body if the subject and diff are self-explanatory.
-    - Add a brief body when needed to explain why, unusual scope, or non-obvious
-      tradeoffs.
-    - If a body is needed, keep it brief and explain what and why, not how.
-    - Do not copy PR-description material, squash/WIP history, or test-only
-      coverage notes into commit bodies unless the commit is primarily about
-      tests.
-    - For detailed examples and preferred patterns, see
-      [style/commit-messages.md](style/commit-messages.md).
-- Do not squash your work, unless told otherwise.
-    - I.e. never rewrite version control history. Never `jj squash`,
-      `jj absorb`, `jj rebase`, `jj describe`, `git commit --amend`,
-      `git rebase`, `git reset --hard`, `git cherry-pick --no-commit` followed
-      by history edits, or force-push prep.
-    - (This lets the reviewer see what you did at each turn.)
-- Repo-specific format
-    - Your prompt may include a ticket/issue number. Include the reference in
-      any commit(s) you make in the style of other recent commits in the repo.
+- Never rewrite version control history unless explicitly asked in the current
+  turn. This includes `jj squash`, `jj absorb`, `jj rebase`, `jj describe`,
+  `git commit --amend`, `git rebase`, `git reset --hard`, and
+  `git cherry-pick --no-commit` followed by history edits.
+- Before creating or updating a commit message, read
+  [style/commit-messages.md](style/commit-messages.md).
 
 ### Worktrees
 
-You may be asked to work in your own worktree, to isolate your work and not
-interfere with concurrent changes in the current directory.
-
-- In `jj`, the worktree concept is called workspaces, initialized and explored
-  via `jj workspace`.
-- Add your worktree to a system temp folder, such as via `$TMPDIR` (to avoid
-  dirtying the user's folders).
-- Base your work on the previous commit, e.g. `jj new @-`, unless told
-  otherwise.
-    - If you base your work on the working copy, i.e. `jj new @`, be careful, as
-      `@` might still be in progress, and the worktrees could get out of sync.
-- Use the same worktree for the duration of the chat, unless told otherwise.
-- If dependencies are missing in the worktree, run the repo's README setup
-  commands from scratch (e.g. `npm install`).
-    - Never symlink or otherwise share your worktree's setup with the prompter's
-      worktree.
-- In your own worktree, it is safe to commit, so commit your work every turn for
-  the prompter to review.
-- In your turn summary, print the command to see your committed changes.
-    - Prefer exact changeids or changeid ranges, instead of relative ranges,
-      e.g. `trksomvv` or `main..trksomvv`, _not_ `@-` or `main..@-`.
-    - The first 8 characters of a changeid are fine, for display brevity.
-    - Comment with the commit subject.
-    - For example:
-
-        ```sh
-        jj diff -r main@origin..changeid3  # Update foo bar in baz`
-
-        # Or, if there are multiple commits to review in this turn:
-
-        jj diff -r changeid1  # Update foo
-        jj diff -r changeid2  # Fix bar
-        jj diff -r changeid3  # Clean up baz
-        ```
-
-    - (Since your commit isn't in the prompter's working directory, it won't be
-      as simple for the prompter to review your work, compared to `jj diff`
-      without arguments.)
-    - It should be very rare that the user _has_ to `cd` to your worktree's temp
-      folder to review your changes.
-        - For example, if your change requires running commands from the
-          directory, or the user must review VCS-ignored files.
+- When I ask you to work in your own worktree or `jj` workspace, follow
+  [style/worktrees.md](style/worktrees.md).
 
 ### Pull Requests
 
@@ -127,14 +60,7 @@ interfere with concurrent changes in the current directory.
 - Default to additive commits.
     - For follow-up work on an existing PR branch/bookmark, create a new child
       commit and push fast-forward only.
-    - Do not rewrite version control history, especially not on an
-      already-pushed change. Never `jj squash`, `jj absorb`, `jj rebase`,
-      `jj describe`, `git commit --amend`, `git rebase`, `git reset --hard`,
-      `git cherry-pick --no-commit` followed by history edits, or force-push
-      prep, unless explicitly asked in the current turn.
     - Do not force-push, unless told otherwise.
-    - If history rewrite seems beneficial, ask first. Present the exact command
-      you would run, then wait for approval.
 - After a PR is already opened, avoid pushing on every commit, unless told
   otherwise.
     - Wait to be prompted to push.
