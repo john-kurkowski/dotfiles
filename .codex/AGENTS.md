@@ -44,12 +44,12 @@
   `git commit --amend`, `git rebase`, `git reset --hard`, and
   `git cherry-pick --no-commit` followed by history edits.
 - Before creating or updating a commit message, read
-  [style/commit-messages.md](style/commit-messages.md).
+  [~/.codex/style/commit-messages.md](~/.codex/style/commit-messages.md).
 
 ### Worktrees
 
 - When I ask you to work in your own worktree or `jj` workspace, follow
-  [style/worktrees.md](style/worktrees.md).
+  [~/.codex/style/worktrees.md](~/.codex/style/worktrees.md).
 
 ### Pull Requests
 
