@@ -5,6 +5,18 @@
 - Tests should verify observable behavior, not re-run the implementation under
   test to compute expected values.
     - Prefer fixed expected literals or independently constructed expectations.
+- Keep tests evergreen: they should describe enduring product behavior,
+  contracts, invariants, or bug-prevention value for future maintainers.
+- Avoid tests that only document implementation scaffolding, rollout steps,
+  migration state, or “this change” mechanics.
+    - Do not add coverage merely to prove an intermediate internal value exists
+      unless that value is part of a stable contract or protects a meaningful
+      boundary.
+    - Prefer testing the durable observable behavior that depends on the
+      implementation detail.
+    - If a test would stop being useful once the current review context is
+      forgotten, skip it or fold the relevant assertion into a broader
+      behavior-focused test.
 
 ## Comments
 
