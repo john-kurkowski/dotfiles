@@ -9,6 +9,7 @@ return {
     init = function()
       vim.g.rooter_patterns = {
         ".git",
+        ".jj",
         "Cargo.toml",
         "Gemfile",
         "Makefile",
