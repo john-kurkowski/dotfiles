@@ -29,6 +29,7 @@ isolate your work from concurrent changes in the prompter's directory.
 - Prefer exact changeids or changeid ranges instead of relative ranges such as
   `@-` or `main..@-`.
 - The first 8 characters of a changeid are fine.
+- Prefer changeids to commit hashes.
 - Comment each command with the commit subject.
 
 ```sh
