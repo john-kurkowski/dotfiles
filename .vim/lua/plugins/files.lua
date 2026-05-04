@@ -10,11 +10,17 @@ return {
       vim.g.rooter_patterns = {
         ".git",
         ".jj",
+        "pyvenv.cfg",
+
+        --[[
+        To focus your work in a monorepo, consider the following additional
+        patterns in a per-project, local Vim config file (.lvimrc).
+
         "Cargo.toml",
         "Gemfile",
         "Makefile",
         "package.json",
-        "pyvenv.cfg",
+        ]]
       }
       vim.g.rooter_silent_chdir = 1
     end,
