@@ -40,8 +40,8 @@
 - When changing files in the same working directory as the prompter, do not
   commit your work, unless told otherwise.
 - Never rewrite version control history unless explicitly asked in the current
-  turn. This includes `jj squash`, `jj absorb`, `jj rebase`, `jj describe`,
-  `git commit --amend`, `git rebase`, `git reset --hard`, and
+  turn. This includes `jj edit`, `jj squash`, `jj absorb`, `jj rebase`,
+  `jj describe`, `git commit --amend`, `git rebase`, `git reset --hard`, and
   `git cherry-pick --no-commit` followed by history edits.
 - Before creating or updating a commit message, read
   [~/.codex/style/commit-messages.md](~/.codex/style/commit-messages.md).
