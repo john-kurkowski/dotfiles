@@ -83,6 +83,14 @@
         3. A short reason
     - Wait for my explicit approve before executing.
     - Default behavior: local edits/tests are allowed; remote writes are not.
+    - A single approval may cover a batch of related remote writes when every
+      action in the batch is shown up front.
+        - If a later command needs information produced by an earlier command,
+          describe the deterministic follow-up in the same approval request.
+        - For example, after `gh pr create` returns PR number `<N>`, you may
+          update the PR body by replacing `<PR_NUMBER>` with `<N>` in a
+          previously shown deploy-preview URL, without asking for a second
+          approval.
 - Before overwriting remote content (PR descriptions, issue comments, etc.),
   always fetch the current version first. Never reconstruct from memory or a
   stale local copy. The user may have edited it concurrently.
