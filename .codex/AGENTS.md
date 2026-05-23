@@ -18,9 +18,9 @@
       forgotten, skip it or fold the relevant assertion into a broader
       behavior-focused test.
 
-## Comments
+## Code Comments
 
-- For any comments you write, including JSDoc or Python docstrings, keep them
+- For any comments you write, such as JSDoc or Python docstrings, keep them
   evergreen: write for future maintainers, not for the current review thread.
 - Avoid comments that narrate the agent's work, review history, tickets, PRs,
   migrations, or other in-the-moment rationale.
@@ -29,6 +29,9 @@
 - Mention tickets only for durable TODOs, or when no clearer explanation exists.
 - Describe the enduring contract, invariants, responsibilities, and tradeoffs of
   the code.
+- Before finalizing a branch or PR, re-review docs and comments changed in the
+  current change set. Remove explanations that only justified an intermediate
+  API shape, review discussion, or earlier iteration.
 
 ## Version Control
 
