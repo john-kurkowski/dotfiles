@@ -42,3 +42,26 @@ jj diff -r changeid2  # Fix bar
 It should be rare that the prompter has to `cd` into the temp worktree to review
 changes. Mention that only when a command must run from the worktree, or when
 the prompter must inspect VCS-ignored files.
+
+
+## Git-Dependent Scripts In JJ Workspaces
+
+Some scripts may shell out to `git` even when the active checkout is a
+non-colocated jj workspace without a `.git` directory. If a check fails with
+`fatal: not a git repository`, do not give up immediately. Retry with Git
+pointed at the original colocated repository and the current jj workspace as the
+work tree:
+
+```sh
+GIT_DIR=/path/to/original/repo/.git \
+GIT_WORK_TREE="$PWD" \
+<command>
+```
+
+If the command runs through a task runner that filters environment variables,
+also pass whatever setting is needed for that runner to preserve `GIT_DIR` and
+`GIT_WORK_TREE`. Prefer the runner's own environment-variable override when it
+has one, so the workaround can live in the command environment instead of every
+runner invocation. For example, Turbo projects can use `TURBO_ENV_MODE=loose`.
+Other monorepo tooling may have its own workaround when it is sensitive to
+environment filtering.
