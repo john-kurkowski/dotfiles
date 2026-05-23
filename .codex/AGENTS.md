@@ -17,6 +17,10 @@
     - If a test would stop being useful once the current review context is
       forgotten, skip it or fold the relevant assertion into a broader
       behavior-focused test.
+- Split tests when a scenario grows to cover multiple independent behaviors;
+  avoid hiding a new feature inside an existing case just to reduce test count.
+- Do not test 3rd party library behavior, unless the application customizes it
+  or depends on it as a deliberate public contract.
 
 ## Code Comments
 
