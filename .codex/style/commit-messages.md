@@ -5,31 +5,39 @@
 - Default to the shortest message that gives the reviewer needed context.
 - Choose the shortest form that still explains the change.
 - Use the body to explain what changed and why. Minimize the how.
-- Prefer no body if the subject and diff already tell the story.
-- Add a body when the reviewer would otherwise miss important motivation,
-  unusual scope, or a non-obvious tradeoff.
-- Add a body when the subject alone cannot explain why the change was necessary.
+    - Default to a commit body when the commit changes behavior, fixes a bug,
+      adds coverage for a bug, changes test infrastructure, or would otherwise
+      require a reviewer to infer the motivation from surrounding discussion.
+    - Add a body when the reviewer would otherwise miss important motivation,
+      unusual scope, or a non-obvious tradeoff.
+    - Add a body when the subject alone cannot explain why the change was
+      necessary.
+    - If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
+      usually enough.
+    - Bigger picture narrative about the _why_ can be in a non-bulleted
+      paragraph at the beginning and/or end of the body.
+    - Omit the body only when the subject plus diff fully explain both what
+      changed and why.
+    - Prefer no body only for narrow mechanical edits, obvious docs/style
+      changes, or tiny self-explanatory fixes where the motivation is clear from
+      the subject and diff.
 - Add bullets when the commit contains a few distinct, reviewer-relevant changes
   that are worth naming together.
-- If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
-  usually enough.
-- List _what_ changed with imperative bullets and sub-bullets, similar to the
-  subject line.
-- If a change seems out of the ordinary relative to the rest of the commit, add
-  a sub-bullet explaining _why_ it was done.
-- If test case or test snapshot changes only cover the application changes in
-  the same commit, no need to enumerate them.
-- Do not mention adding or updating tests when they only cover the same feature
-  or bugfix as the rest of the commit.
-- If a commit is primarily or entirely about test code, the commit message can
-  describe the tests directly.
+    - List _what_ changed with imperative bullets and sub-bullets, similar to
+      the subject line.
+    - If a change seems out of the ordinary relative to the rest of the commit,
+      add a sub-bullet explaining _why_ it was done.
+- If test case or test snapshot changes are there only cover the application
+  changes in the same commit, no need to enumerate test changes.
+    - Do not mention adding or updating tests when they only cover the same
+      feature or bugfix as the rest of the commit.
+    - If a commit is primarily or entirely about test code, the commit message
+      can describe the tests directly.
 - Do not pad the body with obvious diff details.
-- Do not copy PR descriptions, reviewer discussion, or squash-merge WIP commit
-  history into the commit message.
-- Bigger picture narrative about the _why_ can be in a non-bulleted paragraph at
-  the beginning and/or end of the body.
 - If any part of the diff is self-descriptive, no need for narrative and/or
   enumeration for that part of the commit.
+- Do not copy PR descriptions, reviewer discussion, or squash-merge WIP commit
+  history into the commit message.
 
 ## Examples
 

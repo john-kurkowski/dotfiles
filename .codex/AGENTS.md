@@ -54,12 +54,16 @@
 - When I ask you to work in your own worktree or `jj` workspace, follow
   [~/.codex/style/worktrees.md](~/.codex/style/worktrees.md).
 
-### Pull Requests
+### Pull Requests (PRs)
 
-- Treat commit subjects as the starting point for pull request titles, and
-  commit messages as the starting point for pull request descriptions. Then
-  expand only for org/repository guidelines/templates, linked issues, testing
-  notes, rollout details, or reviewer-specific context.
+- Treat commit subjects as the starting point for PR titles, and commit messages
+  as the starting point for PR descriptions.
+    - If you only have vague commit subjects or bodies,
+      [~/.codex/style/commit-messages.md](~/.codex/style/commit-messages.md) is
+      also a good primer how to write PR titles and descriptions.
+    - Then, expand the PR title/description according to org/repository
+      guidelines/templates, linked issues, testing notes, rollout details, or
+      reviewer-specific context.
 - Default to additive commits.
     - For follow-up work on an existing PR branch/bookmark, create a new child
       commit and push fast-forward only.
