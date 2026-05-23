@@ -13,5 +13,12 @@ diff-formatter = ":git"
 pager = "delta --side-by-side"
 
 [aliases]
-lp = ["log", "--patch", "--no-graph", "--ignore-all-space"]
+lp = [
+  "log",
+  "--patch",
+  "--no-graph",
+  "--ignore-all-space",
+  "--template",
+  "builtin_log_compact_full_description",
+]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
