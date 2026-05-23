@@ -43,7 +43,6 @@ It should be rare that the prompter has to `cd` into the temp worktree to review
 changes. Mention that only when a command must run from the worktree, or when
 the prompter must inspect VCS-ignored files.
 
-
 ## Git-Dependent Scripts In JJ Workspaces
 
 Some scripts may shell out to `git` even when the active checkout is a
