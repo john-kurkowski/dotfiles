@@ -57,7 +57,7 @@ alias pd="afplay /System/Library/Sounds/Glass.aiff && terminal-notifier -title '
 
 alias rsync=$'rsync --cvs-exclude --filter=\':- ~/.gitignore\''
 
-export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='git ls-files --cached --others --exclude-standard 2>/dev/null || rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
