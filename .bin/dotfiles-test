@@ -128,7 +128,7 @@ run_checks_here() {
     if (( apply_fixes == 1 )); then
       "$tmp_root/npm-tools/node_modules/.bin/prettier" --list-different --write -- "${tracked_md[@]}"
     else
-      "$tmp_root/npm-tools/node_modules/.bin/prettier" --list-different -- "${tracked_md[@]}"
+      "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
     fi
   fi
 
