@@ -1,6 +1,25 @@
 alias dotfiles-env='GIT_DIR="$HOME"/.dotfiles/ GIT_WORK_TREE="$HOME" GIT_AUTHOR_EMAIL="john.kurkowski@gmail.com" GIT_COMMITTER_EMAIL="john.kurkowski@gmail.com" DOTFILES_GIT_IDENTITY_LOCK=1'
 alias dotfiles='dotfiles-env git'
 
+# $PATH
+
+path=(
+  "$HOME/.bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.local/bin"
+  "$HOME/brew/bin"
+  /opt/homebrew/bin
+  /usr/local/bin
+  $path
+)
+export PATH=${(j[:])path}
+
+# Load mise's environment in non-interactive shells. (Interactive shells add
+# mise's directory-change hooks, via .zshrc.)
+if command -v mise > /dev/null; then
+  eval "$(mise env -s zsh)"
+fi
+
 # Grep dotfiles, using Ripgrep.
 #
 # Excludes symlinks (Git mode 120000), which could clutter search with files
@@ -62,8 +81,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
 # Support zoxide in Vim command mode, which isn't an interactive shell by
-# default. It's okay if `zoxide` isn't found. Outside of Vim, starting a new
-# shell, it may not be on the PATH yet.
-if [ "$(command -v zoxide)" ]; then
+# default.
+if [[ -n "$VIM" || -n "$NVIM" ]] && command -v zoxide > /dev/null; then
   eval "$(zoxide init zsh)"
 fi

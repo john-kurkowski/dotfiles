@@ -23,23 +23,9 @@ setopt menu_complete          # save an extra autocomplete Tab key
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# $PATH
-
-if [ -d /opt/homebrew/bin ]; then
-  # Apple Silicon
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ -d /usr/local/bin ]; then
-  # Intel
-  eval "$(/usr/local/bin/brew shellenv)"
+if command -v brew > /dev/null; then
+  eval "$(brew shellenv)"
 fi
-path=(
-  ~/.bin
-  $HOME/.cargo/bin
-  $HOME/.local/bin
-  $HOME/brew/bin
-  $path
-)
-export PATH=${(j[:])path}
 
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 

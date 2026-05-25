@@ -12,6 +12,7 @@
 # - Markdown formatting with Prettier
 # - Lua formatting and lint for the tracked Neovim config
 # - Zsh syntax for the shell entrypoints
+# - Zsh startup scope for non-interactive and interactive shells
 # - A headless Neovim startup smoke test with isolated XDG state
 #
 # The script installs the Node-backed Markdown formatter into a temporary
@@ -94,6 +95,105 @@ require_cmd() {
   exit 127
 }
 
+write_executable() {
+  local executable_path=$1
+
+  cat >"$executable_path"
+  chmod +x "$executable_path"
+}
+
+assert_equal() {
+  local actual=$1
+  local expected=$2
+  local label=$3
+
+  if [[ "$actual" == "$expected" ]]; then
+    return 0
+  fi
+
+  print -u2 "dotfiles-test: $label"
+  print -u2 "dotfiles-test: expected: $expected"
+  print -u2 "dotfiles-test: actual:   $actual"
+  exit 1
+}
+
+test_zsh_startup_scope() {
+  local tmp_root=$1
+  local test_home="$tmp_root/zsh-startup-home"
+
+  mkdir -p "$test_home/.local/bin"
+  cp .zshenv .zshrc "$test_home"/
+
+  write_executable "$test_home/.local/bin/mise" <<'EOF'
+#!/bin/sh
+printf '%s\n' "mise $*" >>"$DOTFILES_TEST_MISE_LOG"
+
+case "$1" in
+  env)
+    printf '%s\n' 'export DOTFILES_TEST_MISE_ENV=loaded'
+    ;;
+  activate)
+    printf '%s\n' 'export DOTFILES_TEST_MISE_ACTIVATE=loaded'
+    ;;
+esac
+EOF
+
+  write_executable "$test_home/.local/bin/brew" <<'EOF'
+#!/bin/sh
+if [ "$1" = shellenv ]; then
+  printf '%s\n' 'export DOTFILES_TEST_BREW=loaded'
+fi
+EOF
+
+  write_executable "$test_home/.local/bin/starship" <<'EOF'
+#!/bin/sh
+if [ "$1" = init ]; then
+  printf '%s\n' 'export DOTFILES_TEST_ZSHRC=loaded'
+fi
+EOF
+
+  write_executable "$test_home/.local/bin/zoxide" <<'EOF'
+#!/bin/sh
+if [ "$1" = init ]; then
+  printf '%s\n' ''
+fi
+EOF
+
+  write_executable "$test_home/.local/bin/sheldon" <<'EOF'
+#!/bin/sh
+exit 0
+EOF
+
+  local noninteractive_log="$tmp_root/mise-noninteractive.log"
+  local noninteractive_output
+  noninteractive_output=$(
+    env -i \
+      DOTFILES_TEST_MISE_LOG="$noninteractive_log" \
+      HOME="$test_home" \
+      PATH="/usr/bin:/bin" \
+      ZDOTDIR="$test_home" \
+      zsh -c 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"'
+  )
+
+  assert_equal "$noninteractive_output" "loaded:unset:unset" "non-interactive zsh should load .zshenv but not .zshrc"
+  assert_equal "$(<"$noninteractive_log")" "mise env -s zsh" "non-interactive zsh should load mise once without shell hooks"
+
+  local interactive_log="$tmp_root/mise-interactive.log"
+  local interactive_output
+  interactive_output=$(
+    env -i \
+      DOTFILES_TEST_MISE_LOG="$interactive_log" \
+      HOME="$test_home" \
+      PATH="/usr/bin:/bin" \
+      TERM_PROGRAM=WarpTerminal \
+      ZDOTDIR="$test_home" \
+      zsh -ic 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"'
+  )
+
+  assert_equal "$interactive_output" "loaded:loaded:loaded" "interactive zsh should load .zshenv and .zshrc"
+  assert_equal "$(<"$interactive_log")" $'mise env -s zsh\nmise activate zsh' "interactive zsh should add mise shell hooks after the baseline env"
+}
+
 run_checks_here() {
   local work_root=$1
 
@@ -139,6 +239,7 @@ run_checks_here() {
   fi
   luacheck --config .vim/.luacheckrc .vim/init.lua .vim/lua
   zsh -n .zshenv .zshrc
+  test_zsh_startup_scope "$tmp_root"
 
   mkdir -p \
     "$tmp_root/xdg-cache" \

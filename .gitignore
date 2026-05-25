@@ -9,11 +9,11 @@
 .eslintcache
 .idea
 .lvimrc
-.mise.local.toml
 .project
 .python-version
 .settings
 .vimrc.local
 .vscode
 *.egg-info/
+*.local.toml
 xcuserdata/

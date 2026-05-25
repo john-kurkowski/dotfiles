@@ -51,10 +51,10 @@ are used.
 
 ### Machine-Local Commit Identity
 
-Set in `.mise.local.toml`:
+Set in mise's machine-local global config:
 
 ```toml
-# $HOME/.mise.local.toml
+# $HOME/.config/mise/config.local.toml
 [env]
 GIT_AUTHOR_EMAIL = "you@company.com"
 GIT_COMMITTER_EMAIL = "you@company.com"
