@@ -4,14 +4,20 @@
 
 - Default to the shortest message that gives the reviewer needed context.
 - Choose the shortest form that still explains the change.
-- Use the body to explain what changed and why. Minimize the how.
+- Use the body to explain change-level intent and why. Minimize the how.
+    - If the rationale is durable knowledge needed to maintain a local
+      implementation detail, prefer putting it close to the code through a
+      comment, helper name, or test fixture.
+    - When the file format cannot carry that context clearly, a commit body is a
+      reasonable fallback.
     - Default to a commit body when the commit changes behavior, fixes a bug,
       adds coverage for a bug, changes test infrastructure, or would otherwise
       require a reviewer to infer the motivation from surrounding discussion.
     - Add a body when the reviewer would otherwise miss important motivation,
       unusual scope, or a non-obvious tradeoff.
     - Add a body when the subject alone cannot explain why the change was
-      necessary.
+      necessary, and the context either does not belong closer to the code or
+      cannot be represented there cleanly.
     - If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
       usually enough.
     - Bigger picture narrative about the _why_ can be in a non-bulleted

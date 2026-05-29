@@ -24,15 +24,14 @@
 
 ## Code Comments
 
-- For any comments you write, such as JSDoc or Python docstrings, keep them
-  evergreen: write for future maintainers, not for the current review thread.
+- Write comments for future maintainers, not for the current review thread.
+- Use comments to explain durable local knowledge: contracts, invariants,
+  tradeoffs, external API quirks, response-shape normalization, fallback
+  ordering, or other details needed to safely edit nearby code.
 - Avoid comments that narrate the agent's work, review history, tickets, PRs,
-  migrations, or other in-the-moment rationale.
-- Put historical context in commit messages or PR descriptions, not source
-  comments.
+  migrations, or temporary rationale. Put historical context in commit messages
+  or PR descriptions instead.
 - Mention tickets only for durable TODOs, or when no clearer explanation exists.
-- Describe the enduring contract, invariants, responsibilities, and tradeoffs of
-  the code.
 - Before finalizing a branch or PR, re-review docs and comments changed in the
   current change set. Remove explanations that only justified an intermediate
   API shape, review discussion, or earlier iteration.
