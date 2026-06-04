@@ -38,8 +38,11 @@
 
 ## Version Control
 
-- For VCS operations in a repo with a `.jj/` directory at the root, silently use
-  `jj` commands instead of equivalent `git` commands.
+- Silently check for `.jj/` before the first VCS operation. For repos with a
+  `.jj/` directory at the root, silently use `jj` commands instead of equivalent
+  `git` commands.
+    - Many repos are `jj`-colocated, so the presence of `.git/` (or a
+      harness-provided `git status`) does not mean `git` is the right tool.
 
 ### Commits
 
