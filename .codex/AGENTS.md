@@ -45,6 +45,23 @@
   `git` commands.
     - Many repos are `jj`-colocated, so the presence of `.git/` (or a
       harness-provided `git status`) does not mean `git` is the right tool.
+- Treat local VCS metadata writes as sandbox-sensitive.
+    - Read-only inspection commands such as `jj status`, `jj log`, `jj diff`,
+      `jj show`, `git status`, `git log`, `git diff`, and `git show` should run
+      normally first.
+    - For local VCS _writes_, request sandbox escalation on the first attempt,
+      instead of waiting for a sandbox failure. This applies to operations that
+      create, rewrite, move, or describe commits, branches, bookmarks, tags,
+      refs, the index, or repository metadata.
+        - Examples include `jj new`, `jj squash`, `jj absorb`, `jj desc`,
+          `jj rebase`, `jj bookmark`, `git commit`, `git commit --amend`,
+          `git rebase`, `git cherry-pick`, `git merge`, `git branch`,
+          `git switch -c`, and `git tag`.
+        - Use a narrow `prefix_rule` for the specific subcommand when requesting
+          approval.
+        - Note this does not override the rules elsewhere in these instructions
+          requiring explicit user approval before history rewrites, destructive
+          operations, pushes, or other remote writes.
 
 ### Commits
 
