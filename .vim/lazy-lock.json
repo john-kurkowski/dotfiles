@@ -10,6 +10,7 @@
   "fzf.vim": { "branch": "master", "commit": "356608e2ae5d9127e2c964885ea2b21ea7aea9ab" },
   "gitsigns.nvim": { "branch": "main", "commit": "25050e4ed39e628282831d4cbecb1850454ce915" },
   "iceberg.vim": { "branch": "master", "commit": "23835d5ed696436f716cbfdb56a93a7850fe3b18" },
+  "jiejie.nvim": { "branch": "fix-excluded-revset-default", "commit": "7ba3dab7e5f7e509d5340e64da8ac1dd6b9bcb0e" },
   "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
   "lightline.vim": { "branch": "master", "commit": "6c283f8df85aa7219fa4096a6ed4ff45d48aa9e1" },
   "loupe": { "branch": "main", "commit": "100a80de4ece5d2e8cae4a9bf8881c8e31e18e6f" },

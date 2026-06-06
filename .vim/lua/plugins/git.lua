@@ -58,6 +58,12 @@ return {
     },
   },
 
+  -- Jujutsu wrapper
+  {
+    "john-kurkowski/jiejie.nvim",
+    branch = "fix-excluded-revset-default",
+  },
+
   -- Git wrapper
   {
     "tpope/vim-fugitive",
