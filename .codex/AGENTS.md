@@ -31,6 +31,8 @@
 - Avoid comments that narrate the agent's work, review history, tickets, PRs,
   migrations, or temporary rationale. Put historical context in commit messages
   or PR descriptions instead.
+- Before adding a code comment, ask whether it will still help a maintainer six
+  months from now without knowing the current discussion. If not, omit it.
 - Mention tickets only for durable TODOs, or when no clearer explanation exists.
 - Before finalizing a branch or PR, re-review docs and comments changed in the
   current change set. Remove explanations that only justified an intermediate
