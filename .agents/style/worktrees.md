@@ -21,7 +21,7 @@ isolate your work from concurrent changes in the prompter's directory.
 - In your own worktree, commit your work every turn for the prompter to review.
 - Do not squash your commits unless explicitly asked in the current turn.
 - Use the commit message style from
-  [~/.codex/style/commit-messages.md](~/.codex/style/commit-messages.md).
+  [~/.agents/style/commit-messages.md](~/.agents/style/commit-messages.md).
 
 ## Turn Summary
 
