@@ -3,7 +3,7 @@
 *.pyc
 *~
 .~*
-.claude
+.claude/settings.local.json
 .dotfiles
 .env*
 .eslintcache
