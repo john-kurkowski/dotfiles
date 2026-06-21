@@ -40,19 +40,30 @@
 
 ## Version Control
 
-- Silently check for `.jj/` before the first VCS operation. For repos with a
-  `.jj/` directory at the root, silently use `jj` commands instead of equivalent
-  `git` commands.
-    - Many repos are `jj`-colocated, so the presence of `.git/` (or a
-      harness-provided `git status`) does not mean `git` is the right tool.
+- STOP before the first VCS operation of a session, including read-only commands
+  and VCS commands buried inside a larger shell pipeline. Silently run
+  `ls -d .jj` (or equivalent) first and re-confirm in each session.
+    - If `.jj/` exists at the repository root, use `jj` for all VCS operations.
+      Neither the presence of `.git/` nor harness-provided Git output
+      substitutes for the `.jj/` check.
+    - Perform this check without commentary. Do not announce whether `.jj/`
+      exists, which VCS you selected, or that you will use `jj` instead of Git.
+      Mention VCS selection only when it blocks the task or requires user
+      action.
+    - A detached-HEAD `git status` is normal and expected inside a
+      `jj`-colocated repo — never warn about it or suggest switching branches.
 - Treat local VCS metadata writes as sandbox-sensitive.
-    - Read-only inspection commands such as `jj status`, `jj log`, `jj diff`,
-      `jj show`, `git status`, `git log`, `git diff`, and `git show` should run
-      normally first.
-    - For local VCS _writes_, request sandbox escalation on the first attempt,
-      instead of waiting for a sandbox failure. This applies to operations that
-      create, rewrite, move, or describe commits, branches, bookmarks, tags,
-      refs, the index, or repository metadata.
+    - Every `jj` command may update working-copy metadata because each command
+      snapshots the working copy. Request sandbox escalation on the first
+      attempt for all `jj` commands. Narrow approval rules may automatically
+      allow inspection commands; semantic VCS writes remain subject to their
+      normal authorization requirements.
+    - Read-only Git inspection commands such as `git status`, `git log`,
+      `git diff`, and `git show` should run normally first.
+    - For local semantic VCS writes, request sandbox escalation on the first
+      attempt instead of waiting for a sandbox failure. This applies to
+      operations that create, rewrite, move, or describe commits, branches,
+      bookmarks, tags, refs, or the index.
         - Examples include `jj new`, `jj squash`, `jj absorb`, `jj desc`,
           `jj rebase`, `jj bookmark`, `git commit`, `git commit --amend`,
           `git rebase`, `git cherry-pick`, `git merge`, `git branch`,
