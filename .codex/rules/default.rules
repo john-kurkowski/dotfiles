@@ -1,0 +1,5 @@
+prefix_rule(
+    pattern = ["jj", ["status", "diff", "log", "show"]],
+    decision = "allow",
+    justification = "These jj inspection commands may update working-copy metadata.",
+)
