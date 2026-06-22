@@ -3,7 +3,6 @@
 *.pyc
 *~
 .~*
-.claude/settings.local.json
 .dotfiles
 .env*
 .eslintcache
@@ -17,3 +16,8 @@
 *.egg-info/
 *.local.toml
 xcuserdata/
+
+# AI
+**/.claude/settings.local.json
+AGENTS.override.md
+CLAUDE.local.md
