@@ -2,28 +2,27 @@
 
 ## Body structure
 
-- Default to the shortest message that gives the reviewer needed context.
-- Choose the shortest form that still explains the change.
-- Use the body to explain change-level intent and why. Minimize the how.
+- Use the subject for the change summary.
+- Include a body when the subject plus diff do not fully explain why the change
+  was necessary. Common cases:
+    - Behavior changes, bug fixes, bug-regression coverage, or test
+      infrastructure changes.
+    - Motivation that would otherwise require surrounding discussion.
+    - Edits where the diff is clear but the durable reason is external to the
+      repository, such as dependency behavior, migration guidance, hosted CI
+      behavior, external service contracts, platform quirks, or visual rendering
+      changes.
+    - Important motivation, unusual scope, or a non-obvious tradeoff.
+- When writing a body, explain why the commit exists and what context a reviewer
+  would otherwise miss. Keep it brief: one short paragraph or 1-3 bullets is
+  usually enough. Minimize implementation details.
     - If the rationale is durable knowledge needed to maintain a local
       implementation detail, prefer putting it close to the code through a
-      comment, helper name, or test fixture.
-    - When the file format cannot carry that context clearly, a commit body is a
-      reasonable fallback.
-    - Default to a commit body when the commit changes behavior, fixes a bug,
-      adds coverage for a bug, changes test infrastructure, or would otherwise
-      require a reviewer to infer the motivation from surrounding discussion.
-    - Add a body when the reviewer would otherwise miss important motivation,
-      unusual scope, or a non-obvious tradeoff.
-    - Add a body when the subject alone cannot explain why the change was
-      necessary, and the context either does not belong closer to the code or
-      cannot be represented there cleanly.
-    - If a body is needed, keep it brief. One short paragraph or 1-3 bullets is
-      usually enough.
+      comment, helper name, test fixture, or file-local context.
     - Bigger picture narrative about the _why_ can be in a non-bulleted
       paragraph at the beginning and/or end of the body.
-    - Omit the body only when the subject plus diff fully explain both what
-      changed and why.
+- Omit the body only when the subject plus diff fully explain both what changed
+  and why.
     - Prefer no body only for narrow mechanical edits, obvious docs/style
       changes, or tiny self-explanatory fixes where the motivation is clear from
       the subject and diff.
@@ -33,22 +32,19 @@
       the subject line.
     - If a change seems out of the ordinary relative to the rest of the commit,
       add a sub-bullet explaining _why_ it was done.
-- If test case or test snapshot changes are there only cover the application
-  changes in the same commit, no need to enumerate test changes.
-    - Do not mention adding or updating tests when they only cover the same
-      feature or bugfix as the rest of the commit.
+- Do not enumerate test or snapshot updates when they only cover the application
+  changes in the same commit.
     - If a commit is primarily or entirely about test code, the commit message
       can describe the tests directly.
-- Do not pad the body with obvious diff details.
-- If any part of the diff is self-descriptive, no need for narrative and/or
-  enumeration for that part of the commit.
+- Do not pad the body with obvious diff details; describe only the parts whose
+  intent, scope, or tradeoff is not clear from the subject and diff.
 - Do not copy PR descriptions, reviewer discussion, or squash-merge WIP commit
   history into the commit message.
 
 ## Examples
 
-Choose the shortest form that still explains the change. Use a body when the
-subject alone would hide important context.
+These examples show when a short subject is enough and when a body adds useful
+context.
 
 ### Narrative _why_, when the rationale matters
 
