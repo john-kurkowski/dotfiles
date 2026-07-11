@@ -60,8 +60,7 @@ return {
 
   -- Jujutsu wrapper
   {
-    "john-kurkowski/jiejie.nvim",
-    branch = "fix-excluded-revset-default",
+    "jceb/jiejie.nvim",
   },
 
   -- Git wrapper
