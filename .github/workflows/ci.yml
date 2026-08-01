@@ -23,7 +23,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes neovim luarocks zsh
 
-      - uses: taiki-e/install-action@v2
+      - uses: taiki-e/install-action@v2.85.4
         with:
           tool: stylua
 
