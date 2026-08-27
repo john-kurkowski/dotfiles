@@ -107,8 +107,8 @@
     - After a commit has been pushed or a PR has been opened, create follow-up
       work as a new child commit. Amend or squash that history only with the
       user's explicit approval in the current turn.
-    - Push only fast-forward and with explicit approval in the current turn;
-      do not force-push unless told otherwise.
+    - Push only fast-forward and with explicit approval in the current turn; do
+      not force-push unless told otherwise.
 - After a PR is already opened, avoid pushing on every commit, unless told
   otherwise.
     - Wait to be prompted to push.
