@@ -25,23 +25,10 @@ isolate your work from concurrent changes in the prompter's directory.
 
 ## Turn Summary
 
-- Print exact commands to see the committed changes.
-- Prefer exact changeids or changeid ranges instead of relative ranges such as
-  `@-` or `main..@-`.
-- The first 8 characters of a changeid are fine.
-- Prefer changeids to commit hashes.
-- Comment each command with the commit subject.
-
-```sh
-jj diff -r main@origin..changeid3  # Update foo bar in baz
-
-jj diff -r changeid1  # Update foo
-jj diff -r changeid2  # Fix bar
-```
-
 It should be rare that the prompter has to `cd` into the temp worktree to review
-changes. Mention that only when a command must run from the worktree, or when
-the prompter must inspect VCS-ignored files.
+changes. Turn summary-reported change IDs or commit hashes are `diff`-able from
+any other directory. Mention `cd` only when a command must run from the
+worktree, or when the prompter must inspect VCS-ignored files.
 
 ## Git-Dependent Scripts In JJ Workspaces
 

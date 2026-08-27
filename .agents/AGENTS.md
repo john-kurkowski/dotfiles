@@ -137,3 +137,10 @@
 - Before overwriting remote content (PR descriptions, issue comments, etc.),
   always fetch the current version first. Never reconstruct from memory or a
   stale local copy. The user may have edited it concurrently.
+
+## Turn Summary
+
+- When a turn summary refers to a Jujutsu commit, give its **change ID** first,
+  followed by its commit **hash**. 8-character abbreviations are sufficient.
+    - Use exact change IDs or change ID ranges; never use relative revisions
+      such as `@-` or `main..@-`.
