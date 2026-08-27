@@ -100,6 +100,9 @@
     - Then, expand the PR title/description according to org/repository
       guidelines/templates, linked issues, testing notes, rollout details, or
       reviewer-specific context.
+- In PR descriptions and comments, write ticket references and same-repository
+  commit hashes as plain text without Markdown backticks, so they autolink.
+  Continue using backticks for commands and other code identifiers.
 - Default to additive commits.
     - For follow-up work on an existing PR branch/bookmark, create a new child
       commit and push fast-forward only.
