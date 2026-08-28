@@ -1,5 +1,5 @@
 add_newline = false
-format = """$all"""
+format = """$all${custom.virtualenv}$character"""
 right_format= """$cmd_duration $time"""
 
 [aws]
@@ -38,7 +38,15 @@ format = '[$symbol($version )]($style)'
 disabled = true
 
 [python]
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+format = '[${symbol}${pyenv_prefix}(${version} )]($style)'
+
+[custom.virtualenv]
+command = 'exec "$HOME/.config/starship/virtualenv-indicator"'
+when = true
+shell = ['sh']
+format = '[$output]($style) '
+style = 'yellow bold'
+description = 'The active Python virtual environment'
 
 [status]
 disabled = false

@@ -1,0 +1,20 @@
+#!/bin/sh
+# Show a symbol for a virtual environment named after this directory; otherwise show its distinct name.
+
+python_path="$(command -v python)" || exit 0
+venv_dir="${python_path%/bin/python}"
+[ "$venv_dir" != "$python_path" ] && [ -r "$venv_dir/pyvenv.cfg" ] || exit 0
+
+prompt=''
+while IFS= read -r line; do
+  case "$line" in
+    'prompt = '*) prompt="${line#prompt = }"; break ;;
+  esac
+done < "$venv_dir/pyvenv.cfg"
+
+[ -n "$prompt" ] || prompt="${venv_dir##*/}"
+if [ "$prompt" = "${PWD##*/}" ]; then
+  printf '◈'
+else
+  printf '(%s)' "$prompt"
+fi
