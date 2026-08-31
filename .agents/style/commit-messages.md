@@ -19,8 +19,10 @@
     - If the rationale is durable knowledge needed to maintain a local
       implementation detail, prefer putting it close to the code through a
       comment, helper name, test fixture, or file-local context.
-    - Bigger picture narrative about the _why_ can be in a non-bulleted
-      paragraph at the beginning and/or end of the body.
+    - A non-bulleted narrative paragraph may explain durable product intent, a
+      behavioral boundary, current scope, or a non-obvious tradeoff. Do not use
+      it to narrate temporary project status, implementation sequencing, or
+      planned later work.
 - Omit the body only when the subject plus diff fully explain both what changed
   and why.
     - Prefer no body only for narrow mechanical edits, obvious docs/style
