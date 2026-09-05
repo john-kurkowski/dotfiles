@@ -34,9 +34,9 @@ worktree, or when the prompter must inspect VCS-ignored files.
 
 Some scripts may shell out to `git` even when the active checkout is a
 non-colocated jj workspace without a `.git` directory. If a check fails with
-`fatal: not a git repository`, do not give up immediately. Retry with Git
-pointed at the original colocated repository and the current jj workspace as the
-work tree:
+`fatal: not a git repository`, do not give up immediately. For read-only scripts
+that do not depend on the workspace’s `HEAD` or index, retry with Git pointed at
+the original colocated repository and the current jj workspace as the work tree:
 
 ```sh
 GIT_DIR=/path/to/original/repo/.git \
@@ -51,3 +51,11 @@ has one, so the workaround can live in the command environment instead of every
 runner invocation. For example, Turbo projects can use `TURBO_ENV_MODE=loose`.
 Other monorepo tooling may have its own workaround when it is sensitive to
 environment filtering.
+
+If a tool depends on the workspace’s `HEAD` or index, or may write Git metadata,
+use a disposable Git repository in a system temp directory instead of pointing
+it at the original checkout. Set its `HEAD` to the workspace commit, initialize
+a separate index, preserve the original remote URL, and point its work tree at
+the jj workspace. Pass `GIT_DIR`, `GIT_WORK_TREE`, and `GIT_INDEX_FILE` through
+the runner as above. Verify that status and the comparison range match the
+intended workspace state, then remove the temporary repository when finished.
