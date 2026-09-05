@@ -3,3 +3,28 @@ prefix_rule(
     decision = "allow",
     justification = "These jj inspection commands may update working-copy metadata.",
 )
+
+prefix_rule(
+    pattern = ["gh", "auth", "status"],
+    decision = "allow",
+    justification = "Authentication checks use the host GitHub CLI session.",
+    match = ["gh auth status"],
+)
+
+prefix_rule(
+    pattern = ["op", "account", "list"],
+    decision = "allow",
+    justification = "Read-only 1Password account discovery requires access to the local desktop-app socket.",
+)
+
+prefix_rule(
+    pattern = ["op", "vault", "list"],
+    decision = "allow",
+    justification = "Read-only 1Password vault discovery requires access to the local desktop-app socket.",
+)
+
+prefix_rule(
+    pattern = ["op", "item", "list"],
+    decision = "allow",
+    justification = "Read-only 1Password item-title discovery requires access to the local desktop-app socket.",
+)
