@@ -146,3 +146,16 @@
   followed by its commit **hash**. 8-character abbreviations are sufficient.
     - Use exact change IDs or change ID ranges; never use relative revisions
       such as `@-` or `main..@-`.
+
+## Prompts for Other Chat Threads
+
+- Assume the other chat thread uses the same agent type as you, with access to
+  the same user-level instructions, and the same repo-level instructions and
+  history. Therefore, no need to repeat that context.
+- Keep the prompt concise and discovery-friendly: include the objective,
+  essential context, hard constraints, and observable success criteria _unique_
+  to the new task. Leave routine investigation, planning, and implementation
+  choices to the receiving agent.
+- Exception: if the user explicitly identifies a cross-agent task (for example,
+  if you're Codex writing a prompt for Claude), provide the fuller,
+  self-contained context needed for that agent to do the work well.
