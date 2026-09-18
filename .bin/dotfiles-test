@@ -1,7 +1,19 @@
-#!/bin/zsh
+#!/bin/sh
+
+if [ "${DOTFILES_TEST_ZSH_SCRIPT:-}" != "$0" ]; then
+  dotfiles_test_runner_dir=$(/usr/bin/dirname "$0")
+  exec env \
+    DOTFILES_TEST_ZSH_SCRIPT="$0" \
+    ZDOTDIR="$dotfiles_test_runner_dir/.zsh-no-startup" \
+    /bin/zsh -f "$0" "$@"
+fi
 
 # Test this dotfiles repo without requiring project-local package manifests or a
 # non-bare checkout in the real home directory.
+#
+# The bootstrap starts Zsh with an empty ZDOTDIR so the runner never evaluates
+# host startup files. The shell tests source checkout startup files explicitly
+# with isolated dependencies.
 #
 # Default mode runs in a disposable normal clone so package-manager state,
 # Neovim plugin bootstrap, and other temporary files stay out of the author's
@@ -12,7 +24,7 @@
 # - Markdown formatting with Prettier
 # - Lua formatting and lint for the tracked Neovim config
 # - Zsh syntax for the shell entrypoints
-# - Zsh startup scope for non-interactive and interactive shells
+# - Zsh startup scope for non-interactive, interactive, and login shells
 # - A headless Neovim startup smoke test with isolated XDG state
 #
 # The script installs the Node-backed Markdown formatter into a temporary
@@ -119,23 +131,47 @@ assert_equal() {
 
 test_zsh_startup_scope() {
   local tmp_root=$1
-  local test_home="$tmp_root/zsh-startup-home"
+  local test_home="${tmp_root:A}/zsh-startup-home"
 
-  mkdir -p "$test_home/.local/bin"
-  cp .zshenv .zshrc "$test_home"/
+  mkdir -p \
+    "$test_home/.local/bin" \
+    "$test_home/.local/share/mise/shims" \
+    "$test_home/brew/bin" \
+    "$test_home/mise-env/bin" \
+    "$tmp_root/zsh-startup-cwd"
+  cp .zshenv .zprofile .zshrc "$test_home"/
 
   write_executable "$test_home/.local/bin/mise" <<'EOF'
 #!/bin/sh
 printf '%s\n' "mise $*" >>"$DOTFILES_TEST_MISE_LOG"
 
-case "$1" in
-  env)
+case "$1:$2:$3" in
+  env:-s:zsh)
     printf '%s\n' 'export DOTFILES_TEST_MISE_ENV=loaded'
+    printf '%s\n' 'export PATH="$HOME/mise-env/bin:$PATH"'
+    if [ -n "${DOTFILES_TEST_MISE_ENV_CWD_LOG:-}" ]; then
+      printf '%s\n' "$PWD" >>"$DOTFILES_TEST_MISE_ENV_CWD_LOG"
+    fi
     ;;
-  activate)
+  activate:zsh:--shims)
+    printf '%s\n' 'export DOTFILES_TEST_MISE_SHIMS=loaded'
+    printf '%s\n' 'export PATH="$HOME/.local/share/mise/shims:$PATH"'
+    ;;
+  activate:zsh:)
     printf '%s\n' 'export DOTFILES_TEST_MISE_ACTIVATE=loaded'
     ;;
 esac
+EOF
+  ln -s "$test_home/.local/bin/mise" "$test_home/brew/bin/mise"
+
+  write_executable "$test_home/.local/share/mise/shims/python" <<'EOF'
+#!/bin/sh
+printf '%s\n' 'Mise shim Python'
+EOF
+
+  write_executable "$test_home/mise-env/bin/python" <<'EOF'
+#!/bin/sh
+printf '%s\n' 'Mise env Python'
 EOF
 
   write_executable "$test_home/.local/bin/brew" <<'EOF'
@@ -165,18 +201,23 @@ exit 0
 EOF
 
   local noninteractive_log="$tmp_root/mise-noninteractive.log"
+  local noninteractive_env_cwd_log="$tmp_root/mise-noninteractive-env-cwd.log"
+  local startup_cwd="${tmp_root:A}/zsh-startup-cwd"
   local noninteractive_output
   noninteractive_output=$(
-    env -i \
-      DOTFILES_TEST_MISE_LOG="$noninteractive_log" \
-      HOME="$test_home" \
-      PATH="/usr/bin:/bin" \
-      ZDOTDIR="$test_home" \
-      zsh -c 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"'
+    cd "$startup_cwd" &&
+      env -i \
+        DOTFILES_TEST_MISE_LOG="$noninteractive_log" \
+        DOTFILES_TEST_MISE_ENV_CWD_LOG="$noninteractive_env_cwd_log" \
+        HOME="$test_home" \
+        PATH="/usr/bin:/bin" \
+        ZDOTDIR="$test_home" \
+        zsh -c 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_SHIMS:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"; python; print -- "$PWD"'
   )
 
-  assert_equal "$noninteractive_output" "loaded:unset:unset" "non-interactive zsh should load .zshenv but not .zshrc"
-  assert_equal "$(<"$noninteractive_log")" "mise env -s zsh" "non-interactive zsh should load mise once without shell hooks"
+  assert_equal "$noninteractive_output" $'loaded:loaded:unset:unset\nMise shim Python\n'"$startup_cwd" "non-interactive zsh should load Mise env and resolve commands through shims"
+  assert_equal "$(<"$noninteractive_env_cwd_log")" "$test_home" "non-interactive zsh should evaluate Mise env from home without changing its current directory"
+  assert_equal "$(<"$noninteractive_log")" $'mise env -s zsh\nmise activate zsh --shims' "non-interactive zsh should load Mise env before shims"
 
   local interactive_log="$tmp_root/mise-interactive.log"
   local interactive_output
@@ -187,11 +228,35 @@ EOF
       PATH="/usr/bin:/bin" \
       TERM_PROGRAM=WarpTerminal \
       ZDOTDIR="$test_home" \
-      zsh -ic 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"'
+      zsh -ic 'print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_SHIMS:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"; python'
   )
 
-  assert_equal "$interactive_output" "loaded:loaded:loaded" "interactive zsh should load .zshenv and .zshrc"
-  assert_equal "$(<"$interactive_log")" $'mise env -s zsh\nmise activate zsh' "interactive zsh should add mise shell hooks after the baseline env"
+  assert_equal "$interactive_output" $'loaded:loaded:loaded:loaded\nMise shim Python' "interactive zsh should retain Mise env and shims before .zshrc activation"
+  assert_equal "$(<"$interactive_log")" $'mise env -s zsh\nmise activate zsh --shims\nmise activate zsh' "interactive zsh should add shell hooks after loading Mise env and shims"
+
+  # A real login shell also reads the host's /etc/zprofile. Simulate its PATH
+  # reset in an isolated shell, leaving a Homebrew-installed Mise available so
+  # this verifies that .zprofile restores shims without host configuration.
+  local login_log="$tmp_root/mise-login.log"
+  local login_output
+  login_output=$(
+    env -i \
+      DOTFILES_TEST_MISE_LOG="$login_log" \
+      HOME="$test_home" \
+      PATH="/usr/bin:/bin" \
+      ZDOTDIR="$test_home" \
+      zsh -dfc '
+        source "$ZDOTDIR/.zshenv"
+        PATH="$HOME/brew/bin:/usr/bin:/bin"
+        export PATH
+        source "$ZDOTDIR/.zprofile"
+        print -- "${DOTFILES_TEST_MISE_ENV:-unset}:${DOTFILES_TEST_MISE_SHIMS:-unset}:${DOTFILES_TEST_MISE_ACTIVATE:-unset}:${DOTFILES_TEST_ZSHRC:-unset}"
+        python
+      '
+  )
+
+  assert_equal "$login_output" $'loaded:loaded:unset:unset\nMise shim Python' "login zsh should retain Mise env and restore shims without interactive activation"
+  assert_equal "$(<"$login_log")" $'mise env -s zsh\nmise activate zsh --shims\nmise activate zsh --shims' "login zsh should restore shims after the system PATH reset"
 }
 
 run_checks_here() {
@@ -209,50 +274,78 @@ run_checks_here() {
 
   local tmp_root
   tmp_root=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-test.XXXXXX")
+  local tool_cwd="$tmp_root/tool-cwd"
+  mkdir -p "$tool_cwd"
 
   local tracked_md=()
   local markdown_path
   for markdown_path in "${(@0)$("${git_cmd[@]}" ls-files -z -- '*.md')}"; do
     if [[ -n "$markdown_path" && ! -L "$work_root/$markdown_path" ]]; then
-      tracked_md+=("$markdown_path")
+      tracked_md+=("$work_root/$markdown_path")
     fi
   done
 
   if (( ${#tracked_md[@]} > 0 )); then
-    npm install \
-      --prefix "$tmp_root/npm-tools" \
-      --no-package-lock \
-      --no-save \
-      prettier@3 >/dev/null
+    (
+      cd "$tool_cwd" &&
+        npm install \
+          --prefix "$tmp_root/npm-tools" \
+          --no-package-lock \
+          --no-save \
+          prettier@3 >/dev/null
+    )
 
     if (( apply_fixes == 1 )); then
-      "$tmp_root/npm-tools/node_modules/.bin/prettier" --list-different --write -- "${tracked_md[@]}"
+      (
+        cd "$tool_cwd" &&
+          "$tmp_root/npm-tools/node_modules/.bin/prettier" --list-different --write -- "${tracked_md[@]}"
+      )
     else
-      "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
+      (
+        cd "$tool_cwd" &&
+          "$tmp_root/npm-tools/node_modules/.bin/prettier" --check -- "${tracked_md[@]}"
+      )
     fi
   fi
 
   if (( apply_fixes == 1 )); then
-    stylua .vim/init.lua .vim/lua
+    (
+      cd "$tool_cwd" &&
+        stylua "$work_root/.vim/init.lua" "$work_root/.vim/lua"
+    )
   else
-    stylua --check .vim/init.lua .vim/lua
+    (
+      cd "$tool_cwd" &&
+        stylua --check "$work_root/.vim/init.lua" "$work_root/.vim/lua"
+    )
   fi
-  luacheck --config .vim/.luacheckrc .vim/init.lua .vim/lua
-  zsh -n .zshenv .zshrc
+  (
+    cd "$tool_cwd" &&
+      luacheck --config "$work_root/.vim/.luacheckrc" "$work_root/.vim/init.lua" "$work_root/.vim/lua"
+  )
+  (
+    cd "$tool_cwd" &&
+      zsh -n "$work_root/.zshenv" "$work_root/.zprofile" "$work_root/.zshrc"
+  )
   test_zsh_startup_scope "$tmp_root"
 
   mkdir -p \
     "$tmp_root/xdg-cache" \
+    "$tmp_root/xdg-config" \
     "$tmp_root/xdg-data" \
     "$tmp_root/xdg-state"
 
   local nvim_log="$tmp_root/nvim.log"
-  if ! env \
-    HOME="$work_root" \
-    XDG_CACHE_HOME="$tmp_root/xdg-cache" \
-    XDG_DATA_HOME="$tmp_root/xdg-data" \
-    XDG_STATE_HOME="$tmp_root/xdg-state" \
-    nvim --headless "+Lazy! restore" "+qa" >"$nvim_log" 2>&1; then
+  if ! (
+    cd "$tool_cwd" &&
+      env \
+        HOME="$work_root" \
+        XDG_CACHE_HOME="$tmp_root/xdg-cache" \
+        XDG_CONFIG_HOME="$tmp_root/xdg-config" \
+        XDG_DATA_HOME="$tmp_root/xdg-data" \
+        XDG_STATE_HOME="$tmp_root/xdg-state" \
+        nvim --headless "+Lazy! restore" "+qa"
+  ) >"$nvim_log" 2>&1; then
     cat "$nvim_log"
     rm -rf "$tmp_root"
     exit 1

@@ -14,10 +14,15 @@ path=(
 )
 export PATH=${(j[:])path}
 
-# Load mise's environment in non-interactive shells. (Interactive shells add
-# mise's directory-change hooks, via .zshrc.)
+# Load Mise's global environment in every Zsh shell, then put shims first so
+# commands resolve using their current configuration. Evaluate from $HOME so
+# startup never prompts to trust a project config in the current directory.
+# Interactive shells add Mise's directory-change hooks via .zshrc.
 if command -v mise > /dev/null; then
-  eval "$(mise env -s zsh)"
+  eval "$(
+    cd "$HOME" && mise env -s zsh
+  )"
+  eval "$(mise activate zsh --shims)"
 fi
 
 # Grep dotfiles, using Ripgrep.
