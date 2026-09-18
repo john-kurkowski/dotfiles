@@ -84,11 +84,13 @@
       action.
     - A detached-HEAD `git status` is normal and expected inside a
       `jj`-colocated repo — never warn about it or suggest switching branches.
-- VCS metadata writes need permission when their storage lies outside the host's
-  writable scope. This includes snapshots from `jj` inspection commands. Read
-  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) when that
-  applies; existing filesystem permission is sufficient when the metadata is
-  writable.
+- Commands that update repository state need write access to the files that
+  store it. Even `jj` inspection commands can write there by snapshotting the
+  working copy. Before running any `jj` command in a sandbox, check whether
+  those files are within the allowed write paths. If they aren't, request
+  access for that command on the first attempt; don't wait for it to fail.
+  Existing write permission is enough; no extra approval is needed. See
+  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) for details.
 
 ### Before and after comparison
 
