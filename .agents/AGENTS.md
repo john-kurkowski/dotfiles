@@ -20,41 +20,45 @@
 - Before finalizing a branch or PR, re-review changed docs and comments; remove
   explanations that only justified an intermediate implementation or discussion.
 
+## Restricted execution and CLI access
+
+- Sandbox authentication or connectivity failures do not establish that the
+  user's host session is broken. Before asking for login, changing access
+  methods, or abandoning the task, use a non-secret diagnostic with the host
+  access needed to distinguish an environment restriction from an account or
+  service failure. Do not print tokens or start a new login flow as a diagnostic.
+- Retry a safe read once with the required access. When session evidence already
+  establishes that access is needed, request it on the first attempt. Before
+  retrying a mutation, inspect whether it took effect or use an idempotent retry.
+- Use the host's permission controls and narrowest command-specific scope.
+  Request expanded access only when the operation needs resources outside the
+  permitted paths or capabilities. Never broaden sandbox settings or change
+  credential storage as a workaround. Execution access does not authorize
+  additional actions; report denied or unavailable access accurately.
+- For CLI access failures or VCS metadata permission details, read
+  [CLI troubleshooting](~/.agents/style/cli-troubleshooting.md).
+- `gh auth status` is an approved read-only diagnostic. For REST reads through
+  `gh api`, pass `--method GET`. Classify GraphQL queries and mutations by their
+  contents; a transport method alone does not establish whether they write.
+
 ## Version Control
 
 - STOP before the first VCS operation of a session, including read-only commands
   and VCS commands buried inside a larger shell pipeline. Silently run
   `ls -d .jj` (or equivalent) first and re-confirm in each session.
-    - If `.jj/` exists at the repository root, use `jj` for all VCS operations.
-      Neither the presence of `.git/` nor harness-provided Git output
-      substitutes for the `.jj/` check.
-    - Perform this check without commentary. Do not announce whether `.jj/`
-      exists, which VCS you selected, or that you will use `jj` instead of Git.
-      Mention VCS selection only when it blocks the task or requires user
-      action.
-    - A detached-HEAD `git status` is normal and expected inside a
-      `jj`-colocated repo — never warn about it or suggest switching branches.
-- Treat local VCS metadata writes as sandbox-sensitive.
-    - Every `jj` command may update working-copy metadata because each command
-      snapshots the working copy. Request sandbox escalation on the first
-      attempt for all `jj` commands. Narrow approval rules may automatically
-      allow inspection commands; semantic VCS writes remain subject to their
-      normal authorization requirements.
-    - Read-only Git inspection commands such as `git status`, `git log`,
-      `git diff`, and `git show` should run normally first.
-    - For local semantic VCS writes, request sandbox escalation on the first
-      attempt instead of waiting for a sandbox failure. This applies to
-      operations that create, rewrite, move, or describe commits, branches,
-      bookmarks, tags, refs, or the index.
-        - Examples include `jj new`, `jj squash`, `jj absorb`, `jj desc`,
-          `jj rebase`, `jj bookmark`, `git commit`, `git commit --amend`,
-          `git rebase`, `git cherry-pick`, `git merge`, `git branch`,
-          `git switch -c`, and `git tag`.
-        - Use a narrow `prefix_rule` for the specific subcommand when requesting
-          approval.
-        - Note this does not override the rules elsewhere in these instructions
-          requiring explicit user approval before history rewrites, destructive
-          operations, pushes, or other remote writes.
+  - If `.jj/` exists at the repository root, use `jj` for all VCS operations.
+    Neither the presence of `.git/` nor harness-provided Git output
+    substitutes for the `.jj/` check.
+  - Perform this check without commentary. Do not announce whether `.jj/`
+    exists, which VCS you selected, or that you will use `jj` instead of Git.
+    Mention VCS selection only when it blocks the task or requires user
+    action.
+  - A detached-HEAD `git status` is normal and expected inside a
+    `jj`-colocated repo — never warn about it or suggest switching branches.
+- VCS metadata writes need permission when their storage lies outside the host's
+  writable scope. This includes snapshots from `jj` inspection commands. Read
+  [CLI troubleshooting](~/.agents/style/cli-troubleshooting.md) when that applies;
+  existing filesystem permission is sufficient when the metadata is writable.
 
 ### Commits
 
