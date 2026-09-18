@@ -1,26 +1,14 @@
 ## Testing instructions
 
-- While implementing an application code feature or fix, add or update tests to
-  cover your changes.
-- Tests should verify observable behavior, not re-run the implementation under
-  test to compute expected values.
-    - Prefer fixed expected literals or independently constructed expectations.
-- Keep tests evergreen: they should describe enduring product behavior,
-  contracts, invariants, or bug-prevention value for future maintainers.
-- Avoid tests that only document implementation scaffolding, rollout steps,
-  migration state, or “this change” mechanics.
-    - Do not add coverage merely to prove an intermediate internal value exists
-      unless that value is part of a stable contract or protects a meaningful
-      boundary.
-    - Prefer testing the durable observable behavior that depends on the
-      implementation detail.
-    - If a test would stop being useful once the current review context is
-      forgotten, skip it or fold the relevant assertion into a broader
-      behavior-focused test.
-- Split tests when a scenario grows to cover multiple independent behaviors;
-  avoid hiding a new feature inside an existing case just to reduce test count.
-- Do not test 3rd party library behavior, unless the application customizes it
-  or depends on it as a deliberate public contract.
+- For application features and fixes, add or update tests for changed observable
+  behavior or durable contracts. If the available tests cannot observe the
+  change, use proportionate manual QA and report the remaining gap.
+- Use fixed expected values or independently constructed expectations; do not
+  rerun the implementation to calculate its own expected result.
+- Cover enduring behavior, boundaries, and regressions. Avoid assertions that
+  merely record internal scaffolding, migration progress, or review context.
+- Keep independent behaviors in separate cases. Test third-party behavior only
+  where the application customizes it or deliberately exposes it as a contract.
 
 ## Code Comments
 
