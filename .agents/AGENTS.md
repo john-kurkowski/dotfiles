@@ -24,19 +24,13 @@
 
 ## Code Comments
 
-- Write comments for future maintainers, not for the current review thread.
-- Use comments to explain durable local knowledge: contracts, invariants,
-  tradeoffs, external API quirks, response-shape normalization, fallback
-  ordering, or other details needed to safely edit nearby code.
-- Avoid comments that narrate the agent's work, review history, tickets, PRs,
-  migrations, or temporary rationale. Put historical context in commit messages
-  or PR descriptions instead.
-- Before adding a code comment, ask whether it will still help a maintainer six
-  months from now without knowing the current discussion. If not, omit it.
-- Mention tickets only for durable TODOs, or when no clearer explanation exists.
-- Before finalizing a branch or PR, re-review docs and comments changed in the
-  current change set. Remove explanations that only justified an intermediate
-  API shape, review discussion, or earlier iteration.
+- Explain non-obvious contracts, constraints, or tradeoffs a future maintainer
+  needs. Lead explanatory comments and JSDoc with what the code does or
+  represents, then the durable context.
+- Put change history and review rationale in commits or PR descriptions.
+  Mention tickets only for durable TODOs or when no clearer explanation exists.
+- Before finalizing a branch or PR, re-review changed docs and comments; remove
+  explanations that only justified an intermediate implementation or discussion.
 
 ## Version Control
 
@@ -92,60 +86,32 @@
 
 ### Pull Requests (PRs)
 
-- Treat commit subjects as the starting point for PR titles, and commit messages
-  as the starting point for PR descriptions.
-    - If you only have vague commit subjects or bodies,
-      [~/.agents/style/commit-messages.md](~/.agents/style/commit-messages.md)
-      is also a good primer how to write PR titles and descriptions.
-    - Then, expand the PR title/description according to org/repository
-      guidelines/templates, linked issues, testing notes, rollout details, or
-      reviewer-specific context.
-- In PR descriptions and comments, write ticket references and same-repository
-  commit hashes as plain text without Markdown backticks, so they autolink.
-  Continue using backticks for commands and other code identifiers.
-- Default to additive commits.
-    - After a commit has been pushed or a PR has been opened, create follow-up
-      work as a new child commit. Amend or squash that history only with the
-      user's explicit approval in the current turn.
-    - Push only fast-forward and with explicit approval in the current turn; do
-      not force-push unless told otherwise.
-- After a PR is already opened, avoid pushing on every commit, unless told
-  otherwise.
-    - Wait to be prompted to push.
-    - In your turn summary, mention unpushed changes, if any.
-    - (This conserves CI minutes, retriggering AI code review, and sending
-      emails to human subscribers.)
-- After a PR is already opened, do not perform any remote write action without
-  my explicit approval in the current turn.
-    - Remote write actions include:
-        - GitHub writes (`update_pull_request`, `add_*comment*`, review
-          submission, merge, etc.)
-        - VCS pushes (`git push`, `jj git push`)
-        - Commenting on the PR
-    - Before any remote write, show me:
-        1. The exact action
-        2. The exact text/payload/command
-        3. A short reason
-    - Wait for my explicit approve before executing.
-    - Default behavior: local edits/tests are allowed; remote writes are not.
-    - A single approval may cover a batch of related remote writes when every
-      action in the batch is shown up front.
-        - If a later command needs information produced by an earlier command,
-          describe the deterministic follow-up in the same approval request.
-        - For example, after `gh pr create` returns PR number `<N>`, you may
-          update the PR body by replacing `<PR_NUMBER>` with `<N>` in a
-          previously shown deploy-preview URL, without asking for a second
-          approval.
-- Before overwriting remote content (PR descriptions, issue comments, etc.),
-  always fetch the current version first. Never reconstruct from memory or a
-  stale local copy. The user may have edited it concurrently.
+- Start PR titles and descriptions from relevant commit messages, then adapt to
+  the final scope, repository template, linked issues, and reviewer needs.
+  [Commit message style](~/.agents/style/commit-messages.md) also applies here.
+- Write ticket references and same-repository commit hashes without backticks
+  so they autolink; use backticks for commands and code identifiers.
+- After a commit is pushed or a PR opened, default to new child commits. Rewrite
+  that history only with explicit approval in the current turn.
+- Push only when explicitly approved in the current turn; use fast-forward
+  unless force-push is explicitly authorized. After opening a PR, wait to be
+  prompted to push again and report unpushed changes in the turn summary.
+- After a PR is opened, every remote write requires explicit approval in the
+  current turn. Before executing, show the exact action, text/payload/command,
+  and reason. This includes PR updates, comments, reviews, merges, and pushes;
+  local edits and tests remain allowed.
+- One approval can cover a shown batch of related writes and deterministic
+  follow-ups, such as substituting a newly returned PR number into an already
+  approved preview URL. Ask again if the action or payload changes materially.
+- Immediately before overwriting remote content, fetch its current version and
+  preserve concurrent edits. Do not reconstruct it from memory or a stale copy.
 
 ## Turn Summary
 
 - When a turn summary refers to a Jujutsu commit, give its **change ID** first,
   followed by its commit **hash**. 8-character abbreviations are sufficient.
-    - Use exact change IDs or change ID ranges; never use relative revisions
-      such as `@-` or `main..@-`.
+  - Use exact change IDs or change ID ranges; never use relative revisions
+    such as `@-` or `main..@-`.
 
 ## Prompts for Other Chat Threads
 

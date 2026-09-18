@@ -1,114 +1,32 @@
 # Commit Message Style
 
-## Body structure
-
-- Use the subject for the change summary.
-- Include a body when the subject plus diff do not fully explain why the change
-  was necessary. Common cases:
-    - Behavior changes, bug fixes, bug-regression coverage, or test
-      infrastructure changes.
-    - Motivation that would otherwise require surrounding discussion.
-    - Edits where the diff is clear but the durable reason is external to the
-      repository, such as dependency behavior, migration guidance, hosted CI
-      behavior, external service contracts, platform quirks, or visual rendering
-      changes.
-    - Important motivation, unusual scope, or a non-obvious tradeoff.
-- When writing a body, explain why the commit exists and what context a reviewer
-  would otherwise miss. Keep it brief: one short paragraph or 1-3 bullets is
-  usually enough. Minimize implementation details.
-    - If the rationale is durable knowledge needed to maintain a local
-      implementation detail, prefer putting it close to the code through a
-      comment, helper name, test fixture, or file-local context.
-    - A non-bulleted narrative paragraph may explain durable product intent, a
-      behavioral boundary, current scope, or a non-obvious tradeoff. Do not use
-      it to narrate temporary project status, implementation sequencing, or
-      planned later work.
-- Omit the body only when the subject plus diff fully explain both what changed
-  and why.
-    - Prefer no body only for narrow mechanical edits, obvious docs/style
-      changes, or tiny self-explanatory fixes where the motivation is clear from
-      the subject and diff.
-- Add bullets when the commit contains a few distinct, reviewer-relevant changes
-  that are worth naming together.
-    - List _what_ changed with imperative bullets and sub-bullets, similar to
-      the subject line.
-    - If a change seems out of the ordinary relative to the rest of the commit,
-      add a sub-bullet explaining _why_ it was done.
-- Do not enumerate test or snapshot updates when they only cover the application
-  changes in the same commit.
-    - If a commit is primarily or entirely about test code, the commit message
-      can describe the tests directly.
-- Do not pad the body with obvious diff details; describe only the parts whose
-  intent, scope, or tradeoff is not clear from the subject and diff.
-- Do not copy PR descriptions, reviewer discussion, or squash-merge WIP commit
-  history into the commit message.
+- Use a concise, imperative subject that describes the change.
+- Add a body only when the subject and diff do not explain why the change was
+  needed or a reviewer-relevant scope boundary or tradeoff. Usually one short
+  paragraph or 1–3 bullets is enough.
+- Use narrative prose for rationale; use imperative bullets for distinct changes
+  worth naming, with a sub-bullet for an unusual reason. Omit obvious diff details
+  and routine test/snapshot updates unless testing is the primary deliverable.
+- Keep durable knowledge needed to maintain a local implementation near the
+  code. Do not copy review discussion, temporary project status, planned later
+  work, or WIP history into the message.
 
 ## Examples
 
-These examples show when a short subject is enough and when a body adds useful
-context.
-
-### Narrative _why_, when the rationale matters
-
-Source:
-[dotfiles `ca7b7ca`](https://github.com/john-kurkowski/dotfiles/commit/ca7b7ca13ac0b715e64f508188291a142d37b065)
-
-> Prefer `brew shellenv` to manual paths
->
-> Fixes Homebrew shell completion paths missing on Apple Silicon. Future proofs
-> with Homebrew and Apple standard paths. Continues to prioritize host-specific
-> and tool-specific binaries.
-
-### Bullets for _what_, with a sub-bullet for unusual _why_
-
-Source:
-[dotfiles `cc1eff3`](https://github.com/john-kurkowski/dotfiles/commit/cc1eff3276227bdc0d952d81a6ffa20978f0eee9)
-
-> Externalize machine-local config to env vars
->
-> - Require setting committer email via env var
-> - Allow setting Neovim terminal theme via env var
-> - Document mise as a prerequisite of setting up this repo
->     - While mise is not technically necessary to use these dotfiles (you could
->       just `export` environment variables), I've tested mise for a long time
->       and it's become a fire-and-forget part of my workflow
-
-### No body, when the diff is self-descriptive
-
-Source:
-[tldextract `a545c67`](https://github.com/john-kurkowski/tldextract/commit/a545c67d87223616fc13e90692886b3ca9af18bb)
+A self-explanatory subject needs no body:
 
 > Fix missing property in CLI `--json` output
 
-### One short paragraph, when one sentence clarifies intent
+Add a short body when the motivation is external to the diff:
 
-Source:
-[music `102f3d6`](https://github.com/john-kurkowski/music/commit/102f3d683ac38cea5792d1f31fc55a84e57fd58c)
-
-> Reorganize README
+> Prefer `brew shellenv` to manual paths
 >
-> Hook readers earlier.
-
-### Minimal body, when a tiny bit of context prevents confusion
-
-Source:
-[music `406e237`](https://github.com/john-kurkowski/music/commit/406e23758817abc2d9a3545d5e78da182fe8135f)
-
-> Require Python 3.12
->
-> - Upgrade from `TypeVar` to type parameter syntax
->
-> This project also uses `typing.override`, so 3.12 was technically already
-> required.
+> Fixes Homebrew shell completion paths missing on Apple Silicon. Continues to
+> prioritize host-specific and tool-specific binaries.
 
 ## Pull Requests
 
-This style is also a good default starting point for pull request titles and
-descriptions, before expanding for org or repo guidance, templates, and reviewer
-context.
+Use this style as a starting point for PR titles and descriptions, then adapt to
+repository templates and reviewer needs.
 
-## Acknowledgments
-
-This style is adapted in part from cbeams's excellent
-[How to Write a Git Commit Message](https://cbea.ms/git-commit/). This style
-adds some personal preferences and acknowledges repo-specific preferences.
+Adapted in part from [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
