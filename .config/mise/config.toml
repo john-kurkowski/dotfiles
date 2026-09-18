@@ -1,7 +1,12 @@
 [tools]
 node = "22"
-python = "3.13"
+python = { version = "3.13", postinstall = "python -m pip install --upgrade PyYAML" }
 uv = "latest"
+"npm:@openai/codex" = "latest"
+"npm:@vtsls/language-server" = "latest"
+"npm:@zed-industries/codex-acp" = "latest"
+"npm:prettier" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
 
 [settings]
 env_shell_expand = false

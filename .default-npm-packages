@@ -1,5 +1,0 @@
-@openai/codex
-@vtsls/language-server
-@zed-industries/codex-acp
-prettier
-vscode-langservers-extracted
