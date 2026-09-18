@@ -18,6 +18,18 @@ isolate your work from concurrent changes in the prompter's directory.
   - Never symlink or otherwise share dependency setup with the prompter's
     worktree.
 
+## Long-Running Processes
+
+- Run development servers and watchers from a dedicated, supervised process
+  group. Record the absolute worktree path, port, PID/process group, and log
+  location in task-local state.
+- Arrange cleanup for normal completion and interruption. Before removing a
+  temporary worktree, stop the owned process group, wait for descendants to
+  exit, and verify that no process still uses the worktree as its current
+  directory or listens on its port.
+- Do not terminate an entire process group unless it was created for the
+  worktree; a shared terminal process group may contain unrelated processes.
+
 ## Commits
 
 - In your own worktree, commit at completed implementation checkpoints so the

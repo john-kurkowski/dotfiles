@@ -41,6 +41,29 @@
   `gh api`, pass `--method GET`. Classify GraphQL queries and mutations by their
   contents; a transport method alone does not establish whether they write.
 
+## External services and computer use
+
+- Prefer the narrowest suitable access method for external services:
+  1. A connected, app-specific integration or MCP tool.
+  2. An authenticated CLI or API already available in the environment.
+  3. A browser automation surface owned by the agent.
+  4. Computer Use against the user's live desktop, only when the preceding options are unavailable or cannot complete the task.
+- Do not use Computer Use merely because a browser link is supplied. First check whether a relevant integration or CLI can read or act on the service.
+- When falling back, use the least invasive option that can complete the task. State a concrete blocker only if a preferred option is unavailable or insufficient.
+- Distinguish agent-owned browser automation from Computer Use. A visible
+  browser controlled through the native desktop is Computer Use. For rendered
+  web-app QA and screenshots, prefer a hidden or headless browser context with
+  an explicit viewport and direct artifact output. Use native desktop control
+  only when the required interaction cannot be completed through an
+  integration, CLI/API, or agent-owned browser automation.
+
+## Agent-owned local processes
+
+- The agent owns the lifecycle of every development server, watcher, or other
+  long-running local process it starts. Unless the user explicitly asks to
+  leave it running, stop it and verify its listener is closed before finishing.
+  Never stop a process the agent did not start without explicit approval.
+
 ## Version Control
 
 - STOP before the first VCS operation of a session, including read-only commands
@@ -59,6 +82,21 @@
   writable scope. This includes snapshots from `jj` inspection commands. Read
   [CLI troubleshooting](~/.agents/style/cli-troubleshooting.md) when that applies;
   existing filesystem permission is sufficient when the metadata is writable.
+
+### Before and after comparison
+
+- In a clean default workspace, prefer sequential comparison in that workspace
+  when it will not disrupt the user's work. Record its starting revision and
+  branch/bookmark or workspace identity, and restore that exact starting state
+  afterward. Do not treat creating a new child of the starting revision as
+  restoring the original workspace.
+- Reuse a dev server only when dependencies, configuration, and startup state
+  are compatible across revisions. Otherwise restart it and update dependencies
+  as required, respecting process ownership. Use a separate workspace when
+  switching would disturb existing work or simultaneous versions are needed.
+- Use a VCS-supported restoration operation within the existing history rules.
+  If exact restoration would need otherwise unauthorized history changes,
+  choose an isolated workspace instead.
 
 ### Commits
 
