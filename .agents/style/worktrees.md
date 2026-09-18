@@ -9,16 +9,20 @@ isolate your work from concurrent changes in the prompter's directory.
   via `jj workspace`.
 - Add the worktree to a system temp folder, such as via `$TMPDIR`, to avoid
   dirtying the user's folders.
-- Base work on the previous commit, e.g. `jj new @-`, unless told otherwise.
+- Use the requested base. Otherwise determine which revision and local changes
+  the task depends on before creating the workspace; do not automatically omit
+  the current commit or uncommitted work. Ask only if that choice is ambiguous.
 - Use the same worktree for the duration of the chat, unless told otherwise.
 - If dependencies are missing in the worktree, run the repo's README setup
-  commands from scratch (e.g. `npm install`).
-    - Never symlink or otherwise share dependency setup with the prompter's
-      worktree.
+  commands with its package manager.
+  - Never symlink or otherwise share dependency setup with the prompter's
+    worktree.
 
 ## Commits
 
-- In your own worktree, commit your work every turn for the prompter to review.
+- In your own worktree, commit at completed implementation checkpoints so the
+  prompter can review coherent changes. A conversational turn alone is not a
+  reason to create a commit.
 - Do not squash your commits unless explicitly asked in the current turn.
 - Use the commit message style from
   [~/.agents/style/commit-messages.md](~/.agents/style/commit-messages.md).
