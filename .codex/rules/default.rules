@@ -12,6 +12,24 @@ prefix_rule(
 )
 
 prefix_rule(
+    pattern = ["gh", "pr", "view"],
+    decision = "allow",
+    justification = "Pull-request metadata inspection is read-only and uses the host GitHub CLI session.",
+)
+
+prefix_rule(
+    pattern = ["gh", "pr", "diff"],
+    decision = "allow",
+    justification = "Pull-request diff inspection is read-only and uses the host GitHub CLI session.",
+)
+
+prefix_rule(
+    pattern = ["gh", "api", "--method", "GET"],
+    decision = "allow",
+    justification = "Explicit GitHub API GET requests are read-only and use the host GitHub CLI session.",
+)
+
+prefix_rule(
     pattern = ["op", "account", "list"],
     decision = "allow",
     justification = "Read-only 1Password account discovery requires access to the local desktop-app socket.",
