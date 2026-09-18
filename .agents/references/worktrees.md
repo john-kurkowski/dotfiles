@@ -37,7 +37,7 @@ isolate your work from concurrent changes in the prompter's directory.
   reason to create a commit.
 - Do not squash your commits unless explicitly asked in the current turn.
 - Use the commit message style from
-  [~/.agents/style/commit-messages.md](~/.agents/style/commit-messages.md).
+  [~/.agents/references/commit-messages.md](~/.agents/references/commit-messages.md).
 
 ## Turn Summary
 

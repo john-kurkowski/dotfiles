@@ -36,7 +36,7 @@
   credential storage as a workaround. Execution access does not authorize
   additional actions; report denied or unavailable access accurately.
 - For CLI access failures or VCS metadata permission details, read
-  [CLI troubleshooting](~/.agents/style/cli-troubleshooting.md).
+  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md).
 - `gh auth status` is an approved read-only diagnostic. For REST reads through
   `gh api`, pass `--method GET`. Classify GraphQL queries and mutations by their
   contents; a transport method alone does not establish whether they write.
@@ -80,7 +80,7 @@
     `jj`-colocated repo — never warn about it or suggest switching branches.
 - VCS metadata writes need permission when their storage lies outside the host's
   writable scope. This includes snapshots from `jj` inspection commands. Read
-  [CLI troubleshooting](~/.agents/style/cli-troubleshooting.md) when that applies;
+  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) when that applies;
   existing filesystem permission is sufficient when the metadata is writable.
 
 ### Before and after comparison
@@ -107,18 +107,18 @@
   `jj describe`, `git commit --amend`, `git rebase`, `git reset --hard`, and
   `git cherry-pick --no-commit` followed by history edits.
 - Before creating or updating a commit message, read
-  [~/.agents/style/commit-messages.md](~/.agents/style/commit-messages.md).
+  [~/.agents/references/commit-messages.md](~/.agents/references/commit-messages.md).
 
 ### Worktrees
 
 - When I ask you to work in your own worktree or `jj` workspace, follow
-  [~/.agents/style/worktrees.md](~/.agents/style/worktrees.md).
+  [~/.agents/references/worktrees.md](~/.agents/references/worktrees.md).
 
 ### Pull Requests (PRs)
 
 - Start PR titles and descriptions from relevant commit messages, then adapt to
   the final scope, repository template, linked issues, and reviewer needs.
-  [Commit message style](~/.agents/style/commit-messages.md) also applies here.
+  [Commit message style](~/.agents/references/commit-messages.md) also applies here.
 - Write ticket references and same-repository commit hashes without backticks
   so they autolink; use backticks for commands and code identifiers.
 - After a commit is pushed or a PR opened, default to new child commits. Rewrite
