@@ -15,8 +15,8 @@
 - Explain non-obvious contracts, constraints, or tradeoffs a future maintainer
   needs. Lead explanatory comments and JSDoc with what the code does or
   represents, then the durable context.
-- Put change history and review rationale in commits or PR descriptions.
-  Mention tickets only for durable TODOs or when no clearer explanation exists.
+- Put change history and review rationale in commits or PR descriptions. Mention
+  tickets only for durable TODOs or when no clearer explanation exists.
 - Before finalizing a branch or PR, re-review changed docs and comments; remove
   explanations that only justified an intermediate implementation or discussion.
 
@@ -26,10 +26,12 @@
   user's host session is broken. Before asking for login, changing access
   methods, or abandoning the task, use a non-secret diagnostic with the host
   access needed to distinguish an environment restriction from an account or
-  service failure. Do not print tokens or start a new login flow as a diagnostic.
+  service failure. Do not print tokens or start a new login flow as a
+  diagnostic.
 - Retry a safe read once with the required access. When session evidence already
   establishes that access is needed, request it on the first attempt. Before
-  retrying a mutation, inspect whether it took effect or use an idempotent retry.
+  retrying a mutation, inspect whether it took effect or use an idempotent
+  retry.
 - Use the host's permission controls and narrowest command-specific scope.
   Request expanded access only when the operation needs resources outside the
   permitted paths or capabilities. Never broaden sandbox settings or change
@@ -44,44 +46,49 @@
 ## External services and computer use
 
 - Prefer the narrowest suitable access method for external services:
-  1. A connected, app-specific integration or MCP tool.
-  2. An authenticated CLI or API already available in the environment.
-  3. A browser automation surface owned by the agent.
-  4. Computer Use against the user's live desktop, only when the preceding options are unavailable or cannot complete the task.
-- Do not use Computer Use merely because a browser link is supplied. First check whether a relevant integration or CLI can read or act on the service.
-- When falling back, use the least invasive option that can complete the task. State a concrete blocker only if a preferred option is unavailable or insufficient.
+    1. A connected, app-specific integration or MCP tool.
+    2. An authenticated CLI or API already available in the environment.
+    3. A browser automation surface owned by the agent.
+    4. Computer Use against the user's live desktop, only when the preceding
+       options are unavailable or cannot complete the task.
+- Do not use Computer Use merely because a browser link is supplied. First check
+  whether a relevant integration or CLI can read or act on the service.
+- When falling back, use the least invasive option that can complete the task.
+  State a concrete blocker only if a preferred option is unavailable or
+  insufficient.
 - Distinguish agent-owned browser automation from Computer Use. A visible
   browser controlled through the native desktop is Computer Use. For rendered
   web-app QA and screenshots, prefer a hidden or headless browser context with
   an explicit viewport and direct artifact output. Use native desktop control
-  only when the required interaction cannot be completed through an
-  integration, CLI/API, or agent-owned browser automation.
+  only when the required interaction cannot be completed through an integration,
+  CLI/API, or agent-owned browser automation.
 
 ## Agent-owned local processes
 
 - The agent owns the lifecycle of every development server, watcher, or other
-  long-running local process it starts. Unless the user explicitly asks to
-  leave it running, stop it and verify its listener is closed before finishing.
-  Never stop a process the agent did not start without explicit approval.
+  long-running local process it starts. Unless the user explicitly asks to leave
+  it running, stop it and verify its listener is closed before finishing. Never
+  stop a process the agent did not start without explicit approval.
 
 ## Version Control
 
 - STOP before the first VCS operation of a session, including read-only commands
   and VCS commands buried inside a larger shell pipeline. Silently run
   `ls -d .jj` (or equivalent) first and re-confirm in each session.
-  - If `.jj/` exists at the repository root, use `jj` for all VCS operations.
-    Neither the presence of `.git/` nor harness-provided Git output
-    substitutes for the `.jj/` check.
-  - Perform this check without commentary. Do not announce whether `.jj/`
-    exists, which VCS you selected, or that you will use `jj` instead of Git.
-    Mention VCS selection only when it blocks the task or requires user
-    action.
-  - A detached-HEAD `git status` is normal and expected inside a
-    `jj`-colocated repo — never warn about it or suggest switching branches.
+    - If `.jj/` exists at the repository root, use `jj` for all VCS operations.
+      Neither the presence of `.git/` nor harness-provided Git output
+      substitutes for the `.jj/` check.
+    - Perform this check without commentary. Do not announce whether `.jj/`
+      exists, which VCS you selected, or that you will use `jj` instead of Git.
+      Mention VCS selection only when it blocks the task or requires user
+      action.
+    - A detached-HEAD `git status` is normal and expected inside a
+      `jj`-colocated repo — never warn about it or suggest switching branches.
 - VCS metadata writes need permission when their storage lies outside the host's
   writable scope. This includes snapshots from `jj` inspection commands. Read
-  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) when that applies;
-  existing filesystem permission is sufficient when the metadata is writable.
+  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) when that
+  applies; existing filesystem permission is sufficient when the metadata is
+  writable.
 
 ### Before and after comparison
 
@@ -95,8 +102,8 @@
   as required, respecting process ownership. Use a separate workspace when
   switching would disturb existing work or simultaneous versions are needed.
 - Use a VCS-supported restoration operation within the existing history rules.
-  If exact restoration would need otherwise unauthorized history changes,
-  choose an isolated workspace instead.
+  If exact restoration would need otherwise unauthorized history changes, choose
+  an isolated workspace instead.
 
 ### Commits
 
@@ -118,9 +125,10 @@
 
 - Start PR titles and descriptions from relevant commit messages, then adapt to
   the final scope, repository template, linked issues, and reviewer needs.
-  [Commit message style](~/.agents/references/commit-messages.md) also applies here.
-- Write ticket references and same-repository commit hashes without backticks
-  so they autolink; use backticks for commands and code identifiers.
+  [Commit message style](~/.agents/references/commit-messages.md) also applies
+  here.
+- Write ticket references and same-repository commit hashes without backticks so
+  they autolink; use backticks for commands and code identifiers.
 - After a commit is pushed or a PR opened, default to new child commits. Rewrite
   that history only with explicit approval in the current turn.
 - Push only when explicitly approved in the current turn; use fast-forward
@@ -140,14 +148,14 @@
 
 - When a turn summary refers to a Jujutsu commit, give its **change ID** first,
   followed by its commit **hash**. 8-character abbreviations are sufficient.
-  - Use exact change IDs or change ID ranges; never use relative revisions
-    such as `@-` or `main..@-`.
+    - Use exact change IDs or change ID ranges; never use relative revisions
+      such as `@-` or `main..@-`.
 
 ## Prompts for Other Chat Threads
 
-- Give each receiving task the objective, essential decisions and context,
-  hard constraints, artifact pointers, and observable success criteria. Do not
-  assume it shares conversation history, instructions, or the same runtime.
+- Give each receiving task the objective, essential decisions and context, hard
+  constraints, artifact pointers, and observable success criteria. Do not assume
+  it shares conversation history, instructions, or the same runtime.
 - Keep handoffs concise. Point to repository instructions and relevant files
   rather than copying them; leave routine discovery and implementation choices
   to the receiving agent.

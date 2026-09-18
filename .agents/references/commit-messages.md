@@ -5,8 +5,9 @@
   needed or a reviewer-relevant scope boundary or tradeoff. Usually one short
   paragraph or 1–3 bullets is enough.
 - Use narrative prose for rationale; use imperative bullets for distinct changes
-  worth naming, with a sub-bullet for an unusual reason. Omit obvious diff details
-  and routine test/snapshot updates unless testing is the primary deliverable.
+  worth naming, with a sub-bullet for an unusual reason. Omit obvious diff
+  details and routine test/snapshot updates unless testing is the primary
+  deliverable.
 - Keep durable knowledge needed to maintain a local implementation near the
   code. Do not copy review discussion, temporary project status, planned later
   work, or WIP history into the message.
@@ -29,4 +30,5 @@ Add a short body when the motivation is external to the diff:
 Use this style as a starting point for PR titles and descriptions, then adapt to
 repository templates and reviewer needs.
 
-Adapted in part from [How to Write a Git Commit Message](https://cbea.ms/git-commit/).
+Adapted in part from
+[How to Write a Git Commit Message](https://cbea.ms/git-commit/).

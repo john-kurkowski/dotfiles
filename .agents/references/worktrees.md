@@ -15,8 +15,8 @@ isolate your work from concurrent changes in the prompter's directory.
 - Use the same worktree for the duration of the chat, unless told otherwise.
 - If dependencies are missing in the worktree, run the repo's README setup
   commands with its package manager.
-  - Never symlink or otherwise share dependency setup with the prompter's
-    worktree.
+    - Never symlink or otherwise share dependency setup with the prompter's
+      worktree.
 
 ## Long-Running Processes
 

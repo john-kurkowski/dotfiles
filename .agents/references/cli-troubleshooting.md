@@ -19,12 +19,12 @@ storage, or initiate login merely to test sandbox access.
 
 ## VCS metadata
 
-`jj` commands can snapshot the working copy, including inspection commands.
-When its metadata is outside permitted writable paths, request metadata-write
-access on the first attempt. Read-only Git inspection normally needs no write
-access. Local semantic writes also need access to their metadata storage:
-creating or describing commits, changing the index, moving refs/bookmarks,
-creating branches, and rewriting history.
+`jj` commands can snapshot the working copy, including inspection commands. When
+its metadata is outside permitted writable paths, request metadata-write access
+on the first attempt. Read-only Git inspection normally needs no write access.
+Local semantic writes also need access to their metadata storage: creating or
+describing commits, changing the index, moving refs/bookmarks, creating
+branches, and rewriting history.
 
 Filesystem permission and semantic authorization are separate. Access to the
 metadata does not authorize history rewrites, destructive operations, or pushes.
