@@ -17,6 +17,16 @@ interpreter. If access is denied or unavailable, report that limit separately
 from authentication or service failures. Never print tokens, change credential
 storage, or initiate login merely to test sandbox access.
 
+### Validation commands and subprocesses
+
+Account for the access required by subprocesses as well as the top-level
+command. If evidence indicates that an access restriction prevented the
+requested validation from completing, rerun the complete validation with the
+necessary command-specific access when safe to repeat. Individual checks may
+help diagnose the failure, but do not establish that the complete validation
+passed. Do not suppress verification failures or weaken integrity checks to make
+validation pass. Report what completed and what remains unverified.
+
 ## VCS metadata
 
 `jj` commands can snapshot the working copy, including inspection commands. When
