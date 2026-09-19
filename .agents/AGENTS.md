@@ -28,10 +28,11 @@
   access needed to distinguish an environment restriction from an account or
   service failure. Do not print tokens or start a new login flow as a
   diagnostic.
-- Retry a safe read once with the required access. When session evidence already
-  establishes that access is needed, request it on the first attempt. Before
-  retrying a mutation, inspect whether it took effect or use an idempotent
-  retry.
+- When session evidence or documented environment restrictions establish that an
+  operation requires access unavailable in the current sandbox, request the
+  necessary command-specific access on the first attempt. Do not deliberately
+  repeat a known access failure. Before retrying a mutation, inspect whether it
+  took effect or use an idempotent retry.
 - Use the host's permission controls and narrowest command-specific scope.
   Request expanded access only when the operation needs resources outside the
   permitted paths or capabilities. Never broaden sandbox settings or change
@@ -87,10 +88,11 @@
 - Commands that update repository state need write access to the files that
   store it. Even `jj` inspection commands can write there by snapshotting the
   working copy. Before running any `jj` command in a sandbox, check whether
-  those files are within the allowed write paths. If they aren't, request
-  access for that command on the first attempt; don't wait for it to fail.
-  Existing write permission is enough; no extra approval is needed. See
-  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) for details.
+  those files are within the allowed write paths. If they aren't, request access
+  for that command on the first attempt; don't wait for it to fail. Existing
+  write permission is enough; no extra approval is needed. See
+  [CLI troubleshooting](~/.agents/references/cli-troubleshooting.md) for
+  details.
 
 ### Before and after comparison
 
