@@ -316,12 +316,12 @@ run_checks_here() {
   else
     (
       cd "$tool_cwd" &&
-        stylua --check "$work_root/.vim/init.lua" "$work_root/.vim/lua"
+        stylua --check --output-format Summary "$work_root/.vim/init.lua" "$work_root/.vim/lua"
     )
   fi
   (
     cd "$tool_cwd" &&
-      luacheck --config "$work_root/.vim/.luacheckrc" "$work_root/.vim/init.lua" "$work_root/.vim/lua"
+      luacheck --quiet --config "$work_root/.vim/.luacheckrc" "$work_root/.vim/init.lua" "$work_root/.vim/lua"
   )
   (
     cd "$tool_cwd" &&
