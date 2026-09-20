@@ -19,10 +19,21 @@ export PATH=${(j[:])path}
 # startup never prompts to trust a project config in the current directory.
 # Interactive shells add Mise's directory-change hooks via .zshrc.
 if command -v mise > /dev/null; then
-  eval "$(
-    cd "$HOME" && mise env -s zsh
-  )"
-  eval "$(mise activate zsh --shims)"
+  # Child shells preserve the identity pinned by dotfiles-env while Mise loads
+  # the machine-local environment.
+  () {
+    local identity_lock=${DOTFILES_GIT_IDENTITY_LOCK:-}
+    local author_email=${GIT_AUTHOR_EMAIL:-}
+    local committer_email=${GIT_COMMITTER_EMAIL:-}
+    eval "$(
+      cd "$HOME" && mise env -s zsh
+    )"
+    eval "$(mise activate zsh --shims)"
+    if [[ "$identity_lock" == 1 ]]; then
+      export GIT_AUTHOR_EMAIL="$author_email"
+      export GIT_COMMITTER_EMAIL="$committer_email"
+    fi
+  }
 fi
 
 # Grep dotfiles, using Ripgrep.

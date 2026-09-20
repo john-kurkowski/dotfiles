@@ -148,6 +148,8 @@ printf '%s\n' "mise $*" >>"$DOTFILES_TEST_MISE_LOG"
 case "$1:$2:$3" in
   env:-s:zsh)
     printf '%s\n' 'export DOTFILES_TEST_MISE_ENV=loaded'
+    printf '%s\n' 'export GIT_AUTHOR_EMAIL=work@example.com'
+    printf '%s\n' 'export GIT_COMMITTER_EMAIL=work@example.com'
     printf '%s\n' 'export PATH="$HOME/mise-env/bin:$PATH"'
     if [ -n "${DOTFILES_TEST_MISE_ENV_CWD_LOG:-}" ]; then
       printf '%s\n' "$PWD" >>"$DOTFILES_TEST_MISE_ENV_CWD_LOG"
@@ -199,6 +201,24 @@ EOF
 #!/bin/sh
 exit 0
 EOF
+
+  local identity_output
+  identity_output=$(
+    env -i HOME="$test_home" PATH="/usr/bin:/bin" ZDOTDIR="$test_home" \
+      DOTFILES_TEST_MISE_LOG="$tmp_root/mise-identity.log" \
+      DOTFILES_GIT_IDENTITY_LOCK=1 \
+      GIT_AUTHOR_EMAIL=john.kurkowski@gmail.com GIT_COMMITTER_EMAIL=john.kurkowski@gmail.com \
+      zsh -c 'print -r -- "$GIT_AUTHOR_EMAIL:$GIT_COMMITTER_EMAIL"'
+  )
+  assert_equal "$identity_output" "john.kurkowski@gmail.com:john.kurkowski@gmail.com" "locked child shells should preserve personal author and committer emails"
+
+  identity_output=$(
+    env -i HOME="$test_home" PATH="/usr/bin:/bin" ZDOTDIR="$test_home" \
+      DOTFILES_TEST_MISE_LOG="$tmp_root/mise-unlocked-identity.log" \
+      GIT_AUTHOR_EMAIL=old@example.com GIT_COMMITTER_EMAIL=old@example.com \
+      zsh -c 'print -r -- "$GIT_AUTHOR_EMAIL:$GIT_COMMITTER_EMAIL"'
+  )
+  assert_equal "$identity_output" "work@example.com:work@example.com" "ordinary shells should load the machine-local identity"
 
   local noninteractive_log="$tmp_root/mise-noninteractive.log"
   local noninteractive_env_cwd_log="$tmp_root/mise-noninteractive-env-cwd.log"

@@ -24,7 +24,10 @@ JJ_EMAIL = "you@company.com"
 ```
 
 These environment variables are for non-dotfiles repos. `dotfiles-env` pins
-dotfiles commits to my personal email.
+dotfiles commits to my personal email. Its identity lock also preserves those
+emails when child Zsh shells or Neovim reload Mise's environment. Use `dotfiles`
+for Git commands and `dotfiles-env` when launching tools that create dotfiles
+commits; plain Git commands do not apply this override.
 
 ## Theme
 
