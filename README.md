@@ -74,6 +74,14 @@ dotfiles-test --here        # Run tests in the current checkout, with confirmati
 dotfiles-test --here --fix  # Apply available fixes in the current checkout, with confirmation
 ```
 
+### Agent-Assisted Work
+
+For agent-assisted work, start tasks from `$HOME` and follow
+[AGENTS.md](./AGENTS.md) for repository scope and validation instructions.
+Because this bare repository uses the home folder as its working tree, these
+instructions make the starting location explicit and keep agent work scoped to
+dotfiles among the unrelated files and projects in `$HOME`.
+
 ### Advanced Usage
 
 See [the docs folder](./.docs/).
