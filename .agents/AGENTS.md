@@ -142,6 +142,10 @@
   current turn. Before executing, show the exact action, text/payload/command,
   and reason. This includes PR updates, comments, reviews, merges, and pushes;
   local edits and tests remain allowed.
+    - Exception: an explicit request to create a pending review or add a
+      specified draft comment authorizes that private write without another
+      confirmation. Publishing comments, submitting reviews, and pushing still
+      require separate approval.
 - One approval can cover a shown batch of related writes and deterministic
   follow-ups, such as substituting a newly returned PR number into an already
   approved preview URL. Ask again if the action or payload changes materially.
