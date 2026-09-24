@@ -127,10 +127,10 @@
 
 ### Pull Requests (PRs)
 
-- Start PR titles and descriptions from relevant commit messages, then adapt to
-  the final scope, repository template, linked issues, and reviewer needs.
-  [Commit message style](~/.agents/references/commit-messages.md) also applies
-  here.
+- Start PR titles and descriptions from relevant commit messages, following
+  [Commit message style](~/.agents/references/commit-messages.md). Describe the
+  final combined behavior and affected surface; adapt to the repository's
+  template, issue or no-story format, and reviewer needs.
 - Write ticket references and same-repository commit hashes without backticks so
   they autolink; use backticks for commands and code identifiers.
 - After a commit is pushed or a PR opened, default to new child commits. Rewrite
