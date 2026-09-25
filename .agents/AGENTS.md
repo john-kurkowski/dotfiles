@@ -164,6 +164,9 @@
 - Give each receiving task the objective, essential decisions and context, hard
   constraints, artifact pointers, and observable success criteria. Do not assume
   it shares conversation history, instructions, or the same runtime.
-- Keep handoffs concise. Point to repository instructions and relevant files
-  rather than copying them; leave routine discovery and implementation choices
-  to the receiving agent.
+- Keep handoffs concise. Point to relevant files and any additional instructions
+  that are not automatically loaded rather than copying them; leave routine
+  discovery and implementation choices to the receiving agent.
+- Omit reminders to read or follow automatically loaded instructions such as
+  AGENTS.md. Include only task-specific context and constraints; reference
+  additional instruction files only when they would not otherwise be loaded.
