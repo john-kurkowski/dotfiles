@@ -170,11 +170,16 @@
 ## Prompts for Other Chat Threads
 
 - Give each receiving task the objective, essential decisions and context, hard
-  constraints, artifact pointers, and observable success criteria. Do not assume
-  it shares conversation history, instructions, or the same runtime.
-- Keep handoffs concise. Point to relevant files and any additional instructions
-  that are not automatically loaded rather than copying them; leave routine
-  discovery and implementation choices to the receiving agent.
-- Omit reminders to read or follow automatically loaded instructions such as
-  AGENTS.md. Include only task-specific context and constraints; reference
-  additional instruction files only when they would not otherwise be loaded.
+  constraints, artifact pointers, and observable success criteria. Transfer
+  necessary conversation context; do not assume it shares conversation history.
+- When the receiving task uses the same repository and user-level instructions,
+  rely on automatically loaded guidance. Do not repeat or paraphrase its rules
+  for testing, VCS, permissions, process ownership, or writing style, or add
+  reminders to read AGENTS.md. Otherwise, link any necessary missing guidance.
+- Point to relevant files and required skills rather than copying their
+  instructions. Leave routine discovery and implementation choices to the
+  receiving agent.
+- Before presenting prompts, remove duplicated policy and generic checklists.
+  Retain task-specific QA scope, environment and fixtures, deliverables, and
+  explicit user authorization; these are task instructions, not duplicated
+  policy. Do not infer or broaden authorization when transferring it.
