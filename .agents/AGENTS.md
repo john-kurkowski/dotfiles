@@ -150,10 +150,17 @@
   current turn. Before executing, show the exact action, text/payload/command,
   and reason. This includes PR updates, comments, reviews, merges, and pushes;
   local edits and tests remain allowed.
-    - Exception: an explicit request to create a pending review or add a
-      specified draft comment authorizes that private write without another
-      confirmation. Publishing comments, submitting reviews, and pushing still
-      require separate approval.
+    - Exception: an explicit request to create or add comments to an unpublished
+      pending review authorizes those private writes without another
+      confirmation. An explicit request to update an existing PR description
+      also authorizes capturing, uploading, and replacing its relevant
+      screenshots or recordings when needed to match the current changes, unless
+      the user excludes media. An explicit media-placement request authorizes
+      the named uploads and description edit. Neither authorizes additional
+      destinations or fixture mutations. Publish a media comment or reply only
+      when the request explicitly asks to post or publish it. Publishing pending
+      reviews or other comments, submitting reviews, and pushing still require
+      separate approval.
 - One approval can cover a shown batch of related writes and deterministic
   follow-ups, such as substituting a newly returned PR number into an already
   approved preview URL. Ask again if the action or payload changes materially.
