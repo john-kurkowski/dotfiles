@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+"""Interactively forget jj workspaces and delete their directories.
+
+Run from a jj repository; requires Python 3.10+, jj 0.38+ and fzf.
+Tab toggles selection, Ctrl-A selects all, Ctrl-D clears, Enter reviews the batch.
+Default and current workspaces are excluded. One confirmation deletes the batch,
+including ignored files; missing roots are only forgotten.
+
+Age uses the recorded working-copy commit timestamp, not filesystem activity.
+Unmerged counts non-empty ancestors outside --base (default: trunk()), using
+local history; squash/rebase equivalents aren't detected. Selected directories
+are snapshotted and counts refreshed before confirmation. Stop their processes
+before cleanup. Use --list to inspect or --older-than DAYS to filter candidates.
+"""
+
+import argparse
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+from dataclasses import dataclass
+from pathlib import Path
+
+TEMPLATE = (
+    'json(name) ++ "\t" ++ json(target.commit_id()) ++ "\t" ++ '
+    'json(target.committer().timestamp().format("%s")) ++ "\t" ++ '
+    'json(root) ++ "\n"'
+)
+
+
+def _jj(*args, repository=None, snapshot=False):
+    command = ["jj", "--color=never", "--no-pager"]
+    if not snapshot:
+        command.append("--ignore-working-copy")
+    if repository is not None:
+        command.extend(["--repository", str(repository)])
+    return subprocess.run(
+        command + list(args), check=True, text=True, stdout=subprocess.PIPE
+    ).stdout.strip()
+
+
+@dataclass(frozen=True)
+class _Workspace:
+    """Store recorded workspace metadata used for review and deletion."""
+
+    name: str
+    commit: str
+    timestamp: int
+    root: Path | None
+    unmerged: int
+
+    def row(self, index, now):
+        """Render a picker row with a hidden identity and escaped display fields."""
+        days = max(0, int((now - self.timestamp) // 86400))
+        directory = str(self.root) if self.root else "(missing root: forget only)"
+        # JSON escaping keeps control characters out of the terminal and row protocol.
+        return (
+            f"{index}\t{json.dumps(self.name, ensure_ascii=False)}\t"
+            f"{days}d\t{self.unmerged}\t{json.dumps(directory, ensure_ascii=False)}"
+        )
+
+
+def _workspaces(base):
+    result = []
+    for line in _jj("workspace", "list", "--template", TEMPLATE).splitlines():
+        name, commit, timestamp, root = map(json.loads, line.split("\t"))
+        count = int(
+            _jj("log", "--count", "--revision", f"(::{commit} ~ ::({base})) ~ empty()")
+        )
+        result.append(
+            _Workspace(
+                name,
+                commit,
+                int(timestamp),
+                Path(root).resolve() if root else None,
+                count,
+            )
+        )
+    return result
+
+
+def _contains(parent, child):
+    return child == parent or parent in child.parents
+
+
+def _validate_directory(workspace, protected):
+    root = workspace.root
+    if root is None:
+        return
+    if any(_contains(root, path) for path in protected):
+        raise ValueError(f"Refusing to delete protected directory: {root}")
+    if root.is_symlink() or not (root / ".jj").is_dir():
+        raise ValueError(f"Workspace directory changed or has no .jj: {root}")
+    actual = Path(_jj("workspace", "root", repository=root)).resolve()
+    if actual != root:
+        raise ValueError(f"Workspace root mismatch: {root}")
+    repo = root / ".jj" / "repo"
+    shared = (
+        repo.resolve()
+        if repo.is_dir()
+        else (repo.parent / repo.read_text().strip()).resolve()
+    )
+    if _contains(root, shared):
+        raise ValueError(f"Directory contains shared repository storage: {root}")
+
+
+def _pick(candidates, now):
+    rows = [workspace.row(index, now) for index, workspace in enumerate(candidates)]
+    environment = dict(os.environ, FZF_DEFAULT_OPTS="", FZF_DEFAULT_OPTS_FILE="")
+    picked = subprocess.run(
+        [
+            "fzf",
+            "--multi",
+            "--delimiter=\t",
+            "--with-nth=2..",
+            "--layout=reverse",
+            "--header=WORKSPACE | AGE | UNMERGED | DIRECTORY\n"
+            "Tab: toggle  Ctrl-A: select all  Ctrl-D: clear  Enter: review  Esc: cancel",
+            "--bind=ctrl-a:select-all,ctrl-d:deselect-all",
+        ],
+        input="\n".join(rows) + "\n",
+        text=True,
+        stdout=subprocess.PIPE,
+        env=environment,
+    )
+    if picked.returncode in (1, 130):
+        return []
+    if picked.returncode:
+        raise RuntimeError(f"fzf exited with status {picked.returncode}")
+    # Accept only exact input rows, even if a picker configuration changes its output.
+    by_row = dict(zip(rows, candidates, strict=True))
+    return list(dict.fromkeys(by_row[line] for line in picked.stdout.splitlines()))
+
+
+def main():
+    """Select, review, and remove eligible workspaces from the current repository."""
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--list", action="store_true", help="print candidates without deleting"
+    )
+    parser.add_argument(
+        "--older-than",
+        type=int,
+        default=0,
+        metavar="DAYS",
+        help="minimum recorded working-copy age in days (default: 0)",
+    )
+    parser.add_argument(
+        "--base",
+        default="trunk()",
+        metavar="REVSET",
+        help="merged history baseline (default: trunk())",
+    )
+    args = parser.parse_args()
+    if args.older_than < 0:
+        parser.error("--older-than must be non-negative")
+    current = Path(_jj("workspace", "root")).resolve()
+    all_workspaces = _workspaces(args.base)
+    protected = [current, Path.cwd().resolve(), Path.home().resolve()]
+    protected.extend(
+        ws.root for ws in all_workspaces if ws.name == "default" and ws.root
+    )
+    now = time.time()
+    candidates = sorted(
+        (
+            ws
+            for ws in all_workspaces
+            if ws.name != "default"
+            and ws.root != current
+            and now - ws.timestamp >= args.older_than * 86400
+        ),
+        key=lambda ws: (ws.timestamp, ws.name),
+    )
+    if not candidates:
+        print("No eligible workspaces.")
+        return
+    if args.list:
+        print("WORKSPACE\tAGE\tUNMERGED\tDIRECTORY")
+        for index, ws in enumerate(candidates):
+            print(ws.row(index, now).split("\t", 1)[1])
+        return
+    selected = _pick(candidates, now)
+    if not selected:
+        print("Cancelled; no workspaces deleted.")
+        return
+    selected = _prepare_selection(selected, args.base, protected)
+    _delete_selected(selected, args.base, protected)
+
+
+def _prepare_selection(selected, base, protected):
+    for ws in selected:
+        _validate_directory(ws, protected)
+    roots = [ws.root for ws in selected if ws.root]
+    if any(_contains(a, b) for i, a in enumerate(roots) for b in roots[i + 1 :]) or any(
+        _contains(b, a) for i, a in enumerate(roots) for b in roots[i + 1 :]
+    ):
+        raise ValueError(
+            "Selected workspace directories overlap; select them separately."
+        )
+    # Snapshot selected working copies before confirmation so tracked on-disk changes
+    # are retained in jj history. Ignored files will still be removed with the directory.
+    for ws in selected:
+        if ws.root:
+            # Recovery reconciles stale checkout state while preserving local changes.
+            # It is harmless for fresh workspaces and avoids parsing jj error messages.
+            _jj(
+                "workspace",
+                "update-stale",
+                "--quiet",
+                repository=ws.root,
+                snapshot=True,
+            )
+            _jj("status", repository=ws.root, snapshot=True)
+    refreshed = {ws.name: ws for ws in _workspaces(base)}
+    if any(
+        refreshed.get(ws.name) is None or refreshed[ws.name].root != ws.root
+        for ws in selected
+    ):
+        raise ValueError("Workspace directories changed while snapshotting; run again.")
+    selected = [refreshed[ws.name] for ws in selected]
+    return selected
+
+
+def _delete_selected(selected, base, protected):
+    print("\nForget these workspaces and permanently delete their directories:")
+    for index, ws in enumerate(selected):
+        print(ws.row(index, time.time()).split("\t", 1)[1])
+    print(
+        "Unmerged counts are non-empty ancestors outside the base; ignored files are deleted."
+    )
+    with open("/dev/tty", "w") as prompt, open("/dev/tty") as reply:
+        prompt.write(f"Delete {len(selected)} workspace(s)? [y/N] ")
+        prompt.flush()
+        if reply.readline().strip().lower() not in ("y", "yes"):
+            print("Cancelled; no workspaces deleted.")
+            return
+    latest = {ws.name: ws for ws in _workspaces(base)}
+    if any(latest.get(ws.name) != ws for ws in selected):
+        raise ValueError("Workspace metadata changed during confirmation; run again.")
+    for ws in selected:
+        _validate_directory(ws, protected)
+    for ws in selected:
+        _jj("workspace", "forget", "--", ws.name)
+        if ws.root:
+            shutil.rmtree(ws.root)
+        print(f"Removed {json.dumps(ws.name)}")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (
+        OSError,
+        ValueError,
+        KeyError,
+        RuntimeError,
+        subprocess.CalledProcessError,
+    ) as error:
+        print(f"jj-clean-workspaces: {error}", file=sys.stderr)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit(130)

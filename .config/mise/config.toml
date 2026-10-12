@@ -2,6 +2,7 @@
 node = "22"
 python = { version = "3.13", postinstall = "python -m pip install --upgrade PyYAML" }
 uv = "latest"
+ruff = "latest"
 "npm:@openai/codex" = "latest"
 "npm:@vtsls/language-server" = "latest"
 "npm:@zed-industries/codex-acp" = "latest"

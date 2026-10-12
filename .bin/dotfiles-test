@@ -25,6 +25,8 @@ fi
 # - Lua formatting and lint for the tracked Neovim config
 # - Zsh syntax for the shell entrypoints
 # - Zsh startup scope for non-interactive, interactive, and login shells
+# - JJ workspace cleanup against disposable repositories
+# - Python lint and formatting with the tracked Ruff configuration
 # - A headless Neovim startup smoke test with isolated XDG state
 #
 # The script installs the Node-backed Markdown formatter into a temporary
@@ -291,6 +293,7 @@ run_checks_here() {
   require_cmd stylua "Install Stylua, for example: brew install stylua"
   require_cmd luacheck "Install Luacheck, for example: brew install luacheck"
   require_cmd zsh "Install zsh, for example: brew install zsh"
+  require_cmd ruff "Install Ruff via mise: mise install ruff"
 
   local tmp_root
   tmp_root=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-test.XXXXXX")
@@ -348,6 +351,20 @@ run_checks_here() {
       zsh -n "$work_root/.zshenv" "$work_root/.zprofile" "$work_root/.zshrc"
   )
   test_zsh_startup_scope "$tmp_root"
+  require_cmd python3
+  require_cmd jj
+  local python_paths=("$work_root/.bin/jj-clean-workspaces" "$work_root/.tests/test_jj_clean_workspaces.py")
+  local ruff_config="$work_root/.config/ruff/pyproject.toml"
+  (
+    cd "$tool_cwd"
+    if (( apply_fixes == 1 )); then
+      ruff check --fix --config "$ruff_config" "${python_paths[@]}"
+      ruff format --config "$ruff_config" "${python_paths[@]}"
+    fi
+    ruff check --config "$ruff_config" "${python_paths[@]}"
+    ruff format --check --config "$ruff_config" "${python_paths[@]}"
+  )
+  python3 -B "$work_root/.tests/test_jj_clean_workspaces.py"
 
   mkdir -p \
     "$tmp_root/xdg-cache" \
@@ -396,7 +413,7 @@ run_checks_in_temp_clone() {
   overlay_files=("${(@)overlay_files:#}")
   overlay_files=("${(@)overlay_files:#(#m)(?)}")
   local extra_dir
-  for extra_dir in .bin .github; do
+  for extra_dir in .bin .github .tests; do
     if [[ ! -d "$repo_root/$extra_dir" ]]; then
       continue
     fi

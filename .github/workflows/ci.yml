@@ -21,11 +21,11 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install --yes neovim luarocks zsh
+          sudo apt-get install --yes neovim luarocks zsh python3
 
       - uses: taiki-e/install-action@v2
         with:
-          tool: stylua
+          tool: stylua,jj-cli@0.45.1,ruff
 
       - name: Install Luacheck
         run: sudo luarocks install luacheck
