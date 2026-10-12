@@ -131,6 +131,14 @@
   [Commit message style](~/.agents/references/commit-messages.md). Describe the
   final combined behavior and affected surface; adapt to the repository's
   template, issue or no-story format, and reviewer needs.
+- In a PR's **Changes** section, give each independently reportable change its
+  own top-level bullet, starting with an imperative; split a second independent
+  action into another bullet. Use indented sub-bullets for related details such
+  as affected surfaces, behavior, constraints, or rationale that explains the
+  parent change. Promote separate changes to top-level bullets. If rationale
+  explains why otherwise surprising work belongs in the PR, state that
+  connection in **Context**; omit rationale that does not help reviewers
+  understand the scope, behavior, or tradeoffs.
 - Write ticket references and same-repository commit hashes without backticks so
   they autolink; use backticks for commands and code identifiers.
 - After a commit is pushed or a PR opened, default to new child commits. Rewrite
