@@ -10,7 +10,7 @@ diff-formatter = ":git"
 [[--scope]]
 --when.commands = ["diff", "log", "show"]
 [--scope.ui]
-pager = "delta --side-by-side"
+pager = "delta --dark --side-by-side"
 
 [aliases]
 lp = [
