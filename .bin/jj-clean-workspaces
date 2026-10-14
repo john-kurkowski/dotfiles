@@ -66,6 +66,13 @@ def _workspaces(base):
     result = []
     for line in _jj("workspace", "list", "--template", TEMPLATE).splitlines():
         name, commit, timestamp, root = map(json.loads, line.split("\t"))
+        directory = Path(root) if root else None
+        if directory is not None:
+            try:
+                # Missing directories are forget-only; retain symlinks for validation.
+                directory.lstat()
+            except FileNotFoundError:
+                directory = None
         count = int(
             _jj("log", "--count", "--revision", f"(::{commit} ~ ::({base})) ~ empty()")
         )
@@ -74,7 +81,7 @@ def _workspaces(base):
                 name,
                 commit,
                 int(timestamp),
-                Path(root).resolve() if root else None,
+                directory,
                 count,
             )
         )

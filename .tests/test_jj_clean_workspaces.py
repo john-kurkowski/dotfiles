@@ -66,7 +66,9 @@ class CleanupTest(unittest.TestCase):
     def records(self):
         return globals_["_workspaces"]("main")
 
-    def invoke(self, answer="yes\n", picker=None, arguments=()):
+    def invoke(
+        self, answer="yes\n", picker=None, arguments=(), before_confirmation=None
+    ):
         terminal = io.StringIO(answer)
 
         @contextmanager
@@ -80,6 +82,8 @@ class CleanupTest(unittest.TestCase):
                     pass
 
                 def readline(self):
+                    if before_confirmation:
+                        before_confirmation()
                     return terminal.readline()
 
             yield Terminal()
@@ -149,8 +153,36 @@ class CleanupTest(unittest.TestCase):
     def test_missing_directory_is_forgotten(self):
         root = self.workspace()
         shutil.rmtree(root)
-        self.invoke()
+        output = self.invoke()
+        self.assertIn("(missing root: forget only)", output)
         self.assertEqual([ws.name for ws in self.records()], ["default"])
+
+    def test_replacement_directory_is_preserved(self):
+        root = self.workspace()
+        shutil.rmtree(root)
+        root.mkdir()
+        (root / "keep.txt").write_text("keep me\n")
+        with self.assertRaisesRegex(ValueError, "has no .jj"):
+            self.invoke()
+        self.assertEqual((root / "keep.txt").read_text(), "keep me\n")
+        self.assertEqual({ws.name for ws in self.records()}, {"default", "old"})
+
+    def test_dangling_symlink_is_not_forgotten(self):
+        root = self.workspace()
+        shutil.rmtree(root)
+        root.symlink_to(root.parent / "missing")
+        with self.assertRaisesRegex(ValueError, "has no .jj"):
+            self.invoke()
+        self.assertTrue(root.is_symlink())
+        self.assertEqual({ws.name for ws in self.records()}, {"default", "old"})
+
+    def test_directory_recreated_during_confirmation_is_preserved(self):
+        root = self.workspace()
+        shutil.rmtree(root)
+        with self.assertRaisesRegex(ValueError, "metadata changed"):
+            self.invoke(before_confirmation=root.mkdir)
+        self.assertTrue(root.is_dir())
+        self.assertEqual({ws.name for ws in self.records()}, {"default", "old"})
 
     def test_unsnapshotted_files_retained_in_history(self):
         root = self.workspace()
