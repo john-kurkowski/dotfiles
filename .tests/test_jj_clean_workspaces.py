@@ -167,12 +167,28 @@ class CleanupTest(unittest.TestCase):
         self.assertEqual((root / "keep.txt").read_text(), "keep me\n")
         self.assertEqual({ws.name for ws in self.records()}, {"default", "old"})
 
-    def test_dangling_symlink_is_not_forgotten(self):
+    def test_unreported_dangling_symlink_is_preserved_when_forgotten(self):
         root = self.workspace()
         shutil.rmtree(root)
         root.symlink_to(root.parent / "missing")
+        # Jujutsu reports no root when it cannot resolve the workspace symlink.
+        self.assertIsNone(next(ws.root for ws in self.records() if ws.name == "old"))
+
+        output = self.invoke()
+
+        self.assertIn("(missing root: forget only)", output)
+        self.assertTrue(root.is_symlink())
+        self.assertEqual([ws.name for ws in self.records()], ["default"])
+
+    def test_known_dangling_symlink_is_rejected(self):
+        root = self.workspace()
+        workspace = next(ws for ws in self.records() if ws.name == "old")
+        shutil.rmtree(root)
+        root.symlink_to(root.parent / "missing")
+
         with self.assertRaisesRegex(ValueError, "has no .jj"):
-            self.invoke()
+            globals_["_validate_directory"](workspace, [])
+
         self.assertTrue(root.is_symlink())
         self.assertEqual({ws.name for ws in self.records()}, {"default", "old"})
 
