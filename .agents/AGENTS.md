@@ -10,6 +10,26 @@
 - Keep independent behaviors in separate cases. Test third-party behavior only
   where the application customizes it or deliberately exposes it as a contract.
 
+## Code readability
+
+- Use blank lines to separate logical groups of code, keeping closely related
+  statements together.
+- Leave a blank line between sibling test cases and suites, including
+  parameterized cases. Within longer blocks, separate distinct phases such as
+  setup, computation, side effects, and returned results where those boundaries
+  help readers.
+- Review changed code for readable grouping even when formatting checks pass. Do
+  not copy dense surrounding formatting when clearer spacing would help.
+
+## Writing about UI
+
+- When referring to literal user-visible text in prose, put the exact text in
+  double quotation marks: Click "Start verification" or select "Approved". Apply
+  this to documentation, code comments, commit messages, PR titles and
+  descriptions, review comments, and chat responses.
+- Use backticks for code identifiers and commands. Generic descriptions such as
+  the submit button do not need quotation marks.
+
 ## Code Comments
 
 - Explain non-obvious contracts, constraints, or tradeoffs a future maintainer
