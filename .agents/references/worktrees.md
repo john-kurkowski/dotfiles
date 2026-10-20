@@ -13,6 +13,12 @@ isolate your work from concurrent changes in the prompter's directory.
   the task depends on before creating the workspace; do not automatically omit
   the current commit or uncommitted work. Ask only if that choice is ambiguous.
 - Use the same worktree for the duration of the chat, unless told otherwise.
+- Copy applicable local agent instruction files from the source checkout into
+  the new worktree before starting work. Include ignored or untracked overrides
+  that version control does not carry over, using the filenames recognized by
+  the agent in use. Preserve their relative paths and directory scope, keep them
+  out of commits, and do not overwrite existing instructions without checking
+  for differences.
 - If dependencies are missing in the worktree, run the repo's README setup
   commands with its package manager.
     - Never symlink or otherwise share dependency setup with the prompter's
