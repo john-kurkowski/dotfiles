@@ -1,5 +1,6 @@
 add_newline = false
-format = """$all${custom.virtualenv}$character"""
+command_timeout = 2000
+format = "$directory$vcs$nodejs$python$rust$swift${custom.virtualenv}$status$character"
 right_format= """$cmd_duration $time"""
 
 [aws]
@@ -17,16 +18,10 @@ disabled = true
 [gcloud]
 disabled = true
 
-[git_branch]
-disabled = true
-
-[git_status]
-disabled = true
-
-[custom.jj]
-when = "jj-starship detect"
-shell = ["jj-starship", "--no-git-id", "--no-jj-id"]
-format = "$output "
+[vcs]
+order = ["jj", "git"]
+jj_modules = "$jj_bookmark$jj_status"
+git_modules = "$git_branch$git_status"
 
 [line_break]
 disabled = true
