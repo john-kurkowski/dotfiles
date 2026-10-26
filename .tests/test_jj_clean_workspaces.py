@@ -5,6 +5,7 @@
 # ruff: noqa: D101, D102
 
 import io
+import json
 import os
 import runpy
 import shutil
@@ -171,10 +172,24 @@ class CleanupTest(unittest.TestCase):
         root = self.workspace()
         shutil.rmtree(root)
         root.symlink_to(root.parent / "missing")
-        # Jujutsu reports no root when it cannot resolve the workspace symlink.
-        self.assertIsNone(next(ws.root for ws in self.records() if ws.name == "old"))
+        real_jj = globals_["_jj"]
 
-        output = self.invoke()
+        def omit_root(*args, **kwargs):
+            output = real_jj(*args, **kwargs)
+            if args[:2] != ("workspace", "list"):
+                return output
+
+            rows = []
+            for line in output.splitlines():
+                fields = line.split("\t")
+                if json.loads(fields[0]) == "old":
+                    fields[3] = "null"
+                rows.append("\t".join(fields))
+            return "\n".join(rows)
+
+        # An unreported root permits forgetting metadata without touching disk.
+        with patch.dict(globals_, {"_jj": omit_root}):
+            output = self.invoke()
 
         self.assertIn("(missing root: forget only)", output)
         self.assertTrue(root.is_symlink())
